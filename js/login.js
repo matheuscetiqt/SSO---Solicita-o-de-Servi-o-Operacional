@@ -20,7 +20,7 @@ console.log("cliente:", supabase);
 
         try {
 
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: senha
             });
