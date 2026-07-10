@@ -1,3 +1,7 @@
+console.log("window.supabase =", window.supabase);
+console.log("supabaseClient =", supabaseClient);
+console.log("auth =", supabaseClient?.auth);
+
 // Aguarda o carregamento da página
 document.addEventListener("DOMContentLoaded", () => {
 
