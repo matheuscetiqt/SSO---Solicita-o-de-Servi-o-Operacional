@@ -1,6 +1,9 @@
 // Aguarda o carregamento da página
 document.addEventListener("DOMContentLoaded", () => {
 
+    console.log("window.supabase:", window.supabase);
+console.log("cliente:", supabase);
+
     const form = document.querySelector("form");
 
     form.addEventListener("submit", async (event) => {
