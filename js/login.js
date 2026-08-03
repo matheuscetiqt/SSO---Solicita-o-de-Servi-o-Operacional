@@ -1,18 +1,13 @@
-console.log("window.supabase =", window.supabase);
-console.log("supabaseClient =", supabaseClient);
-console.log("auth =", supabaseClient?.auth);
+import { auth } from "./firebase-config.js";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-// Aguarda o carregamento da página
 document.addEventListener("DOMContentLoaded", () => {
-
-    console.log("window.supabase:", window.supabase);
-console.log("cliente:", supabase);
 
     const form = document.querySelector("form");
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", async (e) => {
 
-        event.preventDefault();
+        e.preventDefault();
 
         const email = document.querySelector('input[type="email"]').value.trim();
         const senha = document.querySelector('input[type="password"]').value;
@@ -24,26 +19,15 @@ console.log("cliente:", supabase);
 
         try {
 
-            const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: senha
-            });
-
-            if (error) {
-                alert("Erro: " + error.message);
-                console.error(error);
-                return;
-            }
-
-            console.log("Usuário autenticado:", data);
+            await signInWithEmailAndPassword(auth, email, senha);
 
             window.location.href = "dashboard.html";
 
-        } catch (erro) {
+        } catch (error) {
 
-            console.error(erro);
+            console.error(error);
 
-            alert("Erro ao conectar ao servidor.");
+            alert("E-mail ou senha inválidos.");
 
         }
 
