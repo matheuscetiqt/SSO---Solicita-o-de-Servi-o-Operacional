@@ -1,3 +1,41 @@
+import { auth, db } from "./firebase-config.js";
+
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        window.location.href = "index.html";
+        return;
+
+    }
+
+    const emailUsuario = user.email;
+
+    const usuarios = await getDocs(collection(db, "usuarios"));
+
+    usuarios.forEach((doc) => {
+
+        const dados = doc.data();
+
+        if (dados.email === emailUsuario) {
+
+            document.getElementById("nomeUsuario").textContent = dados.nome;
+
+            document.getElementById("emailUsuario").textContent = dados.email;
+
+        }
+
+    });
+
+});
+
 async function salvarSolicitacao(dados) {
 
     const { data, error } = await supabase
