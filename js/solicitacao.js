@@ -1,3 +1,5 @@
+console.log("Arquivo solicitacao.js carregado");
+
 import { auth, db } from "./firebase-config.js";
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
