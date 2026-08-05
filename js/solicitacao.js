@@ -20,7 +20,7 @@ onAuthStateChanged(auth, async (user) => {
 
     }
 
-    const emailUsuario = user.email;
+    const emailUsuario = user.email.toLowerCase();
 
     const usuarios = await getDocs(collection(db, "usuarios"));
 
@@ -28,7 +28,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const dados = doc.data();
 
-        if (dados.email === emailUsuario) {
+        if (dados.email.toLowerCase() === emailUsuario) {
 
             document.getElementById("nomeUsuario").textContent = dados.nome;
 
