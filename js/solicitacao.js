@@ -9,6 +9,8 @@ import {
 
 onAuthStateChanged(auth, async (user) => {
 
+    console.log(user);
+
     if (!user) {
 
         window.location.href = "index.html";
