@@ -12,6 +12,7 @@ import {
 onAuthStateChanged(auth, async (user) => {
 
     console.log(user);
+    console.log("Usuário logado:", user.email);
 
     if (!user) {
 
@@ -23,10 +24,12 @@ onAuthStateChanged(auth, async (user) => {
     const emailUsuario = user.email.toLowerCase();
 
     const usuarios = await getDocs(collection(db, "usuarios"));
+    console.log("Quantidade de usuários:", usuarios.size);
 
     usuarios.forEach((doc) => {
 
         const dados = doc.data();
+        console.log("Documento:", dados);
 
         if (dados.email.toLowerCase() === emailUsuario) {
 
