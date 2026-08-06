@@ -34,12 +34,15 @@ async function carregarUsuario() {
 
             const dados = doc.data();
 
-            if (dados.email.toLowerCase() === emailUsuario) {
+           if (dados.email.toLowerCase() === emailUsuario) {
 
-                document.getElementById("nomeUsuario").textContent = dados.nome;
-                document.getElementById("emailUsuario").textContent = dados.email;
+    document.getElementById("nomeUsuario").textContent = dados.nome;
 
-            }
+    document.getElementById("emailUsuario").textContent = dados.email;
+
+    document.getElementById("analistaResponsavel").textContent = dados.analista;
+
+}
 
         });
 
