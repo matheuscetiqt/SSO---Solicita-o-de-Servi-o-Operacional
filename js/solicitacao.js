@@ -43,22 +43,6 @@ onAuthStateChanged(auth, async (user) => {
 
 });
 
-async function salvarSolicitacao(dados) {
-
-    const { data, error } = await supabase
-        .from('solicitacoes')
-        .insert([dados]);
-
-    if (error) {
-        console.error(error);
-        alert("Erro ao salvar solicitação.");
-        return false;
-    }
-
-    alert("Solicitação enviada com sucesso!");
-
-    return true;
-}
 document.addEventListener("DOMContentLoaded", () => {
 
     const cards = document.querySelectorAll(".card-servico");
@@ -88,18 +72,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-console.log("Cards encontrados:", document.querySelectorAll(".card-servico").length);
 
-const cards = document.querySelectorAll(".card-servico");
-
-cards.forEach((card) => {
-
-    console.log("Card:", card.querySelector("h3").innerText);
-
-    card.addEventListener("click", () => {
-
-        console.log("Clique detectado");
-
-    });
-
-});
