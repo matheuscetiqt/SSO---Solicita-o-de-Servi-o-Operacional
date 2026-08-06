@@ -1,5 +1,3 @@
-console.log("Arquivo solicitacao.js carregado");
-
 import { auth, db } from "./firebase-config.js";
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
@@ -9,61 +7,37 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-onAuthStateChanged(auth, async (user) => {
+window.addEventListener("load", () => {
 
-    console.log(user);
-    console.log("Usuário logado:", user.email);
+    carregarUsuario();
 
-    if (!user) {
-
-        window.location.href = "index.html";
-        return;
-
-    }
-
-    const emailUsuario = user.email.toLowerCase();
-
-    const usuarios = await getDocs(collection(db, "usuarios"));
-    console.log("Quantidade de usuários:", usuarios.size);
-
-    usuarios.forEach((doc) => {
-
-        const dados = doc.data();
-        console.log("Documento:", dados);
-
-        if (dados.email.toLowerCase() === emailUsuario) {
-
-            document.getElementById("nomeUsuario").textContent = dados.nome;
-
-            document.getElementById("emailUsuario").textContent = dados.email;
-
-        }
-
-    });
+    configurarCards();
 
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+async function carregarUsuario() {
 
-    const cards = document.querySelectorAll(".card-servico");
+    onAuthStateChanged(auth, async (user) => {
 
-    console.log("Cards encontrados:", cards.length);
+        if (!user) {
 
-    cards.forEach((card) => {
+            window.location.href = "index.html";
+            return;
 
-        card.addEventListener("click", () => {
+        }
 
-            const titulo = card.querySelector("h3").textContent.trim();
+        const emailUsuario = user.email.toLowerCase();
 
-            console.log("Você clicou em:", titulo);
+        const usuarios = await getDocs(collection(db, "usuarios"));
 
-            if (titulo === "Solicitação de Compra") {
+        usuarios.forEach((doc) => {
 
-                document.getElementById("blocoSC").style.display = "block";
+            const dados = doc.data();
 
-            } else {
+            if (dados.email.toLowerCase() === emailUsuario) {
 
-                document.getElementById("blocoSC").style.display = "none";
+                document.getElementById("nomeUsuario").textContent = dados.nome;
+                document.getElementById("emailUsuario").textContent = dados.email;
 
             }
 
@@ -71,5 +45,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-});
+}
 
+function configurarCards() {
+
+    const cards = document.querySelectorAll(".card-servico");
+    const blocoSC = document.getElementById("blocoSC");
+
+    cards.forEach((card) => {
+
+        card.addEventListener("click", () => {
+
+            cards.forEach(c => c.classList.remove("active"));
+
+            card.classList.add("active");
+
+            const titulo = card.querySelector("h3").textContent.trim();
+
+            if (titulo === "Solicitação de Compra") {
+
+                blocoSC.style.display = "block";
+
+            } else {
+
+                blocoSC.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+}
