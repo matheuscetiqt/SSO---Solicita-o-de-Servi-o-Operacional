@@ -80,3 +80,18 @@ cards.forEach((card) => {
     });
 
 });
+console.log("Cards encontrados:", document.querySelectorAll(".card-servico").length);
+
+const cards = document.querySelectorAll(".card-servico");
+
+cards.forEach((card) => {
+
+    console.log("Card:", card.querySelector("h3").innerText);
+
+    card.addEventListener("click", () => {
+
+        console.log("Clique detectado");
+
+    });
+
+});
