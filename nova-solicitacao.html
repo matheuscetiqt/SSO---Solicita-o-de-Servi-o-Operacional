@@ -227,185 +227,211 @@ Carregando...
 </div>
 
 <!-- FORMULÁRIO SERVIÇO -->
-<div class="box" id="formServico" style="display:none;">
+<div class="box" id="blocoSC" style="display:none;">
 
-    <h2>📋 Dados do Serviço</h2>
-
-    <div class="grupo">
-        <label>Nome do Professor / Especialista</label>
-        <input type="text" id="professor">
-    </div>
+    <h2>📦 Tipo de Solicitação de Compra</h2>
 
     <div class="grupo">
-        <label>SC anterior de Referência</label>
-        <input type="text" id="scAnterior">
-    </div>
-
-    <div class="grupo">
-        <label>CPF ou CNPJ</label>
 
         <label>
-            <input type="radio" name="cpfcnpj" value="CPF">
-            CPF
+            <input type="radio" name="tipoSC" value="Produto">
+            Produto
         </label>
 
+        <br><br>
+
         <label>
-            <input type="radio" name="cpfcnpj" value="CNPJ">
-            CNPJ
+            <input type="radio" name="tipoSC" value="Servico">
+            Serviço
         </label>
+
+    </div>
+
+    <!-- FORMULÁRIO SERVIÇO -->
+    <div id="formServico" style="display:none; margin-top:35px;">
+
+        <h2>📋 Dados do Serviço</h2>
+
+        <div class="grupo">
+            <label>Nome do Professor / Especialista</label>
+            <input type="text" id="professor">
+        </div>
+
+        <div class="grupo">
+            <label>SC anterior de Referência</label>
+            <input type="text" id="scAnterior">
+        </div>
+
+        <div class="grupo">
+            <label>CPF ou CNPJ</label>
+
+            <label>
+                <input type="radio" name="cpfcnpj" value="CPF">
+                CPF
+            </label>
+
+            <label>
+                <input type="radio" name="cpfcnpj" value="CNPJ">
+                CNPJ
+            </label>
+
+        </div>
 
         <div class="grupo">
 
-    <label>Curso</label>
+            <label>Curso</label>
 
-    <select id="curso">
+            <select id="curso">
 
-        <option value="">Selecione um curso</option>
+                <option value="">Selecione um curso</option>
 
-        <option>30304010303 - C.POS.GRAD.PRES - ALFAIATARIA INDUSTRIAL</option>
+                <option>30304010303 - C.POS.GRAD.PRES - ALFAIATARIA INDUSTRIAL</option>
 
-        <option>30304010304 - C.POS.GRAD.PRES - DESIGN DE ESTAMPAS</option>
+                <option>30304010304 - C.POS.GRAD.PRES - DESIGN DE ESTAMPAS</option>
 
-        <option>30304010305 - C.POS.GRAD.PRES - MODA PRAIA E ESPORTIVA</option>
+                <option>30304010305 - C.POS.GRAD.PRES - MODA PRAIA E ESPORTIVA</option>
 
-        <option>30304011105 - C.POS.GRAD.EAD - SEGURANÇA DE PROCESSOS</option>
+                <option>30304011105 - C.POS.GRAD.EAD - SEGURANÇA DE PROCESSOS</option>
 
-        <option>30304011106 - C.POS.GRAD.EAD - PROD. IND. INTELIGENTE</option>
+                <option>30304011106 - C.POS.GRAD.EAD - PROD. IND. INTELIGENTE</option>
 
-        <option>30304011107 - C.POS.GRAD.EAD - MBI: CONFECÇÃO 4.0</option>
+                <option>30304011107 - C.POS.GRAD.EAD - MBI: CONFECÇÃO 4.0</option>
 
-        <option>30304011108 - C.POS.GRAD.EAD - DOCÊNCIA EDUCACIONAL</option>
+                <option>30304011108 - C.POS.GRAD.EAD - DOCÊNCIA EDUCACIONAL</option>
 
-        <option>30304011109 - C.POS.GRAD.EAD - DESIGN DE PRODUTO DE MODA</option>
+                <option>30304011109 - C.POS.GRAD.EAD - DESIGN DE PRODUTO DE MODA</option>
 
-        <option>30304011112 - C.POS.GRAD.EAD - MBI: AUTOMOTIVO 4.0</option>
+                <option>30304011112 - C.POS.GRAD.EAD - MBI: AUTOMOTIVO 4.0</option>
 
-        <option>30304011120 - C.POS.GRAD.EAD - ECONOMIA CIRCULAR E PRODUÇÃO SUSTENTÁVEL</option>
+                <option>30304011120 - C.POS.GRAD.EAD - ECONOMIA CIRCULAR E PRODUÇÃO SUSTENTÁVEL</option>
 
-    </select>
+            </select>
 
-</div>
+        </div>
 
-<div class="grupo">
+        <div class="grupo">
 
-    <label>Atividade I</label>
+            <label>Atividade I</label>
 
-    <select id="atividade1">
+            <select id="atividade1">
 
-        <option value="">Selecione</option>
+                <option value="">Selecione</option>
 
-        <option>Tutoria - 100021664</option>
+                <option>Tutoria - 100021664</option>
 
-        <option>Ministrar Aula - 100021663</option>
+                <option>Ministrar Aula - 100021663</option>
 
-        <option>Desenvolver Conteúdo - 100022010</option>
+                <option>Desenvolver Conteúdo - 100022010</option>
 
-    </select>
+            </select>
 
-</div>
+        </div>
 
-<div class="grupo">
+        <div class="grupo">
 
-    <label>Nº da Carga Horária I</label>
+            <label>Nº da Carga Horária I</label>
 
-    <input type="number" id="carga1">
+            <input type="number" id="carga1">
 
-</div>
+        </div>
 
-<div class="grupo">
+        <div class="grupo">
 
-    <label>Atividade II (Opcional)</label>
+            <label>Atividade II (Opcional)</label>
 
-    <select id="atividade2">
+            <select id="atividade2">
 
-        <option value="">Nenhuma</option>
+                <option value="">Nenhuma</option>
 
-        <option>Tutoria - 100021664</option>
+                <option>Tutoria - 100021664</option>
 
-        <option>Ministrar Aula - 100021663</option>
+                <option>Ministrar Aula - 100021663</option>
 
-        <option>Desenvolver Conteúdo - 100022010</option>
+                <option>Desenvolver Conteúdo - 100022010</option>
 
-    </select>
+            </select>
 
-</div>
+        </div>
 
-<div class="grupo">
+        <div class="grupo">
 
-    <label>Nº da Carga Horária II</label>
+            <label>Nº da Carga Horária II</label>
 
-    <input type="number" id="carga2">
+            <input type="number" id="carga2">
 
-    <div class="grupo">
+        </div>
 
-    <label>Unidade Curricular / Disciplina</label>
+        <div class="grupo">
 
-    <input
-        type="text"
-        id="disciplina"
-        placeholder="Informe a Unidade Curricular ou Disciplina"
-    >
+            <label>Unidade Curricular / Disciplina</label>
 
-</div>
+            <input
+                type="text"
+                id="disciplina"
+                placeholder="Informe a Unidade Curricular ou Disciplina"
+            >
 
-<div class="grupo">
+        </div>
 
-    <label>Datas das Aulas</label>
+        <div class="grupo">
 
-    <textarea
-        id="datasAulas"
-        rows="3"
-        placeholder="Ex.: 10/09, 17/09, 24/09 e 01/10"
-    ></textarea>
+            <label>Datas das Aulas</label>
 
-</div>
+            <textarea
+                id="datasAulas"
+                rows="3"
+                placeholder="Ex.: 10/09, 17/09, 24/09 e 01/10"
+            ></textarea>
 
-<div class="grupo">
+        </div>
 
-    <label>Valor da Hora Aula (R$)</label>
+        <div class="grupo">
 
-    <input
-        type="number"
-        id="valorHora"
-        step="0.01"
-        min="0"
-        placeholder="0,00"
-    >
+            <label>Valor da Hora Aula (R$)</label>
 
-</div>
+            <input
+                type="number"
+                id="valorHora"
+                step="0.01"
+                min="0"
+                placeholder="0,00"
+            >
 
-<div class="grupo full">
+        </div>
 
-    <label>Histórico de Contratação (Professor Recorrente)</label>
+        <div class="grupo">
 
-    <textarea
-        id="historico"
-        rows="5"
-        placeholder="Informe o histórico de contratação do professor, caso exista."
-    ></textarea>
+            <label>Histórico de Contratação (Professor Recorrente)</label>
 
-</div>
+            <textarea
+                id="historico"
+                rows="5"
+                placeholder="Informe o histórico de contratação do professor."
+            ></textarea>
 
-<div class="grupo full">
+        </div>
 
-    <label>Anexar Proposta</label>
+        <div class="grupo">
 
-    <input
-        type="file"
-        id="proposta"
-        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png"
-    >
+            <label>Anexar Proposta</label>
 
-    <small>
-        Arquivos permitidos: PDF, Word, Excel, PowerPoint e Imagens.
-    </small>
+            <input
+                type="file"
+                id="proposta"
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png"
+            >
 
-</div>
+            <small>
 
-</div>
+                Arquivos permitidos: PDF, Word, Excel, PowerPoint e Imagens.
+
+            </small>
+
+        </div>
 
     </div>
 
+</div>
 </div>
 
 <div class="enviar">
