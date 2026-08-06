@@ -59,3 +59,24 @@ async function salvarSolicitacao(dados) {
 
     return true;
 }
+const cards = document.querySelectorAll(".card-servico");
+
+cards.forEach((card) => {
+
+    card.addEventListener("click", () => {
+
+        const titulo = card.querySelector("h3").innerText;
+
+        if (titulo === "Solicitação de Compra") {
+
+            document.getElementById("blocoSC").style.display = "block";
+
+        } else {
+
+            document.getElementById("blocoSC").style.display = "none";
+
+        }
+
+    });
+
+});
