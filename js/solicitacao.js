@@ -80,3 +80,22 @@ function configurarCards() {
     });
 
 }
+const radiosSC = document.querySelectorAll('input[name="tipoSC"]');
+
+radiosSC.forEach((radio) => {
+
+    radio.addEventListener("change", () => {
+
+        if (radio.value === "Servico" && radio.checked) {
+
+            document.getElementById("formServico").style.display = "block";
+
+        } else if (radio.value === "Produto" && radio.checked) {
+
+            document.getElementById("formServico").style.display = "none";
+
+        }
+
+    });
+
+});
