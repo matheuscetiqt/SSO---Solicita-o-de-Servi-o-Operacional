@@ -197,43 +197,6 @@ Carregando...
     <div class="grupo">
 
         <label>
-
-            <input
-                type="radio"
-                name="tipoSC"
-                value="Produto"
-            >
-
-            Produto
-
-        </label>
-
-        <br><br>
-
-        <label>
-
-            <input
-                type="radio"
-                name="tipoSC"
-                value="Servico"
-            >
-
-            Serviço
-
-        </label>
-
-    </div>
-
-</div>
-
-<!-- FORMULÁRIO SERVIÇO -->
-<div class="box" id="blocoSC" style="display:none;">
-
-    <h2>📦 Tipo de Solicitação de Compra</h2>
-
-    <div class="grupo">
-
-        <label>
             <input type="radio" name="tipoSC" value="Produto">
             Produto
         </label>
@@ -247,7 +210,6 @@ Carregando...
 
     </div>
 
-    <!-- FORMULÁRIO SERVIÇO -->
     <div id="formServico" style="display:none; margin-top:35px;">
 
         <h2>📋 Dados do Serviço</h2>
@@ -278,162 +240,84 @@ Carregando...
         </div>
 
         <div class="grupo">
-
             <label>Curso</label>
 
             <select id="curso">
-
                 <option value="">Selecione um curso</option>
-
                 <option>30304010303 - C.POS.GRAD.PRES - ALFAIATARIA INDUSTRIAL</option>
-
                 <option>30304010304 - C.POS.GRAD.PRES - DESIGN DE ESTAMPAS</option>
-
                 <option>30304010305 - C.POS.GRAD.PRES - MODA PRAIA E ESPORTIVA</option>
-
                 <option>30304011105 - C.POS.GRAD.EAD - SEGURANÇA DE PROCESSOS</option>
-
                 <option>30304011106 - C.POS.GRAD.EAD - PROD. IND. INTELIGENTE</option>
-
                 <option>30304011107 - C.POS.GRAD.EAD - MBI: CONFECÇÃO 4.0</option>
-
                 <option>30304011108 - C.POS.GRAD.EAD - DOCÊNCIA EDUCACIONAL</option>
-
                 <option>30304011109 - C.POS.GRAD.EAD - DESIGN DE PRODUTO DE MODA</option>
-
                 <option>30304011112 - C.POS.GRAD.EAD - MBI: AUTOMOTIVO 4.0</option>
-
                 <option>30304011120 - C.POS.GRAD.EAD - ECONOMIA CIRCULAR E PRODUÇÃO SUSTENTÁVEL</option>
-
             </select>
-
         </div>
 
         <div class="grupo">
-
             <label>Atividade I</label>
 
             <select id="atividade1">
-
                 <option value="">Selecione</option>
-
                 <option>Tutoria - 100021664</option>
-
                 <option>Ministrar Aula - 100021663</option>
-
                 <option>Desenvolver Conteúdo - 100022010</option>
-
             </select>
-
         </div>
 
         <div class="grupo">
-
             <label>Nº da Carga Horária I</label>
-
             <input type="number" id="carga1">
-
         </div>
 
         <div class="grupo">
-
             <label>Atividade II (Opcional)</label>
 
             <select id="atividade2">
-
                 <option value="">Nenhuma</option>
-
                 <option>Tutoria - 100021664</option>
-
                 <option>Ministrar Aula - 100021663</option>
-
                 <option>Desenvolver Conteúdo - 100022010</option>
-
             </select>
-
         </div>
 
         <div class="grupo">
-
             <label>Nº da Carga Horária II</label>
-
             <input type="number" id="carga2">
-
         </div>
 
         <div class="grupo">
-
             <label>Unidade Curricular / Disciplina</label>
-
-            <input
-                type="text"
-                id="disciplina"
-                placeholder="Informe a Unidade Curricular ou Disciplina"
-            >
-
+            <input type="text" id="disciplina">
         </div>
 
         <div class="grupo">
-
             <label>Datas das Aulas</label>
-
-            <textarea
-                id="datasAulas"
-                rows="3"
-                placeholder="Ex.: 10/09, 17/09, 24/09 e 01/10"
-            ></textarea>
-
+            <textarea id="datasAulas" rows="3"></textarea>
         </div>
 
         <div class="grupo">
-
             <label>Valor da Hora Aula (R$)</label>
-
-            <input
-                type="number"
-                id="valorHora"
-                step="0.01"
-                min="0"
-                placeholder="0,00"
-            >
-
+            <input type="number" id="valorHora" step="0.01">
         </div>
 
         <div class="grupo">
-
-            <label>Histórico de Contratação (Professor Recorrente)</label>
-
-            <textarea
-                id="historico"
-                rows="5"
-                placeholder="Informe o histórico de contratação do professor."
-            ></textarea>
-
+            <label>Histórico de Contratação</label>
+            <textarea id="historico" rows="5"></textarea>
         </div>
 
         <div class="grupo">
-
             <label>Anexar Proposta</label>
-
-            <input
-                type="file"
-                id="proposta"
-                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png"
-            >
-
-            <small>
-
-                Arquivos permitidos: PDF, Word, Excel, PowerPoint e Imagens.
-
-            </small>
-
+            <input type="file" id="proposta">
         </div>
 
     </div>
 
 </div>
-</div>
-
+      
 <div class="enviar">
 
 <button type="submit">
