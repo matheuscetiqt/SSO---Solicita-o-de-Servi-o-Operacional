@@ -88,3 +88,17 @@ if (dados.status === "Concluída") {
     });
 
 }
+
+function formatarData(timestamp) {
+
+    if (!timestamp) return "-";
+
+    const data = timestamp.toDate();
+
+    return data.toLocaleDateString("pt-BR") + " " +
+           data.toLocaleTimeString("pt-BR", {
+               hour: "2-digit",
+               minute: "2-digit"
+           });
+
+}
