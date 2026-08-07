@@ -28,6 +28,11 @@ async function carregarSolicitacoes() {
 
     tabela.innerHTML = "";
 
+    let total = 0;
+let pendentes = 0;
+let andamento = 0;
+let concluidas = 0;
+
     const q = query(
         collection(db, "solicitacoes"),
         orderBy("dataCriacao", "desc")
@@ -38,6 +43,25 @@ async function carregarSolicitacoes() {
     snapshot.forEach((doc) => {
 
         const dados = doc.data();
+
+        total++;
+
+        document.getElementById("totalSolicitacoes").textContent = total;
+document.getElementById("totalPendentes").textContent = pendentes;
+document.getElementById("totalAndamento").textContent = andamento;
+document.getElementById("totalConcluidas").textContent = concluidas;
+
+if (dados.status === "Pendente") {
+    pendentes++;
+}
+
+if (dados.status === "Em andamento") {
+    andamento++;
+}
+
+if (dados.status === "Concluída") {
+    concluidas++;
+}
 
         tabela.innerHTML += `
             <tr>
