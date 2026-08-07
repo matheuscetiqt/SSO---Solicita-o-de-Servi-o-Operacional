@@ -713,3 +713,36 @@ textarea{
 .enviar button{
     width:250px;
 }
+.creditos{
+    margin-top:35px;
+    text-align:center;
+}
+
+.creditos hr{
+    border:none;
+    border-top:1px solid #E5E5E5;
+    margin-bottom:20px;
+}
+
+.creditos p{
+    font-size:13px;
+    color:#777;
+    margin-bottom:5px;
+}
+
+.creditos strong{
+    display:block;
+    color:#003B71;
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+.creditos a{
+    color:#005A9C;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.creditos a:hover{
+    text-decoration:underline;
+}
