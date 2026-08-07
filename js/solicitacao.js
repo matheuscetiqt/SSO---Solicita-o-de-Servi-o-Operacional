@@ -78,29 +78,6 @@ function configurarCards() {
         });
 
     });
-
-}
-const radiosSC = document.querySelectorAll('input[name="tipoSC"]');
-
-const formServico = document.getElementById("formServico");
-
-radiosSC.forEach((radio) => {
-
-    radio.addEventListener("change", () => {
-
-        if (radio.value === "Servico") {
-
-            formServico.style.display = "block";
-
-        } else {
-
-            formServico.style.display = "none";
-
-        }
-
-    });
-
-});
 const radiosSC = document.querySelectorAll('input[name="tipoSC"]');
 
 radiosSC.forEach((radio) => {
