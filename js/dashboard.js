@@ -72,15 +72,15 @@ if (dados.status === "Concluída") {
 
                 <td>${dados.tipoServico}</td>
 
-                <td>
-                    <span class="status pendente">
-                        ${dados.status}
-                    </span>
-                </td>
+<td>
+    <span class="status pendente">
+        ${dados.status}
+    </span>
+</td>
 
-                <td>
-                    -
-                </td>
+<td>
+    ${formatarData(dados.dataCriacao)}
+</td>
 
             </tr>
         `;
