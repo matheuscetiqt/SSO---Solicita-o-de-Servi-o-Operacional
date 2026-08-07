@@ -4,9 +4,10 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/fi
 
 import {
     collection,
-    getDocs
+    getDocs,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
 window.addEventListener("load", () => {
 
     carregarUsuario();
