@@ -99,3 +99,56 @@ radiosSC.forEach((radio) => {
 
 });
 }
+const formulario = document.querySelector("form");
+
+formulario.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const nome = document.getElementById("nomeUsuario").textContent;
+    const email = document.getElementById("emailUsuario").textContent;
+    const analista = document.getElementById("analistaResponsavel").textContent;
+
+    let tipoServico = "";
+
+    const cardSelecionado = document.querySelector(".card-servico.active");
+
+    if (cardSelecionado) {
+
+        tipoServico = cardSelecionado.querySelector("h3").textContent;
+
+    }
+
+    try {
+
+        const protocolo = "SSO-" + Date.now();
+
+        await addDoc(collection(db, "solicitacoes"), {
+
+            protocolo: protocolo,
+
+            solicitante: nome,
+
+            email: email,
+
+            analista: analista,
+
+            tipoServico: tipoServico,
+
+            status: "Pendente",
+
+            dataCriacao: serverTimestamp()
+
+        });
+
+        alert("Solicitação enviada com sucesso!");
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao salvar a solicitação.");
+
+    }
+
+});
