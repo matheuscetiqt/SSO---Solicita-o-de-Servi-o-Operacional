@@ -210,6 +210,207 @@ Carregando...
 
     </div>
 
+    <div class="grupo">
+
+    <label>
+        <input type="radio" name="tipoSC" value="Produto">
+        Produto
+    </label>
+
+    <br><br>
+
+    <label>
+        <input type="radio" name="tipoSC" value="Servico">
+        Serviço
+    </label>
+
+</div>
+
+
+<!-- FORMULÁRIO SOLICITAÇÃO DE COMPRA - PRODUTO -->
+
+<div id="formProduto" style="display:none; margin-top:35px;">
+
+    <h2>📦 Dados do Produto</h2>
+
+    <div class="grupo">
+
+        <label>Nome do produto</label>
+
+        <input
+            type="text"
+            id="nomeProduto"
+            placeholder="Informe o nome do produto"
+        >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>SC anterior de Referência</label>
+
+        <input
+            type="text"
+            id="scAnteriorProduto"
+            placeholder="Informe a SC anterior de referência"
+        >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>CPF ou CNPJ</label>
+
+        <label>
+            <input
+                type="radio"
+                name="cpfcnpjProduto"
+                value="CPF"
+            >
+            CPF
+        </label>
+
+        <label>
+            <input
+                type="radio"
+                name="cpfcnpjProduto"
+                value="CNPJ"
+            >
+            CNPJ
+        </label>
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Curso</label>
+
+        <select id="cursoProduto">
+
+            <option value="">Selecione um curso</option>
+
+            <option value="30304010303 - C.POS.GRAD.PRES - ALFAIATARIA INDUSTRIAL">
+                30304010303 - C.POS.GRAD.PRES - ALFAIATARIA INDUSTRIAL
+            </option>
+
+            <option value="30304010304 - C.POS.GRAD.PRES - DESIGN DE ESTAMPAS">
+                30304010304 - C.POS.GRAD.PRES - DESIGN DE ESTAMPAS
+            </option>
+
+            <option value="30304010305 - C.POS.GRAD.PRES - MODA PRAIA E ESPORTIVA">
+                30304010305 - C.POS.GRAD.PRES - MODA PRAIA E ESPORTIVA
+            </option>
+
+            <option value="30304011105 - C.POS.GRAD.EAD - SEGURANÇA DE PROCESSOS">
+                30304011105 - C.POS.GRAD.EAD - SEGURANÇA DE PROCESSOS
+            </option>
+
+            <option value="30304011106 - C.POS.GRAD.EAD - PROD. IND. INTELIGENTE">
+                30304011106 - C.POS.GRAD.EAD - PROD. IND. INTELIGENTE
+            </option>
+
+            <option value="30304011107 - C.POS.GRAD.EAD - MBI: CONFECÇÃO 4.0">
+                30304011107 - C.POS.GRAD.EAD - MBI: CONFECÇÃO 4.0
+            </option>
+
+            <option value="30304011108 - C.POS.GRAD.EAD - DOCÊ. EDC. PROFISSIONAL">
+                30304011108 - C.POS.GRAD.EAD - DOCÊ. EDC. PROFISSIONAL
+            </option>
+
+            <option value="30304011109 - C.POS.GRAD.EAD - DESIGN DE PROD DE MODA">
+                30304011109 - C.POS.GRAD.EAD - DESIGN DE PROD DE MODA
+            </option>
+
+            <option value="30304011112 - C.POS.GRAD.EAD - MBI: AUTOMOTIVO 4.0">
+                30304011112 - C.POS.GRAD.EAD - MBI: AUTOMOTIVO 4.0
+            </option>
+
+            <option value="30304011120 - C.POS.GRAD.EAD - ECONOMIA CIRCULAR E PRODUÇÃO SUSTENTÁVEL">
+                30304011120 - C.POS.GRAD.EAD - ECONOMIA CIRCULAR E PRODUÇÃO SUSTENTÁVEL
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Código ou nome do Produto</label>
+
+        <input
+            type="text"
+            id="codigoProduto"
+            placeholder="Informe o código ou nome do produto"
+        >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Datas das necessidades</label>
+
+        <input
+            type="text"
+            id="datasNecessidades"
+            placeholder="Informe as datas das necessidades"
+        >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Valor do Produto (R$)</label>
+
+        <input
+            type="number"
+            id="valorProduto"
+            step="0.01"
+            min="0"
+            placeholder="0,00"
+        >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Qtd de Produtos</label>
+
+        <input
+            type="number"
+            id="quantidadeProduto"
+            min="1"
+            placeholder="Informe a quantidade"
+        >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Anexar Documentos</label>
+
+        <input
+            type="file"
+            id="documentosProduto"
+            multiple
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.mp3"
+        >
+
+        <small>
+            É possível anexar até 10 arquivos.
+        </small>
+
+    </div>
+
+</div>
+
     <div id="formServico" style="display:none; margin-top:35px;">
 
         <h2>📋 Dados do Serviço</h2>
