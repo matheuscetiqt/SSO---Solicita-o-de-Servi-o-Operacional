@@ -909,3 +909,146 @@ textarea{
     border-top: 1px solid #E5E5E5;
     margin: 10px 0;
 }
+/* ============================
+   MODAL - DETALHES DA SOLICITAÇÃO
+============================ */
+
+#modalSolicitacao {
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+#modalSolicitacao .modal-content {
+    width: 100%;
+    max-width: 950px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+/* Cabeçalho */
+
+#modalSolicitacao .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 30px;
+    border-bottom: 1px solid #e8edf3;
+}
+
+#modalSolicitacao .modal-header h2 {
+    margin: 0;
+    color: #003B71;
+    font-size: 24px;
+}
+
+/* Área dos detalhes */
+
+#detalhesSolicitacao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    padding: 30px;
+}
+
+/* Cada informação */
+
+#detalhesSolicitacao .detalhe-grupo {
+    background: #F4F7FB;
+    border: 1px solid #E4EAF1;
+    border-radius: 14px;
+    padding: 18px 20px;
+    min-height: 80px;
+}
+
+#detalhesSolicitacao .detalhe-grupo span {
+    display: block;
+    color: #718096;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+#detalhesSolicitacao .detalhe-grupo strong {
+    display: block;
+    color: #003B71;
+    font-size: 15px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Título da seção */
+
+#detalhesSolicitacao h3 {
+    color: #003B71;
+    font-size: 20px;
+    margin: 10px 0 0;
+}
+
+/* Status */
+
+#detalhesSolicitacao .select-status {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #D6DEE8;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #003B71;
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+}
+
+#detalhesSolicitacao .select-status:focus {
+    border-color: #005A9C;
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.10);
+}
+
+/* Botão fechar */
+
+#modalSolicitacao #fecharModal {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    background: #F1F3F6;
+    color: #333;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#modalSolicitacao #fecharModal:hover {
+    background: #E4E8ED;
+}
+
+/* Responsivo */
+
+@media (max-width: 700px) {
+
+    #modalSolicitacao {
+        padding: 15px;
+    }
+
+    #detalhesSolicitacao {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    #detalhesSolicitacao h3 {
+        grid-column: 1 !important;
+    }
+
+    #modalSolicitacao .modal-header {
+        padding: 20px;
+    }
+
+}
