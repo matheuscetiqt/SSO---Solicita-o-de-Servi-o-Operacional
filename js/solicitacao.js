@@ -123,24 +123,64 @@ formulario.addEventListener("submit", async (e) => {
 
         const protocolo = "SSO-" + Date.now();
 
-        await addDoc(collection(db, "solicitacoes"), {
+       await addDoc(collection(db, "solicitacoes"), {
 
-            protocolo: protocolo,
+    protocolo: protocolo,
 
-            solicitante: nome,
+    solicitante: nome,
 
-            email: email,
+    email: email,
 
-            analista: analista,
+    analista: analista,
 
-            tipoServico: tipoServico,
+    tipoServico: tipoServico,
 
-            status: "Pendente",
+    status: "Pendente",
 
-            dataCriacao: serverTimestamp()
+    dataCriacao: serverTimestamp(),
 
-        });
+    // DADOS DA SOLICITAÇÃO DE COMPRA - SERVIÇO
 
+    tipoSC:
+        document.querySelector('input[name="tipoSC"]:checked')?.value || "",
+
+    professor:
+        document.getElementById("professor")?.value || "",
+
+    scAnterior:
+        document.getElementById("scAnterior")?.value || "",
+
+    cpfCnpj:
+        document.querySelector('input[name="cpfcnpj"]:checked')?.value || "",
+
+    curso:
+        document.getElementById("curso")?.value || "",
+
+    atividade1:
+        document.getElementById("atividade1")?.value || "",
+
+    carga1:
+        document.getElementById("carga1")?.value || "",
+
+    atividade2:
+        document.getElementById("atividade2")?.value || "",
+
+    carga2:
+        document.getElementById("carga2")?.value || "",
+
+    disciplina:
+        document.getElementById("disciplina")?.value || "",
+
+    datasAulas:
+        document.getElementById("datasAulas")?.value || "",
+
+    valorHora:
+        document.getElementById("valorHora")?.value || "",
+
+    historico:
+        document.getElementById("historico")?.value || ""
+
+});
         alert("Solicitação enviada com sucesso!");
 
     } catch (erro) {
