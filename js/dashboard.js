@@ -147,7 +147,8 @@ function abrirModalSolicitacao(dados) {
 
     const detalhes = document.getElementById("detalhesSolicitacao");
 
-            <div class="detalhe-grupo">
+    detalhes.innerHTML = `
+        <div class="detalhe-grupo">
             <span>Protocolo</span>
             <strong>${dados.protocolo || "-"}</strong>
         </div>
@@ -182,9 +183,9 @@ function abrirModalSolicitacao(dados) {
             <strong>${formatarData(dados.dataCriacao)}</strong>
         </div>
 
-        <hr>
-
-        <h3>📦 Dados da Solicitação de Compra</h3>
+        <div style="grid-column: 1 / 3; margin-top: 15px;">
+            <h3>📦 Dados da Solicitação de Compra</h3>
+        </div>
 
         <div class="detalhe-grupo">
             <span>Tipo de Solicitação</span>
@@ -192,7 +193,7 @@ function abrirModalSolicitacao(dados) {
         </div>
 
         <div class="detalhe-grupo">
-            <span>Nome do Professor / Especialista</span>
+            <span>Professor / Especialista</span>
             <strong>${dados.professor || "-"}</strong>
         </div>
 
@@ -250,6 +251,7 @@ function abrirModalSolicitacao(dados) {
             <span>Histórico de Contratação</span>
             <strong>${dados.historico || "-"}</strong>
         </div>
+    `;
 
     modal.style.display = "flex";
 
