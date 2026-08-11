@@ -6,7 +6,9 @@ import {
     collection,
     getDocs,
     query,
-    orderBy
+    orderBy,
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 onAuthStateChanged(auth, async (user) => {
