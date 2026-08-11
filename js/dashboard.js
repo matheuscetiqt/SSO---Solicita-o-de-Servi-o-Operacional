@@ -63,35 +63,37 @@ if (dados.status === "Concluída") {
     concluidas++;
 }
 
-        tabela.innerHTML += `
-            <tr>
+       tabela.innerHTML += `
+    <tr>
 
-                <td>${dados.protocolo}</td>
+        <td>${dados.protocolo || "-"}</td>
 
-                <td>${dados.solicitante}</td>
+        <td>${dados.solicitante || "-"}</td>
 
-                <td>${dados.tipoServico}</td>
+        <td>${dados.tipoServico || "-"}</td>
 
-<td>
-    <span class="status pendente">
-        ${dados.status}
-    </span>
-</td>
+        <td>
+            <span class="status pendente">
+                ${dados.status || "-"}
+            </span>
+        </td>
 
-<td>
-    ${formatarData(dados.dataCriacao)}
-</td>
+        <td>
+            ${formatarData(dados.dataCriacao)}
+        </td>
 
-<td>
-    <button
-        class="btn-visualizar"
-        data-id="${doc.id}">
-        Visualizar
-    </button>
-</td>
+        <td>
+            <button
+                type="button"
+                class="btn-visualizar"
+                data-id="${doc.id}">
+                <i class="fa-solid fa-eye"></i>
+                Visualizar
+            </button>
+        </td>
 
-            </tr>
-        `;
+    </tr>
+`;
 
     });
 
