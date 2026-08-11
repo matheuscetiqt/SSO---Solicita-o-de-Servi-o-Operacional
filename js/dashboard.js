@@ -82,6 +82,14 @@ if (dados.status === "Concluída") {
     ${formatarData(dados.dataCriacao)}
 </td>
 
+<td>
+    <button
+        class="btn-visualizar"
+        data-id="${doc.id}">
+        Visualizar
+    </button>
+</td>
+
             </tr>
         `;
 
