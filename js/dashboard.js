@@ -203,6 +203,23 @@ function formatarData(timestamp) {
            });
 
 }
+
+document.getElementById("fecharModal").addEventListener("click", () => {
+
+    document.getElementById("modalSolicitacao").style.display = "none";
+
+});
+
+
+document.getElementById("modalSolicitacao").addEventListener("click", (evento) => {
+
+    if (evento.target.id === "modalSolicitacao") {
+
+        evento.currentTarget.style.display = "none";
+
+    }
+
+});
 document.getElementById("fecharModal").addEventListener("click", () => {
 
     document.getElementById("modalSolicitacao").style.display = "none";
