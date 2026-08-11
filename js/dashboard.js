@@ -185,14 +185,23 @@ function abrirModalSolicitacao(dados) {
             <strong>${dados.tipoServico || "-"}</strong>
         </div>
 
-        '<div class="detalhe-grupo">' +
-    '<span>Status</span>' +
-    '<select id="novoStatus" class="select-status">' +
-        '<option value="Pendente" ' + (dados.status === "Pendente" ? "selected" : "") + '>Pendente</option>' +
-        '<option value="Em andamento" ' + (dados.status === "Em andamento" ? "selected" : "") + '>Em andamento</option>' +
-        '<option value="Concluída" ' + (dados.status === "Concluída" ? "selected" : "") + '>Concluída</option>' +
-    '</select>' +
-'</div>' +
+        <div class="detalhe-grupo">
+            <span>Status</span>
+
+            <select id="novoStatus" class="select-status">
+                <option value="Pendente" ${dados.status === "Pendente" ? "selected" : ""}>
+                    Pendente
+                </option>
+
+                <option value="Em andamento" ${dados.status === "Em andamento" ? "selected" : ""}>
+                    Em andamento
+                </option>
+
+                <option value="Concluída" ${dados.status === "Concluída" ? "selected" : ""}>
+                    Concluída
+                </option>
+            </select>
+        </div>
 
         <div class="detalhe-grupo">
             <span>Data da Solicitação</span>
@@ -260,7 +269,9 @@ function abrirModalSolicitacao(dados) {
 
         <div class="detalhe-grupo">
             <span>Valor da Hora Aula</span>
-            <strong>${dados.valorHora ? "R$ " + dados.valorHora : "-"}</strong>
+            <strong>
+                ${dados.valorHora ? "R$ " + dados.valorHora : "-"}
+            </strong>
         </div>
 
         <div class="detalhe-grupo">
