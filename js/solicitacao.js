@@ -81,17 +81,24 @@ function configurarCards() {
     });
 const radiosSC = document.querySelectorAll('input[name="tipoSC"]');
 
+const formProduto = document.getElementById("formProduto");
+const formServico = document.getElementById("formServico");
+
 radiosSC.forEach((radio) => {
 
     radio.addEventListener("change", () => {
 
+        if (radio.value === "Produto" && radio.checked) {
+
+            formProduto.style.display = "block";
+            formServico.style.display = "none";
+
+        }
+
         if (radio.value === "Servico" && radio.checked) {
 
-            document.getElementById("formServico").style.display = "block";
-
-        } else if (radio.value === "Produto" && radio.checked) {
-
-            document.getElementById("formServico").style.display = "none";
+            formProduto.style.display = "none";
+            formServico.style.display = "block";
 
         }
 
