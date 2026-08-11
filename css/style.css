@@ -746,3 +746,21 @@ textarea{
 .creditos a:hover{
     text-decoration:underline;
 }
+.btn-visualizar {
+    width: auto;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #005A9C;
+    color: white;
+    font-family: Poppins, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-visualizar:hover {
+    background: #003B71;
+}
