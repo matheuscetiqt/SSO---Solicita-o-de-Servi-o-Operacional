@@ -49,11 +49,6 @@ let concluidas = 0;
 
         total++;
 
-        document.getElementById("totalSolicitacoes").textContent = total;
-document.getElementById("totalPendentes").textContent = pendentes;
-document.getElementById("totalAndamento").textContent = andamento;
-document.getElementById("totalConcluidas").textContent = concluidas;
-
 if (dados.status === "Pendente") {
     pendentes++;
 }
@@ -100,6 +95,11 @@ if (dados.status === "Concluída") {
 
     });
 
+    document.getElementById("totalSolicitacoes").textContent = total;
+document.getElementById("totalPendentes").textContent = pendentes;
+document.getElementById("totalAndamento").textContent = andamento;
+document.getElementById("totalConcluidas").textContent = concluidas;
+
     document.querySelectorAll(".btn-visualizar").forEach((botao) => {
 
     botao.addEventListener("click", async () => {
@@ -128,6 +128,17 @@ if (dados.status === "Concluída") {
             const dados = resultado.data();
 
             abrirModalSolicitacao(dados);
+
+            const seletorStatus = document.getElementById("novoStatus");
+
+seletorStatus.addEventListener("change", () => {
+
+    alterarStatusSolicitacao(
+        idSolicitacao,
+        seletorStatus.value
+    );
+
+});
 
         } catch (erro) {
 
@@ -174,10 +185,14 @@ function abrirModalSolicitacao(dados) {
             <strong>${dados.tipoServico || "-"}</strong>
         </div>
 
-        <div class="detalhe-grupo">
-            <span>Status</span>
-            <strong>${dados.status || "-"}</strong>
-        </div>
+        '<div class="detalhe-grupo">' +
+    '<span>Status</span>' +
+    '<select id="novoStatus" class="select-status">' +
+        '<option value="Pendente" ' + (dados.status === "Pendente" ? "selected" : "") + '>Pendente</option>' +
+        '<option value="Em andamento" ' + (dados.status === "Em andamento" ? "selected" : "") + '>Em andamento</option>' +
+        '<option value="Concluída" ' + (dados.status === "Concluída" ? "selected" : "") + '>Concluída</option>' +
+    '</select>' +
+'</div>' +
 
         <div class="detalhe-grupo">
             <span>Data da Solicitação</span>
@@ -255,6 +270,36 @@ function abrirModalSolicitacao(dados) {
     `;
 
     modal.style.display = "flex";
+
+}
+
+async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
+
+    try {
+
+        const referencia = doc(
+            db,
+            "solicitacoes",
+            idSolicitacao
+        );
+
+        await updateDoc(referencia, {
+            status: novoStatus
+        });
+
+        alert("Status atualizado com sucesso!");
+
+        document.getElementById("modalSolicitacao").style.display = "none";
+
+        carregarSolicitacoes();
+
+    } catch (erro) {
+
+        console.error("Erro ao atualizar status:", erro);
+
+        alert("Não foi possível atualizar o status.");
+
+    }
 
 }
 
