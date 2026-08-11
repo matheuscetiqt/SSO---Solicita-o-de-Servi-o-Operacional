@@ -147,9 +147,7 @@ function abrirModalSolicitacao(dados) {
 
     const detalhes = document.getElementById("detalhesSolicitacao");
 
-    detalhes.innerHTML = `
-
-        <div class="detalhe-grupo">
+            <div class="detalhe-grupo">
             <span>Protocolo</span>
             <strong>${dados.protocolo || "-"}</strong>
         </div>
@@ -184,7 +182,74 @@ function abrirModalSolicitacao(dados) {
             <strong>${formatarData(dados.dataCriacao)}</strong>
         </div>
 
-    `;
+        <hr>
+
+        <h3>📦 Dados da Solicitação de Compra</h3>
+
+        <div class="detalhe-grupo">
+            <span>Tipo de Solicitação</span>
+            <strong>${dados.tipoSC || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Nome do Professor / Especialista</span>
+            <strong>${dados.professor || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>SC anterior de Referência</span>
+            <strong>${dados.scAnterior || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>CPF ou CNPJ</span>
+            <strong>${dados.cpfCnpj || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Curso</span>
+            <strong>${dados.curso || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Atividade I</span>
+            <strong>${dados.atividade1 || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Carga Horária I</span>
+            <strong>${dados.carga1 || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Atividade II</span>
+            <strong>${dados.atividade2 || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Carga Horária II</span>
+            <strong>${dados.carga2 || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Unidade Curricular / Disciplina</span>
+            <strong>${dados.disciplina || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Datas das Aulas</span>
+            <strong>${dados.datasAulas || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Valor da Hora Aula</span>
+            <strong>${dados.valorHora ? "R$ " + dados.valorHora : "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Histórico de Contratação</span>
+            <strong>${dados.historico || "-"}</strong>
+        </div>
 
     modal.style.display = "flex";
 
