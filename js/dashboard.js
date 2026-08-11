@@ -99,6 +99,95 @@ if (dados.status === "Concluída") {
 
     });
 
+    document.querySelectorAll(".btn-visualizar").forEach((botao) => {
+
+    botao.addEventListener("click", async () => {
+
+        const idSolicitacao = botao.dataset.id;
+
+        console.log("Solicitação selecionada:", idSolicitacao);
+
+        try {
+
+            const referencia = doc(
+                db,
+                "solicitacoes",
+                idSolicitacao
+            );
+
+            const resultado = await getDoc(referencia);
+
+            if (!resultado.exists()) {
+
+                alert("Solicitação não encontrada.");
+                return;
+
+            }
+
+            const dados = resultado.data();
+
+            abrirModalSolicitacao(dados);
+
+        } catch (erro) {
+
+            console.error("Erro ao buscar solicitação:", erro);
+
+            alert("Não foi possível carregar a solicitação.");
+
+        }
+
+    });
+
+});
+
+}
+function abrirModalSolicitacao(dados) {
+
+    const modal = document.getElementById("modalSolicitacao");
+
+    const detalhes = document.getElementById("detalhesSolicitacao");
+
+    detalhes.innerHTML = `
+
+        <div class="detalhe-grupo">
+            <span>Protocolo</span>
+            <strong>${dados.protocolo || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Solicitante</span>
+            <strong>${dados.solicitante || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>E-mail</span>
+            <strong>${dados.email || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Analista Responsável</span>
+            <strong>${dados.analista || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Tipo de Serviço</span>
+            <strong>${dados.tipoServico || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Status</span>
+            <strong>${dados.status || "-"}</strong>
+        </div>
+
+        <div class="detalhe-grupo">
+            <span>Data da Solicitação</span>
+            <strong>${formatarData(dados.dataCriacao)}</strong>
+        </div>
+
+    `;
+
+    modal.style.display = "flex";
+
 }
 
 function formatarData(timestamp) {
@@ -114,3 +203,17 @@ function formatarData(timestamp) {
            });
 
 }
+document.getElementById("fecharModal").addEventListener("click", () => {
+
+    document.getElementById("modalSolicitacao").style.display = "none";
+
+});
+document.getElementById("modalSolicitacao").addEventListener("click", (evento) => {
+
+    if (evento.target.id === "modalSolicitacao") {
+
+        evento.currentTarget.style.display = "none";
+
+    }
+
+});
