@@ -127,7 +127,9 @@ document.getElementById("totalConcluidas").textContent = concluidas;
 
             const dados = resultado.data();
 
-            abrirModalSolicitacao(dados);
+dados.id = resultado.id;
+
+abrirModalSolicitacao(dados);
 
             const seletorStatus = document.getElementById("novoStatus");
 
@@ -159,7 +161,13 @@ function abrirModalSolicitacao(dados) {
 
     const detalhes = document.getElementById("detalhesSolicitacao");
 
+
+    // ==========================================
+    // DADOS GERAIS
+    // ==========================================
+
     detalhes.innerHTML = `
+
         <div class="detalhe-grupo">
             <span>Protocolo</span>
             <strong>${dados.protocolo || "-"}</strong>
@@ -185,238 +193,341 @@ function abrirModalSolicitacao(dados) {
             <strong>${dados.tipoServico || "-"}</strong>
         </div>
 
+
+        <!-- STATUS -->
+
         <div class="detalhe-grupo">
+
             <span>Status</span>
 
-            <select id="novoStatus" class="select-status">
-                <option value="Pendente" ${dados.status === "Pendente" ? "selected" : ""}>
+            <select
+                id="statusSolicitacao"
+                class="select-status"
+                data-id="${dados.id || ""}"
+            >
+
+                <option value="Pendente"
+                    ${dados.status === "Pendente" ? "selected" : ""}>
                     Pendente
                 </option>
 
-                <option value="Em andamento" ${dados.status === "Em andamento" ? "selected" : ""}>
+                <option value="Em andamento"
+                    ${dados.status === "Em andamento" ? "selected" : ""}>
                     Em andamento
                 </option>
 
-                <option value="Concluída" ${dados.status === "Concluída" ? "selected" : ""}>
+                <option value="Concluída"
+                    ${dados.status === "Concluída" ? "selected" : ""}>
                     Concluída
                 </option>
+
+                <option value="Cancelada"
+                    ${dados.status === "Cancelada" ? "selected" : ""}>
+                    Cancelada
+                </option>
+
+                <option value="Reprovada"
+                    ${dados.status === "Reprovada" ? "selected" : ""}>
+                    Reprovada
+                </option>
+
             </select>
+
         </div>
 
+
         <div class="detalhe-grupo">
+
             <span>Data da Solicitação</span>
-            <strong>${formatarData(dados.dataCriacao)}</strong>
-        </div>
 
-        <div style="grid-column: 1 / 3; margin-top: 15px;">
-            <h3>📦 Dados da Solicitação de Compra</h3>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Tipo de Solicitação</span>
-            <strong>${dados.tipoSC || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Professor / Especialista</span>
-            <strong>${dados.professor || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>SC anterior de Referência</span>
-            <strong>${dados.scAnterior || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>CPF ou CNPJ</span>
-            <strong>${dados.cpfCnpj || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Curso</span>
-            <strong>${dados.curso || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Atividade I</span>
-            <strong>${dados.atividade1 || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Carga Horária I</span>
-            <strong>${dados.carga1 || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Atividade II</span>
-            <strong>${dados.atividade2 || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Carga Horária II</span>
-            <strong>${dados.carga2 || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Unidade Curricular / Disciplina</span>
-            <strong>${dados.disciplina || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Datas das Aulas</span>
-            <strong>${dados.datasAulas || "-"}</strong>
-        </div>
-
-        <div class="detalhe-grupo">
-            <span>Valor da Hora Aula</span>
             <strong>
-                ${dados.valorHora ? "R$ " + dados.valorHora : "-"}
+                ${formatarData(dados.dataCriacao)}
             </strong>
+
         </div>
 
-        ${dados.tipoServico === "Abertura de Pré-nota" ? `
 
-    <div style="grid-column: 1 / 3; margin-top: 15px;">
-        <h3>📄 Dados da Abertura de Pré-nota</h3>
-    </div>
+        <!-- ====================================== -->
+        <!-- PRÉ-NOTA                              -->
+        <!-- ====================================== -->
 
-    <div class="detalhe-grupo">
-        <span>Valor</span>
-        <strong>
-            ${dados.valorPrenota
-                ? "R$ " + Number(dados.valorPrenota).toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2
-                })
-                : "-"
-            }
-        </strong>
-    </div>
+        ${
+            dados.tipoServico === "Abertura de Pré-nota"
 
-    <div class="detalhe-grupo">
-        <span>Banco</span>
-        <strong>${dados.bancoPrenota || "-"}</strong>
-    </div>
+            ? `
 
-    <div class="detalhe-grupo">
-        <span>Agência</span>
-        <strong>${dados.agenciaPrenota || "-"}</strong>
-    </div>
+                <div style="grid-column: 1 / 3; margin-top: 15px;">
+                    <h3>📄 Dados da Abertura de Pré-nota</h3>
+                </div>
 
-    <div class="detalhe-grupo">
-        <span>Conta Corrente</span>
-        <strong>${dados.contaCorrentePrenota || "-"}</strong>
-    </div>
 
-    <div class="detalhe-grupo" style="grid-column: 1 / 3;">
-        <span>Observações</span>
-        <strong>${dados.observacoesPrenota || "-"}</strong>
-    </div>
+                <div class="detalhe-grupo">
 
-` : ""}
+                    <span>Valor</span>
 
-${dados.tipoSC ? `
+                    <strong>
+                        ${
+                            dados.valorPrenota
+                                ? "R$ " +
+                                  Number(dados.valorPrenota)
+                                  .toLocaleString("pt-BR", {
+                                      minimumFractionDigits: 2
+                                  })
+                                : "-"
+                        }
+                    </strong>
 
-    <div style="grid-column: 1 / 3; margin-top: 15px;">
-        <h3>📦 Dados da Solicitação de Compra</h3>
-    </div>
+                </div>
 
-    <div class="detalhe-grupo">
-        <span>Tipo de Solicitação</span>
-        <strong>${dados.tipoSC || "-"}</strong>
-    </div>
 
-    <div class="detalhe-grupo">
-        <span>Professor / Especialista</span>
-        <strong>${dados.professor || "-"}</strong>
-    </div>
+                <div class="detalhe-grupo">
 
-    <div class="detalhe-grupo">
-        <span>SC anterior de Referência</span>
-        <strong>${dados.scAnterior || "-"}</strong>
-    </div>
+                    <span>Banco</span>
 
-    <div class="detalhe-grupo">
-        <span>CPF ou CNPJ</span>
-        <strong>${dados.cpfCnpj || "-"}</strong>
-    </div>
+                    <strong>
+                        ${dados.bancoPrenota || "-"}
+                    </strong>
 
-    <div class="detalhe-grupo">
-        <span>Curso</span>
-        <strong>${dados.curso || "-"}</strong>
-    </div>
+                </div>
 
-    <div class="detalhe-grupo">
-        <span>Atividade I</span>
-        <strong>${dados.atividade1 || "-"}</strong>
-    </div>
 
-    <div class="detalhe-grupo">
-        <span>Carga Horária I</span>
-        <strong>${dados.carga1 || "-"}</strong>
-    </div>
+                <div class="detalhe-grupo">
 
-    <div class="detalhe-grupo">
-        <span>Atividade II</span>
-        <strong>${dados.atividade2 || "-"}</strong>
-    </div>
+                    <span>Agência</span>
 
-    <div class="detalhe-grupo">
-        <span>Carga Horária II</span>
-        <strong>${dados.carga2 || "-"}</strong>
-    </div>
+                    <strong>
+                        ${dados.agenciaPrenota || "-"}
+                    </strong>
 
-    <div class="detalhe-grupo">
-        <span>Unidade Curricular / Disciplina</span>
-        <strong>${dados.disciplina || "-"}</strong>
-    </div>
+                </div>
 
-    <div class="detalhe-grupo">
-        <span>Datas das Aulas</span>
-        <strong>${dados.datasAulas || "-"}</strong>
-    </div>
 
-    <div class="detalhe-grupo">
-        <span>Valor da Hora Aula</span>
-        <strong>${dados.valorHora ? "R$ " + dados.valorHora : "-"}</strong>
-    </div>
+                <div class="detalhe-grupo">
 
-    <div class="detalhe-grupo">
-        <span>Histórico de Contratação</span>
-        <strong>${dados.historico || "-"}</strong>
-    </div>
+                    <span>Conta Corrente</span>
 
-` : ""}
+                    <strong>
+                        ${dados.contaCorrentePrenota || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="detalhe-grupo"
+                    style="grid-column: 1 / 3;"
+                >
+
+                    <span>Observações</span>
+
+                    <strong>
+                        ${dados.observacoesPrenota || "-"}
+                    </strong>
+
+                </div>
+
+            `
+
+            : ""
+        }
+
+
+        <!-- ====================================== -->
+        <!-- SOLICITAÇÃO DE COMPRA                  -->
+        <!-- ====================================== -->
+
+        ${
+            dados.tipoServico === "Solicitação de Compra"
+
+            ? `
+
+                <div style="grid-column: 1 / 3; margin-top: 15px;">
+                    <h3>📦 Dados da Solicitação de Compra</h3>
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Tipo de Solicitação</span>
+
+                    <strong>
+                        ${dados.tipoSC || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Professor / Especialista</span>
+
+                    <strong>
+                        ${dados.professor || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>SC anterior de Referência</span>
+
+                    <strong>
+                        ${dados.scAnterior || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>CPF ou CNPJ</span>
+
+                    <strong>
+                        ${dados.cpfCnpj || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Curso</span>
+
+                    <strong>
+                        ${dados.curso || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Atividade I</span>
+
+                    <strong>
+                        ${dados.atividade1 || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Carga Horária I</span>
+
+                    <strong>
+                        ${dados.carga1 || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Atividade II</span>
+
+                    <strong>
+                        ${dados.atividade2 || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Carga Horária II</span>
+
+                    <strong>
+                        ${dados.carga2 || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Unidade Curricular / Disciplina</span>
+
+                    <strong>
+                        ${dados.disciplina || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Datas das Aulas</span>
+
+                    <strong>
+                        ${dados.datasAulas || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Valor da Hora Aula</span>
+
+                    <strong>
+                        ${
+                            dados.valorHora
+                                ? "R$ " + dados.valorHora
+                                : "-"
+                        }
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Histórico de Contratação</span>
+
+                    <strong>
+                        ${dados.historico || "-"}
+                    </strong>
+
+                </div>
+
+            `
+
+            : ""
+        }
+
     `;
+
+
+    // ==========================================
+    // MOSTRA O MODAL
+    // ==========================================
 
     modal.style.display = "flex";
 
-}
 
-async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
+    // ==========================================
+    // ALTERAÇÃO DE STATUS
+    // ==========================================
 
-    try {
+    const selectStatus =
+        document.getElementById("statusSolicitacao");
 
-        const referencia = doc(
-            db,
-            "solicitacoes",
-            idSolicitacao
-        );
 
-        await updateDoc(referencia, {
-            status: novoStatus
+    if (selectStatus) {
+
+        selectStatus.addEventListener("change", () => {
+
+            const novoStatus =
+                selectStatus.value;
+
+            alterarStatusSolicitacao(
+                dados.id,
+                novoStatus
+            );
+
         });
-
-        alert("Status atualizado com sucesso!");
-
-        document.getElementById("modalSolicitacao").style.display = "none";
-
-        carregarSolicitacoes();
-
-    } catch (erro) {
-
-        console.error("Erro ao atualizar status:", erro);
-
-        alert("Não foi possível atualizar o status.");
 
     }
 
