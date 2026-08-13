@@ -156,80 +156,287 @@ formulario.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const nome = document.getElementById("nomeUsuario").textContent;
-    const email = document.getElementById("emailUsuario").textContent;
-    const analista = document.getElementById("analistaResponsavel").textContent;
+    const nome =
+        document.getElementById("nomeUsuario").textContent.trim();
+
+    const email =
+        document.getElementById("emailUsuario").textContent.trim();
+
+    const analista =
+        document.getElementById("analistaResponsavel").textContent.trim();
+
+
+    // ==========================================
+    // IDENTIFICA O TIPO DE SERVIÇO
+    // ==========================================
 
     let tipoServico = "";
 
-    const cardSelecionado = document.querySelector(".card-servico.active");
+    const cardSelecionado =
+        document.querySelector(".card-servico.active");
 
     if (cardSelecionado) {
 
-        tipoServico = cardSelecionado.querySelector("h3").textContent;
+        tipoServico =
+            cardSelecionado.querySelector("h3").textContent.trim();
 
     }
 
-        // ==========================================
+
+    // ==========================================
     // DADOS DA PRÉ-NOTA
     // ==========================================
 
-    let dadosPrenota = {};
+    let dadosPrenota = {
+
+        valorPrenota: "",
+        bancoPrenota: "",
+        agenciaPrenota: "",
+        contaCorrentePrenota: "",
+        observacoesPrenota: ""
+
+    };
+
 
     if (tipoServico === "Abertura de Pré-nota") {
 
         dadosPrenota = {
 
             valorPrenota:
-                document.getElementById("valorPrenota").value,
+                document.getElementById("valorPrenota")?.value || "",
 
             bancoPrenota:
-                document.getElementById("bancoPrenota").value,
+                document.getElementById("bancoPrenota")?.value || "",
 
             agenciaPrenota:
-                document.getElementById("agenciaPrenota").value,
+                document.getElementById("agenciaPrenota")?.value || "",
 
             contaCorrentePrenota:
-                document.getElementById("contaCorrentePrenota").value,
+                document.getElementById("contaCorrentePrenota")?.value || "",
 
             observacoesPrenota:
-                document.getElementById("observacoesPrenota").value
+                document.getElementById("observacoesPrenota")?.value || ""
 
         };
 
     }
 
+
+    // ==========================================
+    // DADOS DA SOLICITAÇÃO DE COMPRA
+    // ==========================================
+
+    const dadosSC = {
+
+        tipoSC:
+            document.querySelector(
+                'input[name="tipoSC"]:checked'
+            )?.value || "",
+
+        professor:
+            document.getElementById("professor")?.value || "",
+
+        scAnterior:
+            document.getElementById("scAnterior")?.value || "",
+
+        cpfCnpj:
+            document.querySelector(
+                'input[name="cpfcnpj"]:checked'
+            )?.value || "",
+
+        curso:
+            document.getElementById("curso")?.value || "",
+
+        atividade1:
+            document.getElementById("atividade1")?.value || "",
+
+        carga1:
+            document.getElementById("carga1")?.value || "",
+
+        atividade2:
+            document.getElementById("atividade2")?.value || "",
+
+        carga2:
+            document.getElementById("carga2")?.value || "",
+
+        disciplina:
+            document.getElementById("disciplina")?.value || "",
+
+        datasAulas:
+            document.getElementById("datasAulas")?.value || "",
+
+        valorHora:
+            document.getElementById("valorHora")?.value || "",
+
+        historico:
+            document.getElementById("historico")?.value || ""
+
+    };
+
+
+    // ==========================================
+    // SALVAR SOLICITAÇÃO
+    // ==========================================
+
     try {
 
-        const protocolo = "SSO-" + Date.now();
+        const protocolo =
+            "SSO-" + Date.now();
 
-       await addDoc(collection(db, "solicitacoes"), {
 
-    protocolo: protocolo,
+        await addDoc(
+            collection(db, "solicitacoes"),
+            {
 
-    solicitante: nome,
+                // ------------------------------
+                // DADOS GERAIS
+                // ------------------------------
 
-    email: email,
+                protocolo: protocolo,
 
-    analista: analista,
+                solicitante: nome,
 
-    tipoServico: tipoServico,
+                email: email,
 
-    status: "Pendente",
+                analista: analista,
 
-    dataCriacao: serverTimestamp(),
+                tipoServico: tipoServico,
 
-    // Dados específicos da Pré-nota
+                status: "Pendente",
 
-    valorPrenota: dadosPrenota.valorPrenota || "",
+                dataCriacao: serverTimestamp(),
 
-    bancoPrenota: dadosPrenota.bancoPrenota || "",
 
-    agenciaPrenota: dadosPrenota.agenciaPrenota || "",
+                // ------------------------------
+                // DADOS DA PRÉ-NOTA
+                // ------------------------------
 
-    contaCorrentePrenota: dadosPrenota.contaCorrentePrenota || "",
+                valorPrenota:
+                    dadosPrenota.valorPrenota,
 
-    observacoesPrenota: dadosPrenota.observacoesPrenota || ""
+                bancoPrenota:
+                    dadosPrenota.bancoPrenota,
+
+                agenciaPrenota:
+                    dadosPrenota.agenciaPrenota,
+
+                contaCorrentePrenota:
+                    dadosPrenota.contaCorrentePrenota,
+
+                observacoesPrenota:
+                    dadosPrenota.observacoesPrenota,
+
+
+                // ------------------------------
+                // DADOS DA SOLICITAÇÃO DE COMPRA
+                // ------------------------------
+
+                tipoSC:
+                    dadosSC.tipoSC,
+
+                professor:
+                    dadosSC.professor,
+
+                scAnterior:
+                    dadosSC.scAnterior,
+
+                cpfCnpj:
+                    dadosSC.cpfCnpj,
+
+                curso:
+                    dadosSC.curso,
+
+                atividade1:
+                    dadosSC.atividade1,
+
+                carga1:
+                    dadosSC.carga1,
+
+                atividade2:
+                    dadosSC.atividade2,
+
+                carga2:
+                    dadosSC.carga2,
+
+                disciplina:
+                    dadosSC.disciplina,
+
+                datasAulas:
+                    dadosSC.datasAulas,
+
+                valorHora:
+                    dadosSC.valorHora,
+
+                historico:
+                    dadosSC.historico
+
+            }
+        );
+
+
+        alert("Solicitação enviada com sucesso!");
+
+
+        // Limpa o formulário
+
+        formulario.reset();
+
+
+        // Remove seleção dos cards
+
+        document
+            .querySelectorAll(".card-servico")
+            .forEach(card => {
+
+                card.classList.remove("active");
+
+            });
+
+
+        // Esconde os formulários
+
+        const blocoSC =
+            document.getElementById("blocoSC");
+
+        const blocoPrenota =
+            document.getElementById("blocoPrenota");
+
+        const formProduto =
+            document.getElementById("formProduto");
+
+        const formServico =
+            document.getElementById("formServico");
+
+
+        if (blocoSC) {
+            blocoSC.style.display = "none";
+        }
+
+        if (blocoPrenota) {
+            blocoPrenota.style.display = "none";
+        }
+
+        if (formProduto) {
+            formProduto.style.display = "none";
+        }
+
+        if (formServico) {
+            formServico.style.display = "none";
+        }
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao salvar a solicitação:",
+            erro
+        );
+
+        alert(
+            "Erro ao salvar a solicitação."
+        );
+
+    }
 
 });
 
