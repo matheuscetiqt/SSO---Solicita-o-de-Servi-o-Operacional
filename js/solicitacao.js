@@ -54,57 +54,101 @@ async function carregarUsuario() {
 function configurarCards() {
 
     const cards = document.querySelectorAll(".card-servico");
+
     const blocoSC = document.getElementById("blocoSC");
+    const blocoPrenota = document.getElementById("blocoPrenota");
+
+    const formProduto = document.getElementById("formProduto");
+    const formServico = document.getElementById("formServico");
+
 
     cards.forEach((card) => {
 
         card.addEventListener("click", () => {
 
+            // Remove a seleção dos outros cards
             cards.forEach(c => c.classList.remove("active"));
 
+            // Marca o card selecionado
             card.classList.add("active");
 
+
             const titulo = card.querySelector("h3").textContent.trim();
+
+
+            // ==========================================
+            // ESCONDE TODOS OS BLOCOS
+            // ==========================================
+
+            blocoSC.style.display = "none";
+
+            blocoPrenota.style.display = "none";
+
+            formProduto.style.display = "none";
+
+            formServico.style.display = "none";
+
+
+            // ==========================================
+            // SOLICITAÇÃO DE COMPRA
+            // ==========================================
 
             if (titulo === "Solicitação de Compra") {
 
                 blocoSC.style.display = "block";
 
-            } else {
+            }
 
-                blocoSC.style.display = "none";
+
+            // ==========================================
+            // ABERTURA DE PRÉ-NOTA
+            // ==========================================
+
+            else if (titulo === "Abertura de Pré-nota") {
+
+                blocoPrenota.style.display = "block";
 
             }
 
         });
 
     });
-const radiosSC = document.querySelectorAll('input[name="tipoSC"]');
 
-const formProduto = document.getElementById("formProduto");
-const formServico = document.getElementById("formServico");
 
-radiosSC.forEach((radio) => {
+    // ==========================================
+    // PRODUTO / SERVIÇO DA SC
+    // ==========================================
 
-    radio.addEventListener("change", () => {
+    const radiosSC = document.querySelectorAll(
+        'input[name="tipoSC"]'
+    );
 
-        if (radio.value === "Produto" && radio.checked) {
 
-            formProduto.style.display = "block";
-            formServico.style.display = "none";
+    radiosSC.forEach((radio) => {
 
-        }
+        radio.addEventListener("change", () => {
 
-        if (radio.value === "Servico" && radio.checked) {
+            if (radio.value === "Produto" && radio.checked) {
 
-            formProduto.style.display = "none";
-            formServico.style.display = "block";
+                formProduto.style.display = "block";
 
-        }
+                formServico.style.display = "none";
+
+            }
+
+
+            if (radio.value === "Servico" && radio.checked) {
+
+                formProduto.style.display = "none";
+
+                formServico.style.display = "block";
+
+            }
+
+        });
 
     });
 
-});
 }
 const formulario = document.querySelector("form");
 
