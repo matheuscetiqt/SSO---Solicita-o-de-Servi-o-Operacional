@@ -131,17 +131,6 @@ dados.id = resultado.id;
 
 abrirModalSolicitacao(dados);
 
-            const seletorStatus = document.getElementById("novoStatus");
-
-seletorStatus.addEventListener("change", () => {
-
-    alterarStatusSolicitacao(
-        idSolicitacao,
-        seletorStatus.value
-    );
-
-});
-
         } catch (erro) {
 
             console.error("Erro ao buscar solicitação:", erro);
