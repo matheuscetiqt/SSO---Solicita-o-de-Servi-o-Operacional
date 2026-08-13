@@ -522,6 +522,45 @@ function abrirModalSolicitacao(dados) {
 
 }
 
+async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
+
+    try {
+
+        const referencia = doc(
+            db,
+            "solicitacoes",
+            idSolicitacao
+        );
+
+        await updateDoc(referencia, {
+            status: novoStatus
+        });
+
+        alert("Status atualizado com sucesso!");
+
+        // Fecha o modal
+        document.getElementById(
+            "modalSolicitacao"
+        ).style.display = "none";
+
+        // Recarrega o Dashboard
+        await carregarSolicitacoes();
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao atualizar status:",
+            erro
+        );
+
+        alert(
+            "Não foi possível atualizar o status."
+        );
+
+    }
+
+}
+
 function formatarData(timestamp) {
 
     if (!timestamp) return "-";
