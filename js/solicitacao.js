@@ -170,6 +170,35 @@ formulario.addEventListener("submit", async (e) => {
 
     }
 
+        // ==========================================
+    // DADOS DA PRÉ-NOTA
+    // ==========================================
+
+    let dadosPrenota = {};
+
+    if (tipoServico === "Abertura de Pré-nota") {
+
+        dadosPrenota = {
+
+            valorPrenota:
+                document.getElementById("valorPrenota").value,
+
+            bancoPrenota:
+                document.getElementById("bancoPrenota").value,
+
+            agenciaPrenota:
+                document.getElementById("agenciaPrenota").value,
+
+            contaCorrentePrenota:
+                document.getElementById("contaCorrentePrenota").value,
+
+            observacoesPrenota:
+                document.getElementById("observacoesPrenota").value
+
+        };
+
+    }
+
     try {
 
         const protocolo = "SSO-" + Date.now();
@@ -189,6 +218,20 @@ formulario.addEventListener("submit", async (e) => {
     status: "Pendente",
 
     dataCriacao: serverTimestamp(),
+
+    // Dados específicos da Pré-nota
+
+    valorPrenota: dadosPrenota.valorPrenota || "",
+
+    bancoPrenota: dadosPrenota.bancoPrenota || "",
+
+    agenciaPrenota: dadosPrenota.agenciaPrenota || "",
+
+    contaCorrentePrenota: dadosPrenota.contaCorrentePrenota || "",
+
+    observacoesPrenota: dadosPrenota.observacoesPrenota || ""
+
+});
 
     // DADOS DA SOLICITAÇÃO DE COMPRA - SERVIÇO
 
