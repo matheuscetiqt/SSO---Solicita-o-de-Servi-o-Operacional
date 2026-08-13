@@ -502,7 +502,118 @@ Carregando...
     </div>
 
 </div>
-      
+
+
+<!-- BLOCO PRÉ-NOTA -->
+
+<div class="box" id="blocoPrenota" style="display:none;">
+
+    <h2>📄 Dados da Abertura de Pré-nota</h2>
+
+    <div id="formPrenota" style="margin-top:35px;">
+
+        <div class="grupo">
+
+            <label>
+                Valor <span style="color:red;">*</span>
+            </label>
+
+            <input
+                type="number"
+                id="valorPrenota"
+                step="0.01"
+                min="0"
+                placeholder="Informe o valor"
+            >
+
+        </div>
+
+
+        <div class="grupo">
+
+            <label>
+                Banco <span style="color:red;">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="bancoPrenota"
+                placeholder="Informe o banco"
+            >
+
+        </div>
+
+
+        <div class="grupo">
+
+            <label>
+                Agência <span style="color:red;">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="agenciaPrenota"
+                placeholder="Informe a agência"
+            >
+
+        </div>
+
+
+        <div class="grupo">
+
+            <label>
+                Conta Corrente <span style="color:red;">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="contaCorrentePrenota"
+                placeholder="Informe a conta corrente"
+            >
+
+        </div>
+
+
+        <div class="grupo">
+
+            <label>
+                Anexar documentos obrigatórios para abertura
+                <span style="color:red;">*</span>
+            </label>
+
+            <input
+                type="file"
+                id="documentosPrenota"
+                multiple
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.mp3"
+            >
+
+            <small>
+                Anexe os documentos necessários para a abertura da Pré-nota.
+            </small>
+
+        </div>
+
+
+        <div class="grupo">
+
+            <label>
+                Observações (Se necessário)
+            </label>
+
+            <textarea
+                id="observacoesPrenota"
+                rows="5"
+                placeholder="Informe alguma observação, caso necessário."
+            ></textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <div class="enviar">
 
 <button type="submit">
