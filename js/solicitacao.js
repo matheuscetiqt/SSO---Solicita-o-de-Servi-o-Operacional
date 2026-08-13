@@ -57,6 +57,8 @@ function configurarCards() {
 
     const blocoSC = document.getElementById("blocoSC");
     const blocoPrenota = document.getElementById("blocoPrenota");
+    const blocoPedidoVenda =
+    document.getElementById("blocoPedidoVenda");
 
     const formProduto = document.getElementById("formProduto");
     const formServico = document.getElementById("formServico");
@@ -84,6 +86,8 @@ function configurarCards() {
 
             blocoPrenota.style.display = "none";
 
+            blocoPedidoVenda.style.display = "none";
+
             formProduto.style.display = "none";
 
             formServico.style.display = "none";
@@ -109,6 +113,12 @@ function configurarCards() {
                 blocoPrenota.style.display = "block";
 
             }
+
+            else if (titulo === "Pedido de Venda") {
+
+    blocoPedidoVenda.style.display = "block";
+
+}
 
         });
 
