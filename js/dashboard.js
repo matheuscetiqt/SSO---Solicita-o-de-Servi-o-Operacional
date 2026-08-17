@@ -616,7 +616,6 @@ function abrirModalSolicitacao(dados) {
 
             : ""
         }
-        }
 
     `;
 
