@@ -59,6 +59,7 @@ function configurarCards() {
     const blocoPrenota = document.getElementById("blocoPrenota");
     const blocoPedidoVenda = document.getElementById("blocoPedidoVenda");
     const blocoDocumentoEntrada = document.getElementById("blocoDocumentoEntrada");
+    const blocoOutro = document.getElementById("blocoOutro");
 
     const formProduto = document.getElementById("formProduto");
     const formServico = document.getElementById("formServico");
@@ -89,6 +90,8 @@ function configurarCards() {
             blocoPedidoVenda.style.display = "none";
 
             blocoDocumentoEntrada.style.display = "none";
+
+            blocoOutro.style.display = "none";
 
             formProduto.style.display = "none";
 
@@ -125,6 +128,12 @@ function configurarCards() {
             else if (titulo === "Documento de Entrada") {
 
     blocoDocumentoEntrada.style.display = "block";
+
+}
+
+            else if (titulo === "Outro") {
+
+    blocoOutro.style.display = "block";
 
 }
 
