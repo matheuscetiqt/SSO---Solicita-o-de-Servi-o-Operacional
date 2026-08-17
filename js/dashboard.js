@@ -481,11 +481,12 @@ function abrirModalSolicitacao(dados) {
 
                 </div>
 
-            `
+                       `
 
             : ""
+        }
 
-                    ${
+        ${
             dados.tipoServico === "Pedido de Venda"
 
             ? `
