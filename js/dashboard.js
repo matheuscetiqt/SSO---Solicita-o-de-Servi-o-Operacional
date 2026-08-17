@@ -484,9 +484,143 @@ function abrirModalSolicitacao(dados) {
             `
 
             : ""
+
+                    ${
+            dados.tipoServico === "Pedido de Venda"
+
+            ? `
+
+                <div style="grid-column: 1 / 3; margin-top: 15px;">
+                    <h3>💰 Dados do Pedido de Venda</h3>
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número da Nota Fiscal SGF</span>
+
+                    <strong>
+                        ${dados.numeroNotaFiscalSGF || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Valor do Pedido de Venda</span>
+
+                    <strong>
+                        ${
+                            dados.valorPedidoVenda
+                                ? "R$ " +
+                                  Number(dados.valorPedidoVenda)
+                                  .toLocaleString("pt-BR", {
+                                      minimumFractionDigits: 2
+                                  })
+                                : "-"
+                        }
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Favorecido</span>
+
+                    <strong>
+                        ${dados.favorecido || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Previsão de Repasse</span>
+
+                    <strong>
+                        ${dados.previsaoRepasse || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número do UO</span>
+
+                    <strong>
+                        ${dados.numeroUO || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número do CR</span>
+
+                    <strong>
+                        ${dados.numeroCR || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número do Produto</span>
+
+                    <strong>
+                        ${dados.numeroProduto || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número do Cliente</span>
+
+                    <strong>
+                        ${dados.numeroCliente || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número da Loja</span>
+
+                    <strong>
+                        ${dados.numeroLoja || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número da Natureza</span>
+
+                    <strong>
+                        ${dados.numeroNatureza || "-"}
+                    </strong>
+
+                </div>
+
+            `
+
+            : ""
+        }
         }
 
     `;
+
+    
 
 
     // ==========================================
