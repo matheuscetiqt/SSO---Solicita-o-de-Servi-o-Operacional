@@ -231,6 +231,66 @@ formulario.addEventListener("submit", async (e) => {
 
     }
 
+        // ==========================================
+    // DADOS DO PEDIDO DE VENDA
+    // ==========================================
+
+    let dadosPedidoVenda = {
+
+        numeroNotaFiscalSGF: "",
+        valorPedidoVenda: "",
+        favorecido: "",
+        previsaoRepasse: "",
+        numeroUO: "",
+        numeroCR: "",
+        numeroProduto: "",
+        numeroCliente: "",
+        numeroLoja: "",
+        numeroNatureza: ""
+
+    };
+
+
+    if (tipoServico === "Pedido de Venda") {
+
+        dadosPedidoVenda = {
+
+            numeroNotaFiscalSGF:
+                document.getElementById("numeroNotaFiscalSGF")?.value || "",
+
+            valorPedidoVenda:
+                document.getElementById("valorPedidoVenda")?.value || "",
+
+            favorecido:
+                document.getElementById("favorecido")?.value || "",
+
+            previsaoRepasse:
+                document.getElementById("previsaoRepasse")?.value || "",
+
+            numeroUO:
+                document.getElementById("numeroUO")?.value || "",
+
+            numeroCR:
+                document.getElementById("numeroCR")?.value || "",
+
+            numeroProduto:
+                document.getElementById("numeroProduto")?.value || "",
+
+            numeroCliente:
+                document.getElementById("numeroCliente")?.value || "",
+
+            numeroLoja:
+                document.getElementById("numeroLoja")?.value || "",
+
+            numeroNatureza:
+                document.getElementById("numeroNatureza")?.value || ""
+
+        };
+
+    }
+
+
+
 
     // ==========================================
     // DADOS DA SOLICITAÇÃO DE COMPRA
@@ -377,8 +437,43 @@ formulario.addEventListener("submit", async (e) => {
                 valorHora:
                     dadosSC.valorHora,
 
-                historico:
-                    dadosSC.historico
+                                historico:
+                    dadosSC.historico,
+
+
+                // ------------------------------
+                // DADOS DO PEDIDO DE VENDA
+                // ------------------------------
+
+                numeroNotaFiscalSGF:
+                    dadosPedidoVenda.numeroNotaFiscalSGF,
+
+                valorPedidoVenda:
+                    dadosPedidoVenda.valorPedidoVenda,
+
+                favorecido:
+                    dadosPedidoVenda.favorecido,
+
+                previsaoRepasse:
+                    dadosPedidoVenda.previsaoRepasse,
+
+                numeroUO:
+                    dadosPedidoVenda.numeroUO,
+
+                numeroCR:
+                    dadosPedidoVenda.numeroCR,
+
+                numeroProduto:
+                    dadosPedidoVenda.numeroProduto,
+
+                numeroCliente:
+                    dadosPedidoVenda.numeroCliente,
+
+                numeroLoja:
+                    dadosPedidoVenda.numeroLoja,
+
+                numeroNatureza:
+                    dadosPedidoVenda.numeroNatureza
 
             }
         );
@@ -411,6 +506,9 @@ formulario.addEventListener("submit", async (e) => {
         const blocoPrenota =
             document.getElementById("blocoPrenota");
 
+                const blocoPedidoVenda =
+            document.getElementById("blocoPedidoVenda");
+
         const formProduto =
             document.getElementById("formProduto");
 
@@ -424,6 +522,10 @@ formulario.addEventListener("submit", async (e) => {
 
         if (blocoPrenota) {
             blocoPrenota.style.display = "none";
+        }
+
+                if (blocoPedidoVenda) {
+            blocoPedidoVenda.style.display = "none";
         }
 
         if (formProduto) {
