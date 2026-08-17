@@ -618,6 +618,61 @@ function abrirModalSolicitacao(dados) {
             : ""
         }
 
+                ${
+            dados.tipoServico === "Documento de Entrada"
+
+            ? `
+
+                <div style="grid-column: 1 / 3; margin-top: 15px;">
+                    <h3>📦 Dados do Documento de Entrada</h3>
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Número do Pedido</span>
+
+                    <strong>
+                        ${dados.numeroPedidoEntrada || "-"}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Valor</span>
+
+                    <strong>
+                        ${
+                            dados.valorEntrada
+                                ? "R$ " +
+                                  Number(dados.valorEntrada)
+                                  .toLocaleString("pt-BR", {
+                                      minimumFractionDigits: 2
+                                  })
+                                : "-"
+                        }
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-grupo">
+
+                    <span>Documento</span>
+
+                    <strong>
+                        ${dados.documentosEntrada || "-"}
+                    </strong>
+
+                </div>
+
+            `
+
+            : ""
+        }
+
     `;
 
     
