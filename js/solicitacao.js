@@ -339,6 +339,27 @@ if (tipoServico === "Documento de Entrada") {
 }
 
     // ==========================================
+// DADOS DE OUTRO SERVIÇO
+// ==========================================
+
+let dadosOutro = {
+
+    descricaoOutro: ""
+
+};
+
+if (tipoServico === "Outro") {
+
+    dadosOutro = {
+
+        descricaoOutro:
+            document.getElementById("descricaoOutro")?.value || ""
+
+    };
+
+}
+
+    // ==========================================
     // DADOS DA SOLICITAÇÃO DE COMPRA
     // ==========================================
 
@@ -532,7 +553,15 @@ valorEntrada:
     dadosDocumentoEntrada.valorEntrada,
 
 documentosEntrada:
-    dadosDocumentoEntrada.documentosEntrada
+    dadosDocumentoEntrada.documentosEntrada,
+
+
+// ------------------------------
+// DADOS DE OUTRO SERVIÇO
+// ------------------------------
+
+descricaoOutro:
+    dadosOutro.descricaoOutro
 
             }
         );
