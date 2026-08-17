@@ -673,6 +673,34 @@ function abrirModalSolicitacao(dados) {
             : ""
         }
 
+                ${
+            dados.tipoServico === "Outro"
+
+            ? `
+
+                <div style="grid-column: 1 / 3; margin-top: 15px;">
+                    <h3>✏️ Dados de Outros Serviços</h3>
+                </div>
+
+
+                <div
+                    class="detalhe-grupo"
+                    style="grid-column: 1 / 3;"
+                >
+
+                    <span>Serviço solicitado</span>
+
+                    <strong>
+                        ${dados.descricaoOutro || "-"}
+                    </strong>
+
+                </div>
+
+            `
+
+            : ""
+        }
+
     `;
 
     
