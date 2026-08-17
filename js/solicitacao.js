@@ -298,7 +298,36 @@ formulario.addEventListener("submit", async (e) => {
     }
 
 
+// ==========================================
+// DADOS DO DOCUMENTO DE ENTRADA
+// ==========================================
 
+let dadosDocumentoEntrada = {
+
+    numeroPedidoEntrada: "",
+    valorEntrada: "",
+    documentosEntrada: ""
+
+};
+
+if (tipoServico === "Documento de Entrada") {
+
+    dadosDocumentoEntrada = {
+
+        numeroPedidoEntrada:
+            document.getElementById("numeroPedidoEntrada")?.value || "",
+
+        valorEntrada:
+            document.getElementById("valorEntrada")?.value || "",
+
+        documentosEntrada:
+            document.getElementById("documentosEntrada")?.files?.length
+                ? document.getElementById("documentosEntrada").files[0].name
+                : ""
+
+    };
+
+}
 
     // ==========================================
     // DADOS DA SOLICITAÇÃO DE COMPRA
@@ -481,7 +510,20 @@ formulario.addEventListener("submit", async (e) => {
                     dadosPedidoVenda.numeroLoja,
 
                 numeroNatureza:
-                    dadosPedidoVenda.numeroNatureza
+                    dadosPedidoVenda.numeroNatureza,
+
+                // ------------------------------
+// DADOS DO DOCUMENTO DE ENTRADA
+// ------------------------------
+
+numeroPedidoEntrada:
+    dadosDocumentoEntrada.numeroPedidoEntrada,
+
+valorEntrada:
+    dadosDocumentoEntrada.valorEntrada,
+
+documentosEntrada:
+    dadosDocumentoEntrada.documentosEntrada
 
             }
         );
