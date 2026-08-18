@@ -6,6 +6,8 @@ import {
     collection,
     getDocs,
     addDoc,
+    updateDoc,
+    doc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -233,21 +235,19 @@ async function enviarAnexosParaSharePoint(protocolo) {
 
     });
 
-
-    // Se não houver anexo, não faz nada
-
+    // Se não houver anexo, retorna lista vazia
     if (arquivos.length === 0) {
 
-        return;
+        return [];
 
     }
 
+    const linksArquivos = [];
 
     for (const arquivo of arquivos) {
 
         const arquivoBase64 =
             await arquivoParaBase64(arquivo);
-
 
         const resposta = await fetch(
             URL_POWER_AUTOMATE,
@@ -271,7 +271,6 @@ async function enviarAnexosParaSharePoint(protocolo) {
             }
         );
 
-
         if (!resposta.ok) {
 
             throw new Error(
@@ -281,7 +280,36 @@ async function enviarAnexosParaSharePoint(protocolo) {
 
         }
 
+        // ==========================================
+        // PEGA A RESPOSTA DO POWER AUTOMATE
+        // ==========================================
+
+        const resultado = await resposta.json();
+
+        console.log(
+            "Resposta do Power Automate:",
+            resultado
+        );
+
+        // ==========================================
+        // GUARDA O LINK DO SHAREPOINT
+        // ==========================================
+
+        if (resultado.arquivoUrl) {
+
+            linksArquivos.push({
+
+                nome: resultado.arquivoNome || arquivo.name,
+
+                url: resultado.arquivoUrl
+
+            });
+
+        }
+
     }
+
+    return linksArquivos;
 
 }
 const formulario = document.querySelector("form");
@@ -527,9 +555,9 @@ if (tipoServico === "Outro") {
        const protocolo =
     "SSO-" + Date.now();
 
-await addDoc(
+const referenciaSolicitacao = await addDoc(
     collection(db, "solicitacoes"),
-            {
+    {
 
                 // ------------------------------
                 // DADOS GERAIS
@@ -676,22 +704,43 @@ descricaoOutro:
         // ENVIA ANEXOS PARA O SHAREPOINT
         // ==========================================
 
-        try {
+       try {
 
-            await enviarAnexosParaSharePoint(protocolo);
+    const linksArquivos =
+        await enviarAnexosParaSharePoint(protocolo);
 
-        } catch (erroAnexo) {
+    // ==========================================
+    // SALVA OS LINKS DOS ARQUIVOS NO FIREBASE
+    // ==========================================
 
-            console.error(
-                "Erro ao enviar anexo para o SharePoint:",
-                erroAnexo
-            );
+    if (linksArquivos.length > 0) {
 
-            alert(
-                "A solicitação foi registrada, mas houve um problema ao enviar o anexo."
-            );
+        await updateDoc(
+            doc(db, "solicitacoes", referenciaSolicitacao.id),
+            {
+                anexos: linksArquivos
+            }
+        );
 
-        }
+        console.log(
+            "Links dos anexos salvos no Firebase:",
+            linksArquivos
+        );
+
+    }
+
+} catch (erroAnexo) {
+
+    console.error(
+        "Erro ao enviar anexo para o SharePoint:",
+        erroAnexo
+    );
+
+    alert(
+        "A solicitação foi registrada, mas houve um problema ao enviar o anexo."
+    );
+
+}
 
 
         alert("Solicitação enviada com sucesso!");
