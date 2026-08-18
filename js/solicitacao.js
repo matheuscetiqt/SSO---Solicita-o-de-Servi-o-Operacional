@@ -178,6 +178,112 @@ function configurarCards() {
     });
 
 }
+
+// ==========================================
+// ENVIA ANEXO PARA O POWER AUTOMATE
+// ==========================================
+
+const URL_POWER_AUTOMATE =
+    "https://defaultcd8472815bbf4642aa28142c41b273.a0.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/23/workflows/f2039ec44ee14bd1b07de849460464bc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_Jo6WwgmiyswYiPkkhWMRdljxwnfrEE2aO5yT51OmjM";
+
+
+function arquivoParaBase64(arquivo) {
+
+    return new Promise((resolve, reject) => {
+
+        const leitor = new FileReader();
+
+        leitor.onload = () => {
+
+            const resultado = leitor.result;
+
+            const base64 = resultado.split(",")[1];
+
+            resolve(base64);
+
+        };
+
+        leitor.onerror = reject;
+
+        leitor.readAsDataURL(arquivo);
+
+    });
+
+}
+
+
+async function enviarAnexosParaSharePoint(protocolo) {
+
+    const camposArquivo =
+        document.querySelectorAll('input[type="file"]');
+
+    const arquivos = [];
+
+    camposArquivo.forEach((campo) => {
+
+        if (campo.files && campo.files.length > 0) {
+
+            for (const arquivo of campo.files) {
+
+                arquivos.push(arquivo);
+
+            }
+
+        }
+
+    });
+
+
+    // Se não houver anexo, não faz nada
+
+    if (arquivos.length === 0) {
+
+        return;
+
+    }
+
+
+    for (const arquivo of arquivos) {
+
+        const arquivoBase64 =
+            await arquivoParaBase64(arquivo);
+
+
+        const resposta = await fetch(
+            URL_POWER_AUTOMATE,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    protocolo: protocolo,
+
+                    arquivoNome: arquivo.name,
+
+                    arquivoBase64: arquivoBase64
+
+                })
+
+            }
+        );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Não foi possível enviar o arquivo " +
+                arquivo.name
+            );
+
+        }
+
+    }
+
+}
 const formulario = document.querySelector("form");
 
 formulario.addEventListener("submit", async (e) => {
@@ -418,11 +524,13 @@ if (tipoServico === "Outro") {
 
     try {
 
-        const protocolo =
-            "SSO-" + Date.now();
+       const protocolo =
+    "SSO-" + Date.now();
 
-        await addDoc(
-            collection(db, "solicitacoes"),
+await enviarAnexosParaSharePoint(protocolo);
+
+await addDoc(
+    collection(db, "solicitacoes"),
             {
 
                 // ------------------------------
