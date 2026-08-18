@@ -670,7 +670,28 @@ descricaoOutro:
     dadosOutro.descricaoOutro
 
             }
-        );
+                );
+
+        // ==========================================
+        // ENVIA ANEXOS PARA O SHAREPOINT
+        // ==========================================
+
+        try {
+
+            await enviarAnexosParaSharePoint(protocolo);
+
+        } catch (erroAnexo) {
+
+            console.error(
+                "Erro ao enviar anexo para o SharePoint:",
+                erroAnexo
+            );
+
+            alert(
+                "A solicitação foi registrada, mas houve um problema ao enviar o anexo."
+            );
+
+        }
 
 
         alert("Solicitação enviada com sucesso!");
