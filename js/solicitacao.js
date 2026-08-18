@@ -8,6 +8,16 @@ import {
     addDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
+const storage = getStorage();
+
 window.addEventListener("load", () => {
 
     carregarUsuario();
@@ -639,5 +649,65 @@ descricaoOutro:
     }
 
 });
+async function enviarAnexos(protocolo) {
 
+    const arquivos = [];
+
+    const camposArquivo = document.querySelectorAll(
+        'input[type="file"]'
+    );
+
+    camposArquivo.forEach((campo) => {
+
+        if (campo.files && campo.files.length > 0) {
+
+            for (let i = 0; i < campo.files.length; i++) {
+
+                arquivos.push(campo.files[i]);
+
+            }
+
+        }
+
+    });
+
+    if (arquivos.length === 0) {
+
+        return [];
+
+    }
+
+    const anexos = [];
+
+    for (const arquivo of arquivos) {
+
+        const caminho = `solicitacoes/${protocolo}/${arquivo.name}`;
+
+        const referenciaArquivo = ref(
+            storage,
+            caminho
+        );
+
+        await uploadBytes(
+            referenciaArquivo,
+            arquivo
+        );
+
+        const url = await getDownloadURL(
+            referenciaArquivo
+        );
+
+        anexos.push({
+
+            nome: arquivo.name,
+
+            url: url
+
+        });
+
+    }
+
+    return anexos;
+
+}
    
