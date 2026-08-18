@@ -430,6 +430,8 @@ if (tipoServico === "Outro") {
         const protocolo =
             "SSO-" + Date.now();
 
+        const anexos = await enviarAnexos(protocolo);
+
 
         await addDoc(
             collection(db, "solicitacoes"),
@@ -452,6 +454,8 @@ if (tipoServico === "Outro") {
                 status: "Pendente",
 
                 dataCriacao: serverTimestamp(),
+
+                anexos: anexos,
 
 
                 // ------------------------------
