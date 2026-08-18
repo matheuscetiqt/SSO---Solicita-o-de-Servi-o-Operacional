@@ -700,7 +700,71 @@ function abrirModalSolicitacao(dados) {
 
             : ""
         }
+        ${
+            dados.anexos && dados.anexos.length > 0
+                ? `
 
+                <div style="grid-column: 1 / 3; margin-top: 20px;">
+
+                    <h3>📎 Anexos</h3>
+
+                    <div style="
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        margin-top: 10px;
+                    ">
+
+                        ${dados.anexos.map((anexo) => `
+
+                            <div style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                gap: 15px;
+                                padding: 12px 15px;
+                                border: 1px solid #ddd;
+                                border-radius: 8px;
+                                background: #f8f9fa;
+                            ">
+
+                                <span>
+                                    📄 ${anexo.nome || "Arquivo"}
+                                </span>
+
+                                ${
+                                    anexo.url
+                                        ? `
+                                        <a
+                                            href="${anexo.url}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style="
+                                                background: #005b96;
+                                                color: white;
+                                                padding: 8px 14px;
+                                                border-radius: 6px;
+                                                text-decoration: none;
+                                                font-weight: 600;
+                                            "
+                                        >
+                                            Abrir arquivo
+                                        </a>
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        `).join("")}
+
+                    </div>
+
+                </div>
+
+                `
+                : ""
+        }
     `;
 
     
