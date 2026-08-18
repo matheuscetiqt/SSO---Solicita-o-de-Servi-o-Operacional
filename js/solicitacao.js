@@ -527,8 +527,6 @@ if (tipoServico === "Outro") {
        const protocolo =
     "SSO-" + Date.now();
 
-await enviarAnexosParaSharePoint(protocolo);
-
 await addDoc(
     collection(db, "solicitacoes"),
             {
