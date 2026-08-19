@@ -1211,7 +1211,8 @@ function carregarFotoUsuario(user) {
 
     const fotosUsuarios = {
     "mdrconceicao@cetiqt.senai.br": "Matheus.jpg",
-    "cdsrodrigues@cetiqt.senai.br": "Carol.jpg"
+    "cdsrodrigues@cetiqt.senai.br": "Carol.jpg",
+    "cckopke@cetiqt.senai.br": "Clarissa.PNG"
 };
 
     const fotoUsuario = document.getElementById("fotoUsuario");
