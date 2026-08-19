@@ -29,6 +29,8 @@ onAuthStateChanged(auth, async (user) => {
 
     iniciarNotificacoes(user);
 
+    carregarFotoUsuario(user);
+
 });
 
 async function carregarSolicitacoes() {
@@ -1202,4 +1204,22 @@ function iniciarNotificacoes(user) {
         }
     );
 
+}
+function carregarFotoUsuario(user) {
+
+    const email = user.email.toLowerCase();
+
+    const fotosUsuarios = {
+        "mdrconceicao@cetiqt.senai.br": "img/usuarios/Matheus.jpg"
+    };
+
+    const fotoUsuario = document.getElementById("fotoUsuario");
+
+    if (!fotoUsuario) {
+        return;
+    }
+
+    if (fotosUsuarios[email]) {
+        fotoUsuario.src = fotosUsuarios[email];
+    }
 }
