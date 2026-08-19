@@ -809,9 +809,17 @@ function abrirModalSolicitacao(dados) {
 
 }
 
+// ==========================================
+// ALTERAR STATUS + CRIAR NOTIFICAÇÃO
+// ==========================================
+
 async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
 
     try {
+
+        // ==========================================
+        // BUSCA A SOLICITAÇÃO
+        // ==========================================
 
         const referencia = doc(
             db,
@@ -819,19 +827,105 @@ async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
             idSolicitacao
         );
 
-        await updateDoc(referencia, {
-            status: novoStatus
-        });
+        const resultado = await getDoc(referencia);
 
-        alert("Status atualizado com sucesso!");
+        if (!resultado.exists()) {
 
-        // Fecha o modal
+            alert("Solicitação não encontrada.");
+            return;
+
+        }
+
+        const dados = resultado.data();
+
+        const statusAnterior =
+            dados.status || "Pendente";
+
+
+        // ==========================================
+        // SE NÃO HOUVE MUDANÇA, NÃO CRIA AVISO
+        // ==========================================
+
+        if (statusAnterior === novoStatus) {
+
+            return;
+
+        }
+
+
+        // ==========================================
+        // ATUALIZA O STATUS
+        // ==========================================
+
+        await updateDoc(
+            referencia,
+            {
+                status: novoStatus
+            }
+        );
+
+
+        // ==========================================
+        // CRIA A NOTIFICAÇÃO
+        // ==========================================
+
+        if (dados.email) {
+
+            await addDoc(
+                collection(db, "notificacoes"),
+                {
+
+                    uid: dados.uid || "",
+
+                    email: dados.email,
+
+                    protocolo:
+                        dados.protocolo || "",
+
+                    statusAnterior:
+                        statusAnterior,
+
+                    novoStatus:
+                        novoStatus,
+
+                    mensagem:
+                        `O status da sua solicitação foi alterado de "${statusAnterior}" para "${novoStatus}".`,
+
+                    lida: false,
+
+                    dataCriacao:
+                        serverTimestamp()
+
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // AVISO
+        // ==========================================
+
+        alert(
+            "Status atualizado com sucesso!"
+        );
+
+
+        // ==========================================
+        // FECHA O MODAL
+        // ==========================================
+
         document.getElementById(
             "modalSolicitacao"
         ).style.display = "none";
 
-        // Recarrega o Dashboard
+
+        // ==========================================
+        // RECARREGA O DASHBOARD
+        // ==========================================
+
         await carregarSolicitacoes();
+
 
     } catch (erro) {
 
