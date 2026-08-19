@@ -9,7 +9,11 @@ import {
     orderBy,
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    addDoc,
+    where,
+    onSnapshot,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 onAuthStateChanged(auth, async (user) => {
@@ -22,6 +26,8 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     carregarSolicitacoes();
+
+    iniciarNotificacoes(user);
 
 });
 
@@ -879,3 +885,227 @@ document.getElementById("modalSolicitacao").addEventListener("click", (evento) =
     }
 
 });
+// ==========================================
+// NOTIFICAÇÕES
+// ==========================================
+
+function iniciarNotificacoes(user) {
+
+    const btnNotificacoes =
+        document.getElementById("btnNotificacoes");
+
+    const painelNotificacoes =
+        document.getElementById("painelNotificacoes");
+
+    const contadorNotificacoes =
+        document.getElementById("contadorNotificacoes");
+
+    const listaNotificacoes =
+        document.getElementById("listaNotificacoes");
+
+
+    // ==========================================
+    // ABRIR / FECHAR PAINEL
+    // ==========================================
+
+    btnNotificacoes.addEventListener("click", (evento) => {
+
+        evento.stopPropagation();
+
+        if (painelNotificacoes.style.display === "none") {
+
+            painelNotificacoes.style.display = "block";
+
+        } else {
+
+            painelNotificacoes.style.display = "none";
+
+        }
+
+    });
+
+
+    // Fecha ao clicar fora
+    document.addEventListener("click", (evento) => {
+
+        if (
+            !painelNotificacoes.contains(evento.target) &&
+            !btnNotificacoes.contains(evento.target)
+        ) {
+
+            painelNotificacoes.style.display = "none";
+
+        }
+
+    });
+
+
+    // ==========================================
+    // ESCUTA AS NOTIFICAÇÕES DO USUÁRIO
+    // ==========================================
+
+    const consulta = query(
+        collection(db, "notificacoes"),
+        where("uid", "==", user.uid),
+        orderBy("dataCriacao", "desc")
+    );
+
+
+    onSnapshot(
+        consulta,
+        (snapshot) => {
+
+            listaNotificacoes.innerHTML = "";
+
+            let naoLidas = 0;
+
+
+            if (snapshot.empty) {
+
+                listaNotificacoes.innerHTML = `
+                    <p class="sem-notificacoes">
+                        Nenhuma notificação.
+                    </p>
+                `;
+
+            }
+
+
+            snapshot.forEach((documento) => {
+
+                const notificacao =
+                    documento.data();
+
+                const idNotificacao =
+                    documento.id;
+
+
+                if (!notificacao.lida) {
+
+                    naoLidas++;
+
+                }
+
+
+                listaNotificacoes.innerHTML += `
+
+                    <div
+                        class="item-notificacao ${
+                            notificacao.lida
+                                ? ""
+                                : "nao-lida"
+                        }"
+                        data-id="${idNotificacao}"
+                    >
+
+                        <div class="icone-notificacao">
+
+                            <i class="fa-solid fa-bell"></i>
+
+                        </div>
+
+                        <div class="texto-notificacao">
+
+                            <strong>
+                                ${notificacao.protocolo || "Solicitação"}
+                            </strong>
+
+                            <p>
+                                ${
+                                    notificacao.mensagem ||
+                                    "Sua solicitação foi atualizada."
+                                }
+                            </p>
+
+                            <small>
+                                ${
+                                    formatarData(
+                                        notificacao.dataCriacao
+                                    )
+                                }
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+
+            // ==========================================
+            // CONTADOR
+            // ==========================================
+
+            if (naoLidas > 0) {
+
+                contadorNotificacoes.textContent =
+                    naoLidas > 99 ? "99+" : naoLidas;
+
+                contadorNotificacoes.style.display =
+                    "flex";
+
+            } else {
+
+                contadorNotificacoes.style.display =
+                    "none";
+
+            }
+
+
+            // ==========================================
+            // MARCAR COMO LIDA
+            // ==========================================
+
+            document
+                .querySelectorAll(".item-notificacao")
+                .forEach((item) => {
+
+                    item.addEventListener(
+                        "click",
+                        async () => {
+
+                            const id =
+                                item.dataset.id;
+
+                            try {
+
+                                await updateDoc(
+                                    doc(
+                                        db,
+                                        "notificacoes",
+                                        id
+                                    ),
+                                    {
+                                        lida: true
+                                    }
+                                );
+
+                            } catch (erro) {
+
+                                console.error(
+                                    "Erro ao marcar notificação como lida:",
+                                    erro
+                                );
+
+                            }
+
+                        }
+                    );
+
+                });
+
+        },
+
+        (erro) => {
+
+            console.error(
+                "Erro ao carregar notificações:",
+                erro
+            );
+
+        }
+    );
+
+}
