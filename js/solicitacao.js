@@ -564,7 +564,9 @@ const referenciaSolicitacao = await addDoc(
                 // ------------------------------
 
                 protocolo: protocolo,
-
+        
+        uid: auth.currentUser.uid,
+        
                 solicitante: nome,
 
                 email: email,
