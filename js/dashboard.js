@@ -1210,8 +1210,8 @@ function carregarFotoUsuario(user) {
     const email = user.email.toLowerCase();
 
     const fotosUsuarios = {
-        "mdrconceicao@cetiqt.senai.br": "img/usuarios/Matheus.jpg"
-    };
+    "mdrconceicao@cetiqt.senai.br": "Matheus.jpg"
+};
 
     const fotoUsuario = document.getElementById("fotoUsuario");
 
