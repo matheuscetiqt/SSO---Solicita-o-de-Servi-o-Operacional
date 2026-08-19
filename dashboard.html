@@ -92,11 +92,51 @@
 
             <div class="user">
 
-                <i class="fa-solid fa-bell"></i>
+    <div class="notificacao-container">
 
-                <img src="https://i.pravatar.cc/100" alt="">
+        <button
+            type="button"
+            id="btnNotificacoes"
+            class="btn-notificacoes"
+            aria-label="Notificações">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <span
+                id="contadorNotificacoes"
+                class="contador-notificacoes"
+                style="display: none;">
+                0
+            </span>
+
+        </button>
+
+        <div
+            id="painelNotificacoes"
+            class="painel-notificacoes"
+            style="display: none;">
+
+            <div class="notificacoes-cabecalho">
+                <strong>Notificações</strong>
+            </div>
+
+            <div id="listaNotificacoes">
+
+                <p class="sem-notificacoes">
+                    Nenhuma notificação.
+                </p>
 
             </div>
+
+        </div>
+
+    </div>
+
+    <img
+        src="https://i.pravatar.cc/100"
+        alt="">
+
+</div>
 
         </header>
 
