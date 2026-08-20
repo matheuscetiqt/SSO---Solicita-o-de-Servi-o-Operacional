@@ -983,6 +983,7 @@ if (selectStatus) {
     });
 
 }
+}
 
 // ==========================================
 // ALTERAR STATUS + CRIAR NOTIFICAÇÃO
