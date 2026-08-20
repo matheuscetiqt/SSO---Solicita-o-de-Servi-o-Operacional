@@ -1212,10 +1212,10 @@ function carregarFotoUsuario(user) {
     const fotosUsuarios = {
     "mdrconceicao@cetiqt.senai.br": "Matheus.jpg",
     "cdsrodrigues@cetiqt.senai.br": "Carol.jpg",
-    "cckopke@cetiqt.senai.br": "Clarissa.PNG"
-    "PRFreitas@cetiqt.senai.br": "PAULA RIBEIRO FREITAS 1.jpg"
-    "KFMCarneiro@cetiqt.senai.br": "Kalvin Carneiro.jpg"
-    "RBenites@cetiqt.senai.br": "roger.jpeg"
+    "cckopke@cetiqt.senai.br": "Clarissa.PNG",
+    "PRFreitas@cetiqt.senai.br": "PAULA RIBEIRO FREITAS 1.jpg",
+    "KFMCarneiro@cetiqt.senai.br": "Kalvin Carneiro.jpg",
+    "RBenites@cetiqt.senai.br": "roger.jpeg",
     "CVOuverney@cetiqt.senai.br": "Caren.jpg"
     
     
