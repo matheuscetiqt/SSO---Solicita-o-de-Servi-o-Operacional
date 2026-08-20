@@ -798,11 +798,14 @@ if (selectStatus) {
 
         const novoStatus = selectStatus.value;
 
-        // Remove campos antigos, se existirem
+        // Remove campos anteriores
         document.getElementById("campoConclusao")?.remove();
         document.getElementById("campoReprovacao")?.remove();
 
+        // ==========================================
         // CONCLUÍDA
+        // ==========================================
+
         if (novoStatus === "Concluída") {
 
             const campo = document.createElement("div");
@@ -828,14 +831,62 @@ if (selectStatus) {
                         font-family: inherit;
                     "
                 >${dados.descricaoConclusao || ""}</textarea>
+
+                <button
+                    type="button"
+                    id="btnSalvarStatus"
+                    style="
+                        margin-top: 12px;
+                        padding: 10px 18px;
+                        border: none;
+                        border-radius: 8px;
+                        background: #005b96;
+                        color: white;
+                        cursor: pointer;
+                        font-weight: 600;
+                    "
+                >
+                    Salvar alteração
+                </button>
             `;
 
             selectStatus
                 .closest(".detalhe-grupo")
                 .after(campo);
+
+            document
+                .getElementById("btnSalvarStatus")
+                .addEventListener("click", async () => {
+
+                    const descricao =
+                        document
+                            .getElementById("descricaoConclusao")
+                            .value
+                            .trim();
+
+                    if (!descricao) {
+
+                        alert(
+                            "Informe a descrição da conclusão antes de salvar."
+                        );
+
+                        return;
+                    }
+
+                    await alterarStatusSolicitacao(
+                        dados.id,
+                        novoStatus,
+                        descricao,
+                        ""
+                    );
+
+                });
         }
 
+        // ==========================================
         // REPROVADA
+        // ==========================================
+
         if (novoStatus === "Reprovada") {
 
             const campo = document.createElement("div");
@@ -861,14 +912,62 @@ if (selectStatus) {
                         font-family: inherit;
                     "
                 >${dados.motivoReprovacao || ""}</textarea>
+
+                <button
+                    type="button"
+                    id="btnSalvarStatus"
+                    style="
+                        margin-top: 12px;
+                        padding: 10px 18px;
+                        border: none;
+                        border-radius: 8px;
+                        background: #005b96;
+                        color: white;
+                        cursor: pointer;
+                        font-weight: 600;
+                    "
+                >
+                    Salvar alteração
+                </button>
             `;
 
             selectStatus
                 .closest(".detalhe-grupo")
                 .after(campo);
+
+            document
+                .getElementById("btnSalvarStatus")
+                .addEventListener("click", async () => {
+
+                    const motivo =
+                        document
+                            .getElementById("motivoReprovacao")
+                            .value
+                            .trim();
+
+                    if (!motivo) {
+
+                        alert(
+                            "Informe o motivo da reprovação antes de salvar."
+                        );
+
+                        return;
+                    }
+
+                    await alterarStatusSolicitacao(
+                        dados.id,
+                        novoStatus,
+                        "",
+                        motivo
+                    );
+
+                });
         }
 
-        // Se for outro status, salva normalmente
+        // ==========================================
+        // OUTROS STATUS
+        // ==========================================
+
         if (
             novoStatus !== "Concluída" &&
             novoStatus !== "Reprovada"
