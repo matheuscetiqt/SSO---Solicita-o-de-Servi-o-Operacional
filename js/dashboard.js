@@ -1214,7 +1214,7 @@ function carregarFotoUsuario(user) {
     "cdsrodrigues@cetiqt.senai.br": "Carol.jpg",
     "cckopke@cetiqt.senai.br": "Clarissa.PNG",
     "prfreitas@cetiqt.senai.br": "PAULA RIBEIRO FREITAS 1.jpg",
-    "kfmCarneiro@cetiqt.senai.br": "Kalvin Carneiro.jpg",
+    "kfmcarneiro@cetiqt.senai.br": "Kalvin Carneiro.jpg",
     "rbenites@cetiqt.senai.br": "roger.jpeg",
     "cvouverney@cetiqt.senai.br": "Caren.jpg"
     
