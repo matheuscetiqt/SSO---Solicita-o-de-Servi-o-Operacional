@@ -1213,10 +1213,10 @@ function carregarFotoUsuario(user) {
     "mdrconceicao@cetiqt.senai.br": "Matheus.jpg",
     "cdsrodrigues@cetiqt.senai.br": "Carol.jpg",
     "cckopke@cetiqt.senai.br": "Clarissa.PNG",
-    "PRFreitas@cetiqt.senai.br": "PAULA RIBEIRO FREITAS 1.jpg",
-    "KFMCarneiro@cetiqt.senai.br": "Kalvin Carneiro.jpg",
-    "RBenites@cetiqt.senai.br": "roger.jpeg",
-    "CVOuverney@cetiqt.senai.br": "Caren.jpg"
+    "prfreitas@cetiqt.senai.br": "PAULA RIBEIRO FREITAS 1.jpg",
+    "kfmCarneiro@cetiqt.senai.br": "Kalvin Carneiro.jpg",
+    "rbenites@cetiqt.senai.br": "roger.jpeg",
+    "cvouverney@cetiqt.senai.br": "Caren.jpg"
     
     
 };
