@@ -789,25 +789,99 @@ function abrirModalSolicitacao(dados) {
     // ALTERAÇÃO DE STATUS
     // ==========================================
 
-    const selectStatus =
-        document.getElementById("statusSolicitacao");
+const selectStatus =
+    document.getElementById("statusSolicitacao");
 
+if (selectStatus) {
 
-    if (selectStatus) {
+    selectStatus.addEventListener("change", () => {
 
-        selectStatus.addEventListener("change", () => {
+        const novoStatus = selectStatus.value;
 
-            const novoStatus =
-                selectStatus.value;
+        // Remove campos antigos, se existirem
+        document.getElementById("campoConclusao")?.remove();
+        document.getElementById("campoReprovacao")?.remove();
+
+        // CONCLUÍDA
+        if (novoStatus === "Concluída") {
+
+            const campo = document.createElement("div");
+
+            campo.id = "campoConclusao";
+            campo.className = "detalhe-grupo";
+            campo.style.gridColumn = "1 / 3";
+
+            campo.innerHTML = `
+                <span>Descrição da conclusão *</span>
+
+                <textarea
+                    id="descricaoConclusao"
+                    rows="4"
+                    placeholder="Descreva o serviço realizado..."
+                    style="
+                        width: 100%;
+                        margin-top: 8px;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        resize: vertical;
+                        font-family: inherit;
+                    "
+                >${dados.descricaoConclusao || ""}</textarea>
+            `;
+
+            selectStatus
+                .closest(".detalhe-grupo")
+                .after(campo);
+        }
+
+        // REPROVADA
+        if (novoStatus === "Reprovada") {
+
+            const campo = document.createElement("div");
+
+            campo.id = "campoReprovacao";
+            campo.className = "detalhe-grupo";
+            campo.style.gridColumn = "1 / 3";
+
+            campo.innerHTML = `
+                <span>Motivo da reprovação *</span>
+
+                <textarea
+                    id="motivoReprovacao"
+                    rows="4"
+                    placeholder="Informe o motivo da reprovação..."
+                    style="
+                        width: 100%;
+                        margin-top: 8px;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        resize: vertical;
+                        font-family: inherit;
+                    "
+                >${dados.motivoReprovacao || ""}</textarea>
+            `;
+
+            selectStatus
+                .closest(".detalhe-grupo")
+                .after(campo);
+        }
+
+        // Se for outro status, salva normalmente
+        if (
+            novoStatus !== "Concluída" &&
+            novoStatus !== "Reprovada"
+        ) {
 
             alterarStatusSolicitacao(
                 dados.id,
                 novoStatus
             );
 
-        });
+        }
 
-    }
+    });
 
 }
 
@@ -815,7 +889,12 @@ function abrirModalSolicitacao(dados) {
 // ALTERAR STATUS + CRIAR NOTIFICAÇÃO
 // ==========================================
 
-async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
+async function alterarStatusSolicitacao(
+    idSolicitacao,
+    novoStatus,
+    descricaoConclusao = "",
+    motivoReprovacao = ""
+) {
 
     try {
 
@@ -859,12 +938,24 @@ async function alterarStatusSolicitacao(idSolicitacao, novoStatus) {
         // ATUALIZA O STATUS
         // ==========================================
 
-        await updateDoc(
-            referencia,
-            {
-                status: novoStatus
-            }
-        );
+        const dadosAtualizacao = {
+    status: novoStatus
+};
+
+if (novoStatus === "Concluída") {
+    dadosAtualizacao.descricaoConclusao =
+        descricaoConclusao;
+}
+
+if (novoStatus === "Reprovada") {
+    dadosAtualizacao.motivoReprovacao =
+        motivoReprovacao;
+}
+
+await updateDoc(
+    referencia,
+    dadosAtualizacao
+);
 
 
         // ==========================================
