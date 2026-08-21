@@ -16,6 +16,12 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+// ==========================================
+// POWER AUTOMATE - ENVIO DE ANEXOS
+// ==========================================
+
+const URL_ANEXOS_POWER_AUTOMATE = "https://defaultcd8472815bbf4642aa28142c41b273.a0.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/617c8aa40d3d4d7b95c8b7d868085b14/triggers/manual/paths/invoke?api-version=1";
+
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
