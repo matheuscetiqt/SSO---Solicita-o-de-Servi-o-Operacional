@@ -958,6 +958,29 @@ if (selectStatus) {
                     "
                 >${dados.descricaoConclusao || ""}</textarea>
 
+                <label
+    style="
+        display: block;
+        margin-top: 18px;
+        font-weight: 500;
+    "
+>
+    Anexo da conclusão
+</label>
+
+<input
+    type="file"
+    id="anexoConclusao"
+    style="
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: white;
+    "
+>
+
                 <div style="margin-top: 16px;">
 
     <span style="display: block; margin-bottom: 8px;">
@@ -1022,6 +1045,42 @@ if (selectStatus) {
                             .getElementById("descricaoConclusao")
                             .value
                             .trim();
+
+                    const arquivo =
+    document.getElementById("anexoConclusao")?.files[0];
+
+                    let anexoEnviado = null;
+
+if (
+    novoStatus === "Concluída" &&
+    arquivo
+) {
+
+    try {
+
+        anexoEnviado =
+            await enviarAnexoConclusao(
+                dados.protocolo,
+                descricao,
+                arquivo
+            );
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao enviar anexo:",
+            erro
+        );
+
+        alert(
+            "Ocorreu um erro ao enviar o anexo. A solicitação não foi concluída."
+        );
+
+        return;
+
+    }
+
+}
 
                     if (!descricao) {
 
