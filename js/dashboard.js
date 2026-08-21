@@ -232,6 +232,24 @@ function abrirModalSolicitacao(dados) {
 
         </div>
 
+        ${
+    dados.status === "Reprovada" && dados.motivoReprovacao
+        ? `
+            <div class="detalhe-reprovacao">
+
+                <span class="titulo-reprovacao">
+                    Motivo da Reprovação
+                </span>
+
+                <div class="texto-reprovacao">
+                    ${dados.motivoReprovacao}
+                </div>
+
+            </div>
+        `
+        : ""
+}
+
        ${
     dados.status === "Concluída" && dados.descricaoConclusao
         ? `
