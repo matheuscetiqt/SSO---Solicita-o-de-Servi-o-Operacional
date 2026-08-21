@@ -22,6 +22,91 @@ import {
 
 const URL_ANEXOS_POWER_AUTOMATE = "https://defaultcd8472815bbf4642aa28142c41b273.a0.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/617c8aa40d3d4d7b95c8b7d868085b14/triggers/manual/paths/invoke?api-version=1";
 
+// ==========================================
+// CONVERTE ARQUIVO PARA BASE64
+// ==========================================
+
+function arquivoParaBase64(arquivo) {
+
+    return new Promise((resolve, reject) => {
+
+        const leitor = new FileReader();
+
+        leitor.onload = () => {
+
+            const resultado = leitor.result;
+
+            const base64 =
+                resultado.split(",")[1];
+
+            resolve(base64);
+
+        };
+
+        leitor.onerror = reject;
+
+        leitor.readAsDataURL(arquivo);
+
+    });
+
+}
+
+
+// ==========================================
+// ENVIA ANEXO DE CONCLUSÃO
+// ==========================================
+
+async function enviarAnexoConclusao(
+    protocolo,
+    descricao,
+    arquivo
+) {
+
+    if (!arquivo) {
+        return;
+    }
+
+    const arquivoBase64 =
+        await arquivoParaBase64(arquivo);
+
+
+    const resposta = await fetch(
+        URL_ANEXOS_POWER_AUTOMATE,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                protocolo: protocolo,
+
+                descricao: descricao,
+
+                nomeArquivo: arquivo.name,
+
+                tipoArquivo: arquivo.type,
+
+                arquivoBase64: arquivoBase64
+
+            })
+
+        }
+    );
+
+
+    if (!resposta.ok) {
+
+        throw new Error(
+            "Não foi possível enviar o anexo."
+        );
+
+    }
+
+}
+
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
