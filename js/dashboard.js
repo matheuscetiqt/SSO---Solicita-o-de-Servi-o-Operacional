@@ -232,6 +232,30 @@ function abrirModalSolicitacao(dados) {
 
         </div>
 
+        ${
+            dados.status === "Concluída" && dados.descricaoConclusao
+                ? `
+                    <div
+                        class="detalhe-grupo"
+                        style="grid-column: 1 / 3;"
+                    >
+                        <span>Descrição da Conclusão</span>
+
+                        <strong
+                            style="
+                                display: block;
+                                margin-top: 8px;
+                                font-weight: 400;
+                                line-height: 1.5;
+                                white-space: pre-wrap;
+                            "
+                        >
+                            ${dados.descricaoConclusao}
+                        </strong>
+                    </div>
+                `
+                : ""
+        }
 
         <div class="detalhe-grupo">
 
