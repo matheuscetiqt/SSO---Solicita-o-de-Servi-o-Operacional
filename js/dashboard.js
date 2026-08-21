@@ -867,6 +867,39 @@ if (selectStatus) {
                     "
                 >${dados.descricaoConclusao || ""}</textarea>
 
+                <div style="margin-top: 16px;">
+
+    <span style="display: block; margin-bottom: 8px;">
+        Anexo da conclusão <small>(opcional)</small>
+    </span>
+
+    <input
+        type="file"
+        id="anexoConclusao"
+        accept="image/*,.pdf,.doc,.docx,.xls,.xlsx"
+        style="
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            box-sizing: border-box;
+        "
+    >
+
+    <small
+        style="
+            display: block;
+            margin-top: 6px;
+            color: #777;
+        "
+    >
+        Você pode anexar um print, PDF ou documento relacionado ao serviço.
+    </small>
+
+</div>
+
                 <button
                     type="button"
                     id="btnSalvarStatus"
