@@ -99,11 +99,15 @@ async function enviarAnexoConclusao(
 
     if (!resposta.ok) {
 
-        throw new Error(
-            "Não foi possível enviar o anexo."
-        );
+    throw new Error(
+        "Não foi possível enviar o anexo."
+    );
 
-    }
+}
+
+const resultado = await resposta.json();
+
+return resultado;
 
 }
 
@@ -1061,11 +1065,12 @@ if (
                     }
 
                     await alterarStatusSolicitacao(
-                        dados.id,
-                        novoStatus,
-                        descricao,
-                        ""
-                    );
+    dados.id,
+    novoStatus,
+    descricao,
+    "",
+    anexoEnviado?.arquivo || ""
+);
 
                 });
         }
