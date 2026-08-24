@@ -15,7 +15,7 @@ import {
 // Por enquanto, estamos utilizando o analista
 // que está identificado no sistema.
 
-const ANALISTA_RESPONSAVEL = "Matheus";
+const ANALISTA_RESPONSAVEL = "Matheus Damica";
 
 
 // ==========================================
@@ -75,10 +75,10 @@ async function carregarMinhasSolicitacoes() {
             // FILTRA APENAS AS SOLICITAÇÕES
             // DO ANALISTA RESPONSÁVEL
 
-            if (
-                dados.analistaResponsavel ===
-                ANALISTA_RESPONSAVEL
-            ) {
+           if (
+    dados.analista ===
+    ANALISTA_RESPONSAVEL
+) {
 
                 minhasSolicitacoes.push({
 
@@ -438,15 +438,15 @@ function abrirModalSolicitacao(dados) {
 
         <div class="detalhe-grupo">
 
-            <span>
-                Analista Responsável
-            </span>
+    <span>
+        Analista Responsável
+    </span>
 
-            <strong>
-                ${dados.analistaResponsavel || "-"}
-            </strong>
+    <strong>
+        ${dados.analista || "-"}
+    </strong>
 
-        </div>
+</div>
 
 
         <div class="detalhe-grupo">
