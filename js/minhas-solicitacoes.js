@@ -66,31 +66,35 @@ async function carregarMinhasSolicitacoes() {
 
         let minhasSolicitacoes = [];
 
-        snapshot.forEach((doc) => {
+       snapshot.forEach((doc) => {
 
-            const dados =
-                doc.data();
+    const dados = doc.data();
 
+    console.log("================================");
+    console.log("ID da solicitação:", doc.id);
+    console.log("Dados completos:", dados);
+    console.log("Analista encontrado:", dados.analista);
+    console.log("Analista procurado:", ANALISTA_RESPONSAVEL);
 
-            // FILTRA APENAS AS SOLICITAÇÕES
-            // DO ANALISTA RESPONSÁVEL
+    if (
+        dados.analista &&
+        dados.analista.trim().toLowerCase() ===
+        ANALISTA_RESPONSAVEL.trim().toLowerCase()
+    ) {
 
-           if (
-    dados.analista ===
-    ANALISTA_RESPONSAVEL
-) {
+        console.log("SOLICITAÇÃO ADICIONADA!");
 
-                minhasSolicitacoes.push({
+        minhasSolicitacoes.push({
 
-                    id: doc.id,
+            id: doc.id,
 
-                    ...dados
-
-                });
-
-            }
+            ...dados
 
         });
+
+    }
+
+});
 
 
         // ORDENA DA MAIS RECENTE
