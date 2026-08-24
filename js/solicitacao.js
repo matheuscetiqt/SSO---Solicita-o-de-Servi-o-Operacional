@@ -745,7 +745,12 @@ descricaoOutro:
 }
 
 
-        alert("Solicitação enviada com sucesso!");
+       alert(
+    "🎉 Solicitação enviada com sucesso!\n\n" +
+    "Seu número de protocolo é:\n\n" +
+    protocolo +
+    "\n\nGuarde este número para acompanhar sua solicitação."
+);
 
 
         // Limpa o formulário
