@@ -1,1 +1,374 @@
+<!DOCTYPE html>
 
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Minhas Solicitações | SSO</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+
+<body>
+
+<div class="layout">
+
+
+    <!-- MENU LATERAL -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>SSO</h2>
+
+            <span>Sistema Operacional</span>
+
+        </div>
+
+
+        <nav>
+
+            <a href="dashboard.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="nova-solicitacao.html">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nova Solicitação
+
+            </a>
+
+
+            <a
+                href="minhas-solicitacoes.html"
+                class="active">
+
+                <i class="fa-solid fa-list"></i>
+
+                Minhas Solicitações
+
+            </a>
+
+
+            <a href="#">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Indicadores
+
+            </a>
+
+
+            <a href="#">
+
+                <i class="fa-solid fa-gear"></i>
+
+                Configurações
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main>
+
+
+        <!-- CABEÇALHO -->
+
+        <header>
+
+            <div>
+
+                <h1>Minhas Solicitações 📋</h1>
+
+                <span>
+                    Acompanhe todas as solicitações sob sua responsabilidade.
+                </span>
+
+            </div>
+
+
+            <div class="user">
+
+                <div class="notificacao-container">
+
+                    <button
+                        type="button"
+                        id="btnNotificacoes"
+                        class="btn-notificacoes"
+                        aria-label="Notificações">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                        <span
+                            id="contadorNotificacoes"
+                            class="contador-notificacoes"
+                            style="display: none;">
+
+                            0
+
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        id="painelNotificacoes"
+                        class="painel-notificacoes"
+                        style="display: none;">
+
+
+                        <div class="notificacoes-cabecalho">
+
+                            <strong>
+                                Notificações
+                            </strong>
+
+                        </div>
+
+
+                        <div id="listaNotificacoes">
+
+                            <p class="sem-notificacoes">
+
+                                Nenhuma notificação.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <img
+                    id="fotoUsuario"
+                    src="Matheus.jpg"
+                    alt="Foto do usuário">
+
+            </div>
+
+        </header>
+
+
+        <!-- CARDS -->
+
+        <section class="cards">
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <h2 id="totalMinhasSolicitacoes">
+
+                    0
+
+                </h2>
+
+                <span>
+                    Total de Solicitações
+                </span>
+
+            </div>
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-hourglass-half"></i>
+
+                <h2 id="totalPendentes">
+
+                    0
+
+                </h2>
+
+                <span>
+                    Pendentes
+                </span>
+
+            </div>
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-gears"></i>
+
+                <h2 id="totalAndamento">
+
+                    0
+
+                </h2>
+
+                <span>
+                    Em Andamento
+                </span>
+
+            </div>
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <h2 id="totalConcluidas">
+
+                    0
+
+                </h2>
+
+                <span>
+                    Concluídas
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- TABELA -->
+
+        <section class="table-area">
+
+            <div class="table-title">
+
+                Minhas Solicitações
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Protocolo
+                        </th>
+
+                        <th>
+                            Solicitante
+                        </th>
+
+                        <th>
+                            Categoria
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Data da Solicitação
+                        </th>
+
+                        <th>
+                            Ação
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tabelaMinhasSolicitacoes">
+
+                    <!-- As solicitações serão carregadas aqui -->
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- MODAL DE VISUALIZAÇÃO -->
+
+<div
+    id="modalSolicitacao"
+    class="modal-solicitacao">
+
+
+    <div class="modal-conteudo">
+
+
+        <div class="modal-cabecalho">
+
+            <h2>
+
+                📋 Detalhes da Solicitação
+
+            </h2>
+
+
+            <button
+                type="button"
+                id="fecharModal"
+                class="fechar-modal">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div id="detalhesSolicitacao">
+
+            <!-- Os dados serão carregados pelo JavaScript -->
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script
+    type="module"
+    src="js/minhas-solicitacoes.js">
+</script>
+
+
+</body>
+
+</html>
