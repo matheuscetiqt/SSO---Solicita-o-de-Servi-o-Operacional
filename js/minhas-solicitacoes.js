@@ -237,12 +237,12 @@ console.log(dados);
                 </td>
 
                 <td>
-                    ${dados.nome || "-"}
-                </td>
+    ${dados.solicitante || "-"}
+</td>
 
                 <td>
-                    ${dados.categoria || "-"}
-                </td>
+    ${dados.tipoServico || "-"}
+</td>
 
                 <td>
 
@@ -413,7 +413,7 @@ function abrirModalSolicitacao(dados) {
             </span>
 
             <strong>
-                ${dados.nome || "-"}
+                ${dados.solicitante || "-"}
             </strong>
 
         </div>
@@ -439,7 +439,7 @@ function abrirModalSolicitacao(dados) {
             </span>
 
             <strong>
-                ${dados.categoria || "-"}
+                ${dados.tipoServico || "-"}
             </strong>
 
         </div>
