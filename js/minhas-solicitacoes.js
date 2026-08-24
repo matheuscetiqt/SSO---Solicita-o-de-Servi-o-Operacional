@@ -70,6 +70,8 @@ async function carregarMinhasSolicitacoes() {
 
     const dados = doc.data();
 
+           console.log("DADOS DA SOLICITAÇÃO:", dados);
+
     console.log("================================");
     console.log("ID da solicitação:", doc.id);
     console.log("Dados completos:", dados);
