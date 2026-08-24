@@ -249,6 +249,94 @@ abrirModalSolicitacao(dados);
 }
 function abrirModalSolicitacao(dados) {
 
+    // ==========================================
+// BUSCAR SOLICITAÇÃO POR PROTOCOLO
+// ==========================================
+
+document
+    .getElementById("btnBuscarProtocolo")
+    .addEventListener("click", buscarPorProtocolo);
+
+
+async function buscarPorProtocolo() {
+
+    const input =
+        document.getElementById("inputBuscaProtocolo");
+
+    const protocolo =
+        input.value.trim();
+
+    if (!protocolo) {
+
+        alert("Digite o número do protocolo.");
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    try {
+
+        const consulta = query(
+
+            collection(db, "solicitacoes"),
+
+            where(
+                "protocolo",
+                "==",
+                protocolo
+            )
+
+        );
+
+
+        const resultado =
+            await getDocs(consulta);
+
+
+        if (resultado.empty) {
+
+            alert(
+                "Nenhuma solicitação encontrada com este protocolo."
+            );
+
+            return;
+
+        }
+
+
+        const documento =
+            resultado.docs[0];
+
+
+        const dados =
+            documento.data();
+
+
+        dados.id =
+            documento.id;
+
+
+        abrirModalSolicitacao(dados);
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao buscar protocolo:",
+            erro
+        );
+
+        alert(
+            "Não foi possível buscar a solicitação."
+        );
+
+    }
+
+}
+
     const modal = document.getElementById("modalSolicitacao");
 
     const detalhes = document.getElementById("detalhesSolicitacao");
