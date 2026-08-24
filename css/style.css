@@ -1292,3 +1292,150 @@ textarea{
     text-align: left;
     white-space: pre-wrap;
 }
+/* ==========================================
+   PESQUISA POR PROTOCOLO
+========================================== */
+
+.busca-protocolo {
+
+    background: white;
+
+    margin-bottom: 25px;
+
+    padding: 22px 25px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+}
+
+
+.busca-protocolo-texto h2 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #1f2937;
+
+}
+
+
+.busca-protocolo-texto span {
+
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    color: #6b7280;
+
+}
+
+
+.busca-protocolo-campo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.busca-protocolo-campo input {
+
+    width: 260px;
+
+    padding: 12px 15px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 14px;
+
+}
+
+
+.busca-protocolo-campo input:focus {
+
+    border-color: #2563eb;
+
+}
+
+
+.busca-protocolo-campo button {
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-family: "Poppins", sans-serif;
+
+    font-weight: 500;
+
+    transition: 0.2s;
+
+}
+
+
+.busca-protocolo-campo button:hover {
+
+    transform: translateY(-1px);
+
+    opacity: 0.9;
+
+}
+
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 768px) {
+
+    .busca-protocolo {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .busca-protocolo-campo {
+
+        width: 100%;
+
+    }
+
+
+    .busca-protocolo-campo input {
+
+        width: 100%;
+
+    }
+
+}
