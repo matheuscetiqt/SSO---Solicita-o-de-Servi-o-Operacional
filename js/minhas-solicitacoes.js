@@ -378,6 +378,12 @@ function abrirModalSolicitacao(dados) {
         );
 
 
+    console.log(
+        "DADOS ABERTOS NO MODAL:",
+        dados
+    );
+
+
     detalhes.innerHTML = `
 
         <div class="detalhe-grupo">
@@ -435,7 +441,7 @@ function abrirModalSolicitacao(dados) {
         <div class="detalhe-grupo">
 
             <span>
-                Categoria
+                Tipo de Serviço
             </span>
 
             <strong>
@@ -447,15 +453,15 @@ function abrirModalSolicitacao(dados) {
 
         <div class="detalhe-grupo">
 
-    <span>
-        Analista Responsável
-    </span>
+            <span>
+                Analista Responsável
+            </span>
 
-    <strong>
-        ${dados.analista || "-"}
-    </strong>
+            <strong>
+                ${dados.analista || "-"}
+            </strong>
 
-</div>
+        </div>
 
 
         <div class="detalhe-grupo">
@@ -465,7 +471,7 @@ function abrirModalSolicitacao(dados) {
             </span>
 
             <strong>
-                ${dados.descricao || "-"}
+                ${dados.descricaoOutro || "-"}
             </strong>
 
         </div>
@@ -473,8 +479,7 @@ function abrirModalSolicitacao(dados) {
     `;
 
 
-    modal.style.display =
-        "flex";
+    modal.style.display = "flex";
 
 }
 
