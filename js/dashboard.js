@@ -345,7 +345,7 @@ function abrirModalSolicitacao(dados) {
         : ""
 }
 
-       ${
+              ${
     dados.status === "Concluída" && dados.descricaoConclusao
         ? `
             <div class="detalhe-conclusao">
@@ -357,6 +357,45 @@ function abrirModalSolicitacao(dados) {
                 <div class="texto-conclusao">
                     ${dados.descricaoConclusao}
                 </div>
+
+                ${
+                    dados.anexoConclusao
+                        ? `
+                            <div style="
+                                margin-top: 20px;
+                                padding-top: 15px;
+                                border-top: 1px solid #ddd;
+                            ">
+
+                                <span style="
+                                    display: block;
+                                    font-weight: 600;
+                                    margin-bottom: 10px;
+                                ">
+                                    📎 Anexo da conclusão
+                                </span>
+
+                                <a
+                                    href="${dados.anexoConclusao}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="
+                                        display: inline-block;
+                                        background: #005b96;
+                                        color: white;
+                                        padding: 10px 16px;
+                                        border-radius: 6px;
+                                        text-decoration: none;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Abrir arquivo
+                                </a>
+
+                            </div>
+                        `
+                        : ""
+                }
 
             </div>
         `
