@@ -247,9 +247,8 @@ abrirModalSolicitacao(dados);
 });
 
 }
-function abrirModalSolicitacao(dados) {
 
-    // ==========================================
+// ==========================================
 // BUSCAR SOLICITAÇÃO POR PROTOCOLO
 // ==========================================
 
@@ -276,7 +275,6 @@ async function buscarPorProtocolo() {
 
     }
 
-
     try {
 
         const consulta = query(
@@ -291,10 +289,8 @@ async function buscarPorProtocolo() {
 
         );
 
-
         const resultado =
             await getDocs(consulta);
-
 
         if (resultado.empty) {
 
@@ -306,21 +302,16 @@ async function buscarPorProtocolo() {
 
         }
 
-
         const documento =
             resultado.docs[0];
-
 
         const dados =
             documento.data();
 
-
         dados.id =
             documento.id;
 
-
         abrirModalSolicitacao(dados);
-
 
     } catch (erro) {
 
@@ -337,6 +328,8 @@ async function buscarPorProtocolo() {
 
 }
 
+function abrirModalSolicitacao(dados) {
+    
     const modal = document.getElementById("modalSolicitacao");
 
     const detalhes = document.getElementById("detalhesSolicitacao");
