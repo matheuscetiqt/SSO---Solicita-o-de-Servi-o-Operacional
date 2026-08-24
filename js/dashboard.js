@@ -1185,8 +1185,11 @@ async function alterarStatusSolicitacao(
     idSolicitacao,
     novoStatus,
     descricaoConclusao = "",
-    motivoReprovacao = ""
-) {
+    motivoReprovacao = "",
+    anexoConclusao = ""
+) 
+
+{
 
     try {
 
@@ -1235,8 +1238,13 @@ async function alterarStatusSolicitacao(
 };
 
 if (novoStatus === "Concluída") {
+
     dadosAtualizacao.descricaoConclusao =
         descricaoConclusao;
+
+    dadosAtualizacao.anexoConclusao =
+        anexoConclusao;
+
 }
 
 if (novoStatus === "Reprovada") {
