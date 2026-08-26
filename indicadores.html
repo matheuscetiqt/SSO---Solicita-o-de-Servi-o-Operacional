@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Indicadores | SSO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>SSO</h2>
+
+                <span>Sistema Operacional</span>
+
+            </div>
+
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Dashboard
+
+                </a>
+
+
+                <a href="nova-solicitacao.html">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Nova Solicitação
+
+                </a>
+
+
+                <a href="minhas-solicitacoes.html">
+
+                    <i class="fa-solid fa-list"></i>
+
+                    Minhas Solicitações
+
+                </a>
+
+
+                <a
+                    href="indicadores.html"
+                    class="active"
+                >
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    Indicadores
+
+                </a>
+
+
+                <a href="#">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    Configurações
+
+                </a>
+
+            </nav>
+
+
+            <!-- SAIR -->
+
+            <div class="sidebar-footer">
+
+                <button
+                    type="button"
+                    id="btnSair"
+                    class="btn-sair"
+                >
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Sair
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTEÚDO PRINCIPAL -->
+
+        <main>
+
+            <header>
+
+                <div>
+
+                    <h1>
+                        Indicadores 📊
+                    </h1>
+
+                    <span>
+                        Acompanhe os principais indicadores das solicitações.
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <!-- RESUMO -->
+
+            <section class="indicadores-resumo">
+
+                <div class="indicador-card">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    <h2 id="indicadorTotal">
+                        0
+                    </h2>
+
+                    <span>
+                        Total de Solicitações
+                    </span>
+
+                </div>
+
+
+                <div class="indicador-card">
+
+                    <i class="fa-solid fa-hourglass-half"></i>
+
+                    <h2 id="indicadorPendentes">
+                        0
+                    </h2>
+
+                    <span>
+                        Pendentes
+                    </span>
+
+                </div>
+
+
+                <div class="indicador-card">
+
+                    <i class="fa-solid fa-gears"></i>
+
+                    <h2 id="indicadorAndamento">
+                        0
+                    </h2>
+
+                    <span>
+                        Em Andamento
+                    </span>
+
+                </div>
+
+
+                <div class="indicador-card">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <h2 id="indicadorTaxaConclusao">
+                        0%
+                    </h2>
+
+                    <span>
+                        Taxa de Conclusão
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- GRÁFICOS -->
+
+            <section class="graficos-grid">
+
+
+                <!-- STATUS -->
+
+                <div class="grafico-card">
+
+                    <div class="grafico-cabecalho">
+
+                        <h3>
+                            Solicitações por Status
+                        </h3>
+
+                        <span>
+                            Situação atual das solicitações.
+                        </span>
+
+                    </div>
+
+                    <div class="grafico-container">
+
+                        <canvas
+                            id="graficoStatus"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORIA -->
+
+                <div class="grafico-card">
+
+                    <div class="grafico-cabecalho">
+
+                        <h3>
+                            Solicitações por Categoria
+                        </h3>
+
+                        <span>
+                            Distribuição dos serviços solicitados.
+                        </span>
+
+                    </div>
+
+                    <div class="grafico-container">
+
+                        <canvas
+                            id="graficoCategoria"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVOLUÇÃO -->
+
+                <div
+                    class="grafico-card grafico-grande"
+                >
+
+                    <div class="grafico-cabecalho">
+
+                        <h3>
+                            Evolução das Solicitações
+                        </h3>
+
+                        <span>
+                            Quantidade de solicitações criadas por dia.
+                        </span>
+
+                    </div>
+
+                    <div class="grafico-container">
+
+                        <canvas
+                            id="graficoEvolucao"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ANALISTAS -->
+
+                <div
+                    class="grafico-card grafico-grande"
+                >
+
+                    <div class="grafico-cabecalho">
+
+                        <h3>
+                            Solicitações por Analista
+                        </h3>
+
+                        <span>
+                            Distribuição das solicitações entre os analistas.
+                        </span>
+
+                    </div>
+
+                    <div class="grafico-container">
+
+                        <canvas
+                            id="graficoAnalistas"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script
+        type="module"
+        src="js/indicadores.js"
+    ></script>
+
+</body>
+
+</html>
