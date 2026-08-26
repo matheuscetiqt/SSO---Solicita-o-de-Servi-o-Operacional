@@ -1742,3 +1742,43 @@ function carregarFotoUsuario(user) {
         fotoUsuario.src = fotosUsuarios[email];
     }
 }
+// ==========================================
+// SAIR DO SISTEMA
+// ==========================================
+
+const btnSair =
+    document.getElementById(
+        "btnSair"
+    );
+
+
+if (btnSair) {
+
+    btnSair.addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                await signOut(auth);
+
+                window.location.href =
+                    "login.html";
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao sair do sistema:",
+                    erro
+                );
+
+                alert(
+                    "Não foi possível sair do sistema."
+                );
+
+            }
+
+        }
+    );
+
+}
