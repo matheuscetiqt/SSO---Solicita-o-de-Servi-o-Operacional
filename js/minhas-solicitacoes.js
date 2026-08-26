@@ -77,6 +77,9 @@ async function carregarMinhasSolicitacoes() {
             usuarioLogado.email
                 .toLowerCase();
 
+        const ANALISTA_RESPONSAVEL =
+    usuarioLogado.displayName;
+
         const snapshot =
             await getDocs(
                 collection(
