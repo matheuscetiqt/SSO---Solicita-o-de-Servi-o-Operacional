@@ -1,6 +1,9 @@
 import { auth, db } from "./firebase-config.js";
 
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 import {
     collection,
@@ -1747,9 +1750,7 @@ function carregarFotoUsuario(user) {
 // ==========================================
 
 const btnSair =
-    document.getElementById(
-        "btnSair"
-    );
+    document.getElementById("btnSair");
 
 
 if (btnSair) {
@@ -1763,7 +1764,7 @@ if (btnSair) {
                 await signOut(auth);
 
                 window.location.href =
-                    "login.html";
+                    "index.html";
 
             } catch (erro) {
 
