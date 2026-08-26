@@ -1644,3 +1644,20 @@ textarea{
     }
 
 }
+/* GARANTE QUE O MENU LATERAL FIQUE ACIMA DO CONTEÚDO */
+.sidebar {
+    position: relative;
+    z-index: 1000;
+}
+
+/* GARANTE QUE OS LINKS DO MENU POSSAM SER CLICADOS */
+.sidebar nav {
+    position: relative;
+    z-index: 1001;
+}
+
+.sidebar nav a {
+    position: relative;
+    z-index: 1002;
+    pointer-events: auto;
+}
