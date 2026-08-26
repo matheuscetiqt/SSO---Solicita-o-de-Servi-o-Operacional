@@ -118,6 +118,8 @@ if (
 
 }
 
+});
+
 
         // ORDENA DA MAIS RECENTE
         // PARA A MAIS ANTIGA
