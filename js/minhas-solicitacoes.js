@@ -4,8 +4,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
+    auth,
     db
 } from "./firebase-config.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
 // ==========================================
@@ -15,7 +20,7 @@ import {
 // Por enquanto, estamos utilizando o analista
 // que está identificado no sistema.
 
-const ANALISTA_RESPONSAVEL = "Matheus Damica";
+
 
 
 // ==========================================
@@ -56,6 +61,22 @@ async function carregarMinhasSolicitacoes() {
 
     try {
 
+        const usuarioLogado =
+            auth.currentUser;
+
+        if (!usuarioLogado) {
+
+            window.location.href =
+                "index.html";
+
+            return;
+
+        }
+
+        const emailUsuario =
+            usuarioLogado.email
+                .toLowerCase();
+
         const snapshot =
             await getDocs(
                 collection(
@@ -81,25 +102,21 @@ console.log(dados);
     console.log("Analista encontrado:", dados.analista);
     console.log("Analista procurado:", ANALISTA_RESPONSAVEL);
 
-    if (
-        dados.analista &&
-        dados.analista.trim().toLowerCase() ===
-        ANALISTA_RESPONSAVEL.trim().toLowerCase()
-    ) {
+if (
+    dados.email &&
+    dados.email.toLowerCase() ===
+    emailUsuario
+) {
 
-        console.log("SOLICITAÇÃO ADICIONADA!");
+    minhasSolicitacoes.push({
 
-        minhasSolicitacoes.push({
+        id: doc.id,
 
-            id: doc.id,
+        ...dados
 
-            ...dados
+    });
 
-        });
-
-    }
-
-});
+}
 
 
         // ORDENA DA MAIS RECENTE
@@ -511,4 +528,20 @@ document
 // INICIAR PÁGINA
 // ==========================================
 
-carregarMinhasSolicitacoes();
+onAuthStateChanged(
+    auth,
+    (usuario) => {
+
+        if (usuario) {
+
+            carregarMinhasSolicitacoes();
+
+        } else {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    }
+);
