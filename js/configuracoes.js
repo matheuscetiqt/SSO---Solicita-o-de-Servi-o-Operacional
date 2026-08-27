@@ -15,7 +15,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
-    auth
+    auth,
+    db
 } from "./firebase-config.js";
 
 
@@ -534,12 +535,125 @@ salvarColaborador.addEventListener(
 
 
         // ==================================
-        // VALIDAÇÃO CONCLUÍDA
-        // ==================================
+// CRIAR COLABORADOR
+// ==================================
+
+try {
+
+    salvarColaborador.disabled = true;
+
+    salvarColaborador.textContent =
+        "Criando acesso...";
+
+
+    const usuarioAtual =
+        auth.currentUser;
+
+
+    if (!usuarioAtual) {
 
         alert(
-            "Todos os campos foram preenchidos corretamente!"
+            "Não foi possível identificar o administrador responsável."
+        );
+
+        return;
+
+    }
+
+
+    // CRIAR USUÁRIO NO FIREBASE
+
+    const credencial =
+        await createUserWithEmailAndPassword(
+            auth,
+            email,
+            senha
+        );
+
+
+    const novoUsuario =
+        credencial.user;
+
+
+    // SALVAR INFORMAÇÕES DO COLABORADOR
+
+    await addDoc(
+        collection(
+            db,
+            "colaboradores"
+        ),
+        {
+
+            nome: nome,
+
+            email: email,
+
+            uid:
+                novoUsuario.uid,
+
+            status:
+                "ativo",
+
+            adicionadoPor:
+                usuarioAtual.displayName ||
+                usuarioAtual.email,
+
+            emailAdministrador:
+                usuarioAtual.email,
+
+            dataCadastro:
+                serverTimestamp()
+
+        }
+    );
+
+
+    alert(
+        "Colaborador cadastrado com sucesso!"
+    );
+
+
+    modalAdicionarColaborador.style.display =
+        "none";
+
+
+    nomeColaborador.value = "";
+
+    emailColaborador.value = "";
+
+    senhaColaborador.value = "";
+
+
+} catch (erro) {
+
+    console.error(
+        "Erro ao cadastrar colaborador:",
+        erro
+    );
+
+
+    if (
+        erro.code ===
+        "auth/email-already-in-use"
+    ) {
+
+        alert(
+            "Este e-mail já possui um cadastro."
+        );
+
+    } else {
+
+        alert(
+            "Não foi possível criar o colaborador."
         );
 
     }
-);
+
+} finally {
+
+    salvarColaborador.disabled = false;
+
+    salvarColaborador.textContent =
+        "Criar acesso";
+
+}
