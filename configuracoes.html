@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Configurações | SSO</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>SSO</h2>
+
+                <span>
+                    Sistema Operacional
+                </span>
+
+            </div>
+
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Dashboard
+
+                </a>
+
+
+                <a href="nova-solicitacao.html">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Nova Solicitação
+
+                </a>
+
+
+                <a href="minhas-solicitacoes.html">
+
+                    <i class="fa-solid fa-list"></i>
+
+                    Minhas Solicitações
+
+                </a>
+
+
+                <a href="indicadores.html">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    Indicadores
+
+                </a>
+
+
+                <a
+                    href="configuracoes.html"
+                    class="active"
+                >
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    Configurações
+
+                </a>
+
+            </nav>
+
+
+            <!-- BOTÃO SAIR -->
+
+            <div class="sidebar-footer">
+
+                <button
+                    type="button"
+                    id="btnSair"
+                    class="btn-sair"
+                >
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Sair
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+
+        <main>
+
+            <header>
+
+                <div>
+
+                    <h1>
+                        Configurações ⚙️
+                    </h1>
+
+                    <span>
+                        Gerencie sua conta e as configurações do sistema.
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <!-- MINHA CONTA -->
+
+            <section class="configuracoes-secao">
+
+                <div class="configuracoes-titulo">
+
+                    <div>
+
+                        <h2>
+
+                            <i class="fa-solid fa-user"></i>
+
+                            Minha Conta
+
+                        </h2>
+
+                        <span>
+                            Informações da sua conta no sistema.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="configuracoes-card">
+
+                    <div class="info-conta">
+
+                        <span>
+                            Nome
+                        </span>
+
+                        <strong id="nomeUsuario">
+                            Carregando...
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-conta">
+
+                        <span>
+                            E-mail
+                        </span>
+
+                        <strong id="emailUsuario">
+                            Carregando...
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ALTERAR SENHA -->
+
+            <section class="configuracoes-secao">
+
+                <div class="configuracoes-titulo">
+
+                    <div>
+
+                        <h2>
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            Segurança
+
+                        </h2>
+
+                        <span>
+                            Altere sua senha de acesso.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="configuracoes-card">
+
+                    <button
+                        type="button"
+                        id="btnAlterarSenha"
+                        class="btn-configuracao"
+                    >
+
+                        <i class="fa-solid fa-key"></i>
+
+                        Alterar minha senha
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ADMINISTRAÇÃO -->
+
+            <section
+                id="areaAdministracao"
+                class="configuracoes-secao"
+                style="display: none;"
+            >
+
+                <div class="configuracoes-titulo">
+
+                    <div>
+
+                        <h2>
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            Administração
+
+                        </h2>
+
+                        <span>
+                            Gerencie os colaboradores que possuem acesso ao sistema.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="btnAdicionarColaborador"
+                        class="btn-configuracao"
+                    >
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                        Adicionar colaborador
+
+                    </button>
+
+                </div>
+
+
+                <div class="configuracoes-card">
+
+                    <div class="tabela-configuracoes">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Colaborador
+                                    </th>
+
+                                    <th>
+                                        E-mail
+                                    </th>
+
+                                    <th>
+                                        Adicionado por
+                                    </th>
+
+                                    <th>
+                                        Data
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Ações
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="tabelaColaboradores"
+                            >
+
+                                <tr>
+
+                                    <td
+                                        colspan="6"
+                                        style="
+                                            text-align: center;
+                                            padding: 30px;
+                                        "
+                                    >
+
+                                        Carregando colaboradores...
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- MODAL ALTERAR SENHA -->
+
+    <div
+        id="modalAlterarSenha"
+        class="modal-solicitacao"
+        style="display: none;"
+    >
+
+        <div class="modal-conteudo">
+
+            <div class="modal-cabecalho">
+
+                <h2>
+                    🔐 Alterar Senha
+                </h2>
+
+                <button
+                    type="button"
+                    id="fecharModalSenha"
+                    class="fechar-modal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="form-configuracao">
+
+                <div class="campo-configuracao">
+
+                    <label>
+                        Nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="novaSenha"
+                        placeholder="Digite a nova senha"
+                    >
+
+                </div>
+
+
+                <div class="campo-configuracao">
+
+                    <label>
+                        Confirmar nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmarSenha"
+                        placeholder="Digite novamente a senha"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="salvarNovaSenha"
+                    class="btn-configuracao"
+                >
+
+                    Salvar nova senha
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script
+        type="module"
+        src="js/configuracoes.js"
+    ></script>
+
+</body>
+
+</html>
