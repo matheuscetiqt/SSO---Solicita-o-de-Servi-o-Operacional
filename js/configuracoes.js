@@ -467,7 +467,7 @@ if (fecharModalColaborador) {
 
 salvarColaborador.addEventListener(
     "click",
-    () => {
+    async () => {
 
         const nome =
             nomeColaborador.value.trim();
@@ -605,11 +605,11 @@ try {
     // CRIAR USUÁRIO NO FIREBASE
 
     const credencial =
-        await createUserWithEmailAndPassword(
-            auth,
-            email,
-            senha
-        );
+    await createUserWithEmailAndPassword(
+        authSecundario,
+        email,
+        senha
+    );
 
 
     const novoUsuario =
