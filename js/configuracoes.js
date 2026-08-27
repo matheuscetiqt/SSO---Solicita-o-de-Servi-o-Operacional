@@ -457,3 +457,52 @@ const salvarColaborador =
     document.getElementById(
         "salvarColaborador"
     );
+
+// ==========================================
+// ABRIR MODAL ADICIONAR COLABORADOR
+// ==========================================
+
+btnAdicionarColaborador.addEventListener(
+    "click",
+    () => {
+
+        modalAdicionarColaborador.style.display =
+            "flex";
+
+    }
+);
+
+
+// ==========================================
+// FECHAR MODAL PELO BOTÃO X
+// ==========================================
+
+fecharModalColaborador.addEventListener(
+    "click",
+    () => {
+
+        modalAdicionarColaborador.style.display =
+            "none";
+
+    }
+);
+// ==========================================
+// FECHAR AO CLICAR FORA DO MODAL
+// ==========================================
+
+modalAdicionarColaborador.addEventListener(
+    "click",
+    (evento) => {
+
+        if (
+            evento.target ===
+            modalAdicionarColaborador
+        ) {
+
+            modalAdicionarColaborador.style.display =
+                "none";
+
+        }
+
+    }
+);
