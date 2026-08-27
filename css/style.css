@@ -2049,3 +2049,316 @@ textarea{
     }
 
 }
+/* ==========================================
+   CONFIGURAÇÕES
+========================================== */
+
+.configuracoes-secao {
+    margin-bottom: 28px;
+}
+
+.configuracoes-titulo {
+    margin-bottom: 14px;
+}
+
+.configuracoes-titulo h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 0 0 5px;
+
+    font-size: 22px;
+    color: #173f63;
+}
+
+.configuracoes-titulo h2 i {
+    font-size: 20px;
+    color: #1f5f91;
+}
+
+.configuracoes-titulo span {
+    display: block;
+
+    font-size: 14px;
+    color: #6b7280;
+}
+
+
+/* ==========================================
+   CARDS DAS CONFIGURAÇÕES
+========================================== */
+
+.configuracoes-card {
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 8px 25px rgba(23, 63, 99, 0.08);
+
+    border: 1px solid #edf0f4;
+}
+
+
+/* ==========================================
+   MINHA CONTA
+========================================== */
+
+.configuracoes-secao:first-of-type .configuracoes-card {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.info-conta {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding: 18px 20px;
+
+    background: #f7f9fc;
+
+    border: 1px solid #e7edf4;
+
+    border-radius: 12px;
+}
+
+.info-conta span {
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #6b7280;
+}
+
+.info-conta strong {
+    font-size: 16px;
+
+    color: #173f63;
+
+    word-break: break-word;
+}
+
+
+/* ==========================================
+   BOTÕES DAS CONFIGURAÇÕES
+========================================== */
+
+.btn-configuracao {
+    border: none;
+
+    background: #1f5f91;
+
+    color: #ffffff;
+
+    min-height: 50px;
+
+    padding: 0 22px;
+
+    border-radius: 10px;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-configuracao:hover {
+    background: #173f63;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(31, 95, 145, 0.20);
+}
+
+.btn-configuracao:active {
+    transform: translateY(0);
+}
+
+
+/* BOTÃO ALTERAR SENHA */
+
+#btnAlterarSenha {
+    width: 100%;
+}
+
+
+/* ==========================================
+   ADMINISTRAÇÃO
+========================================== */
+
+#areaAdministracao .configuracoes-titulo {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+#areaAdministracao .configuracoes-card {
+    padding: 0;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   TABELA DE COLABORADORES
+========================================== */
+
+.tabela-configuracoes {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.tabela-configuracoes table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 800px;
+}
+
+.tabela-configuracoes thead {
+    background: #173f63;
+}
+
+.tabela-configuracoes th {
+    padding: 17px 18px;
+
+    color: #ffffff;
+
+    text-align: left;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.tabela-configuracoes td {
+    padding: 17px 18px;
+
+    border-bottom:
+        1px solid #edf0f4;
+
+    font-size: 14px;
+
+    color: #4b5563;
+}
+
+.tabela-configuracoes tbody tr {
+    transition: background 0.2s ease;
+}
+
+.tabela-configuracoes tbody tr:hover {
+    background: #f7f9fc;
+}
+
+.tabela-configuracoes tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ==========================================
+   MODAIS DE CONFIGURAÇÃO
+========================================== */
+
+.form-configuracao {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    padding-top: 8px;
+}
+
+.campo-configuracao {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.campo-configuracao label {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #173f63;
+}
+
+.campo-configuracao input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 15px;
+
+    border:
+        1px solid #d9e0e8;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 14px;
+
+    transition:
+        border 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.campo-configuracao input:focus {
+    border-color: #1f5f91;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(31, 95, 145, 0.10);
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .configuracoes-secao:first-of-type .configuracoes-card {
+        grid-template-columns: 1fr;
+    }
+
+    #areaAdministracao .configuracoes-titulo {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    #btnAdicionarColaborador {
+        width: 100%;
+    }
+
+}
