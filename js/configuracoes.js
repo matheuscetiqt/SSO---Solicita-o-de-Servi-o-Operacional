@@ -419,3 +419,127 @@ if (fecharModalColaborador) {
     );
 
 }
+// ==========================================
+// VALIDAR CAMPOS DO COLABORADOR
+// ==========================================
+
+salvarColaborador.addEventListener(
+    "click",
+    () => {
+
+        const nome =
+            nomeColaborador.value.trim();
+
+        const email =
+            emailColaborador.value
+                .trim()
+                .toLowerCase();
+
+        const senha =
+            senhaColaborador.value.trim();
+
+
+        // ==================================
+        // VALIDAR NOME
+        // ==================================
+
+        if (!nome) {
+
+            alert(
+                "Digite o nome do colaborador."
+            );
+
+            nomeColaborador.focus();
+
+            return;
+
+        }
+
+
+        if (nome.length < 3) {
+
+            alert(
+                "O nome deve possuir pelo menos 3 caracteres."
+            );
+
+            nomeColaborador.focus();
+
+            return;
+
+        }
+
+
+        // ==================================
+        // VALIDAR E-MAIL
+        // ==================================
+
+        if (!email) {
+
+            alert(
+                "Digite o e-mail do colaborador."
+            );
+
+            emailColaborador.focus();
+
+            return;
+
+        }
+
+
+        const emailValido =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (!emailValido.test(email)) {
+
+            alert(
+                "Digite um e-mail válido."
+            );
+
+            emailColaborador.focus();
+
+            return;
+
+        }
+
+
+        // ==================================
+        // VALIDAR SENHA
+        // ==================================
+
+        if (!senha) {
+
+            alert(
+                "Digite uma senha para o colaborador."
+            );
+
+            senhaColaborador.focus();
+
+            return;
+
+        }
+
+
+        if (senha.length < 6) {
+
+            alert(
+                "A senha deve possuir pelo menos 6 caracteres."
+            );
+
+            senhaColaborador.focus();
+
+            return;
+
+        }
+
+
+        // ==================================
+        // VALIDAÇÃO CONCLUÍDA
+        // ==================================
+
+        alert(
+            "Todos os campos foram preenchidos corretamente!"
+        );
+
+    }
+);
