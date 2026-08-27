@@ -419,3 +419,41 @@ if (fecharModalColaborador) {
     );
 
 }
+// ==========================================
+// MODAL ADICIONAR COLABORADOR
+// ==========================================
+
+const modalAdicionarColaborador =
+    document.getElementById(
+        "modalAdicionarColaborador"
+    );
+
+const btnAdicionarColaborador =
+    document.getElementById(
+        "btnAdicionarColaborador"
+    );
+
+const fecharModalColaborador =
+    document.getElementById(
+        "fecharModalColaborador"
+    );
+
+const nomeColaborador =
+    document.getElementById(
+        "nomeColaborador"
+    );
+
+const emailColaborador =
+    document.getElementById(
+        "emailColaborador"
+    );
+
+const senhaColaborador =
+    document.getElementById(
+        "senhaColaborador"
+    );
+
+const salvarColaborador =
+    document.getElementById(
+        "salvarColaborador"
+    );
