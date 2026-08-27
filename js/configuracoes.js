@@ -1,6 +1,7 @@
 import {
     onAuthStateChanged,
-    signOut
+    signOut,
+    updatePassword
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 import {
@@ -43,6 +44,40 @@ const areaAdministracao =
 const btnSair =
     document.getElementById(
         "btnSair"
+    );
+
+// ==========================================
+// ELEMENTOS - ALTERAR SENHA
+// ==========================================
+
+const btnAlterarSenha =
+    document.getElementById(
+        "btnAlterarSenha"
+    );
+
+const modalAlterarSenha =
+    document.getElementById(
+        "modalAlterarSenha"
+    );
+
+const fecharModalSenha =
+    document.getElementById(
+        "fecharModalSenha"
+    );
+
+const novaSenha =
+    document.getElementById(
+        "novaSenha"
+    );
+
+const confirmarSenha =
+    document.getElementById(
+        "confirmarSenha"
+    );
+
+const salvarNovaSenha =
+    document.getElementById(
+        "salvarNovaSenha"
     );
 
 
@@ -140,6 +175,155 @@ btnSair.addEventListener(
                 "Erro ao sair:",
                 erro
             );
+
+        }
+
+    }
+);
+// ==========================================
+// ABRIR MODAL ALTERAR SENHA
+// ==========================================
+
+btnAlterarSenha.addEventListener(
+    "click",
+    () => {
+
+        novaSenha.value = "";
+
+        confirmarSenha.value = "";
+
+        modalAlterarSenha.style.display =
+            "flex";
+
+    }
+);
+
+
+// ==========================================
+// FECHAR MODAL ALTERAR SENHA
+// ==========================================
+
+fecharModalSenha.addEventListener(
+    "click",
+    () => {
+
+        modalAlterarSenha.style.display =
+            "none";
+
+    }
+);
+
+
+// ==========================================
+// SALVAR NOVA SENHA
+// ==========================================
+
+salvarNovaSenha.addEventListener(
+    "click",
+    async () => {
+
+        const senha =
+            novaSenha.value.trim();
+
+        const confirmar =
+            confirmarSenha.value.trim();
+
+
+        // VALIDAÇÕES
+
+        if (!senha) {
+
+            alert(
+                "Digite a nova senha."
+            );
+
+            return;
+
+        }
+
+
+        if (senha.length < 6) {
+
+            alert(
+                "A senha deve possuir pelo menos 6 caracteres."
+            );
+
+            return;
+
+        }
+
+
+        if (senha !== confirmar) {
+
+            alert(
+                "As senhas não coincidem."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const usuario =
+                auth.currentUser;
+
+
+            if (!usuario) {
+
+                alert(
+                    "Usuário não identificado."
+                );
+
+                return;
+
+            }
+
+
+            // ALTERAR SENHA
+
+            await updatePassword(
+                usuario,
+                senha
+            );
+
+
+            alert(
+                "Senha alterada com sucesso!"
+            );
+
+
+            modalAlterarSenha.style.display =
+                "none";
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao alterar senha:",
+                erro
+            );
+
+
+            // FIREBASE PODE EXIGIR LOGIN RECENTE
+
+            if (
+                erro.code ===
+                "auth/requires-recent-login"
+            ) {
+
+                alert(
+                    "Por segurança, faça login novamente antes de alterar sua senha."
+                );
+
+            } else {
+
+                alert(
+                    "Não foi possível alterar a senha."
+                );
+
+            }
 
         }
 
