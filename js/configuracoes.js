@@ -1,8 +1,18 @@
 import {
     onAuthStateChanged,
     signOut,
-    updatePassword
+    updatePassword,
+    createUserWithEmailAndPassword,
+    getAuth,
+    initializeAuth,
+    deleteUser
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
     auth
@@ -329,3 +339,83 @@ salvarNovaSenha.addEventListener(
 
     }
 );
+// ==========================================
+// ELEMENTOS - COLABORADORES
+// ==========================================
+
+const btnAdicionarColaborador =
+    document.getElementById(
+        "btnAdicionarColaborador"
+    );
+
+const modalAdicionarColaborador =
+    document.getElementById(
+        "modalAdicionarColaborador"
+    );
+
+const fecharModalColaborador =
+    document.getElementById(
+        "fecharModalColaborador"
+    );
+
+const nomeColaborador =
+    document.getElementById(
+        "nomeColaborador"
+    );
+
+const emailColaborador =
+    document.getElementById(
+        "emailColaborador"
+    );
+
+const senhaColaborador =
+    document.getElementById(
+        "senhaColaborador"
+    );
+
+const salvarColaborador =
+    document.getElementById(
+        "salvarColaborador"
+    );
+// ==========================================
+// ABRIR MODAL ADICIONAR COLABORADOR
+// ==========================================
+
+if (btnAdicionarColaborador) {
+
+    btnAdicionarColaborador.addEventListener(
+        "click",
+        () => {
+
+            nomeColaborador.value = "";
+
+            emailColaborador.value = "";
+
+            senhaColaborador.value = "";
+
+            modalAdicionarColaborador.style.display =
+                "flex";
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// FECHAR MODAL ADICIONAR COLABORADOR
+// ==========================================
+
+if (fecharModalColaborador) {
+
+    fecharModalColaborador.addEventListener(
+        "click",
+        () => {
+
+            modalAdicionarColaborador.style.display =
+                "none";
+
+        }
+    );
+
+}
