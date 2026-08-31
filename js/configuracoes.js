@@ -14,6 +14,7 @@ import {
 import {
     collection,
     addDoc,
+    getDocs,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -188,15 +189,19 @@ onAuthStateChanged(
 
         if (ehAdministrador) {
 
-            areaAdministracao.style.display =
-                "block";
+    areaAdministracao.style.display =
+        "block";
 
-        } else {
 
-            areaAdministracao.style.display =
-                "none";
+    carregarColaboradores();
 
-        }
+
+} else {
+
+    areaAdministracao.style.display =
+        "none";
+
+}
 
     }
 );
@@ -419,6 +424,204 @@ const salvarColaborador =
     document.getElementById(
         "salvarColaborador"
     );
+
+// ==========================================
+// CARREGAR COLABORADORES
+// ==========================================
+
+async function carregarColaboradores() {
+
+    const tabela =
+        document.getElementById(
+            "tabelaColaboradores"
+        );
+
+
+    if (!tabela) {
+        return;
+    }
+
+
+    try {
+
+        tabela.innerHTML = `
+            <tr>
+                <td
+                    colspan="6"
+                    style="
+                        text-align: center;
+                        padding: 30px;
+                    "
+                >
+                    Carregando colaboradores...
+                </td>
+            </tr>
+        `;
+
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "colaboradores"
+                )
+            );
+
+
+        tabela.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            tabela.innerHTML = `
+                <tr>
+                    <td
+                        colspan="6"
+                        style="
+                            text-align: center;
+                            padding: 30px;
+                        "
+                    >
+                        Nenhum colaborador cadastrado.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        snapshot.forEach((documento) => {
+
+            const dados =
+                documento.data();
+
+
+            let dataCadastro = "-";
+
+
+            if (
+                dados.dataCadastro &&
+                dados.dataCadastro.toDate
+            ) {
+
+                dataCadastro =
+                    dados.dataCadastro
+                        .toDate()
+                        .toLocaleDateString(
+                            "pt-BR"
+                        );
+
+            }
+
+
+            const status =
+                dados.status || "ativo";
+
+
+            const statusTexto =
+                status === "ativo"
+                    ? "Ativo"
+                    : "Inativo";
+
+
+            const classeStatus =
+                status === "ativo"
+                    ? "ativo"
+                    : "inativo";
+
+
+            tabela.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            ${dados.nome || "-"}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${dados.email || "-"}
+                    </td>
+
+                    <td>
+                        ${dados.adicionadoPor || "-"}
+                    </td>
+
+                    <td>
+                        ${dataCadastro}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="status-colaborador ${classeStatus}"
+                        >
+                            ${statusTexto}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="btn-acao-colaborador"
+                            data-id="${documento.id}"
+                            data-status="${status}"
+                        >
+
+                            <i
+                                class="fa-solid ${
+                                    status === "ativo"
+                                        ? "fa-user-slash"
+                                        : "fa-user-check"
+                                }"
+                            ></i>
+
+                            ${
+                                status === "ativo"
+                                    ? "Desativar"
+                                    : "Ativar"
+                            }
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar colaboradores:",
+            erro
+        );
+
+
+        tabela.innerHTML = `
+            <tr>
+                <td
+                    colspan="6"
+                    style="
+                        text-align: center;
+                        padding: 30px;
+                    "
+                >
+                    Não foi possível carregar os colaboradores.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
 // ==========================================
 // ABRIR MODAL ADICIONAR COLABORADOR
 // ==========================================
