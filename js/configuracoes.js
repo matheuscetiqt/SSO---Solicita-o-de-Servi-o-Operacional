@@ -208,7 +208,77 @@ onAuthStateChanged(
     }
 );
 
+// ==========================================
+// ATIVAR / DESATIVAR COLABORADOR
+// ==========================================
 
+async function alterarStatusColaborador(
+    idColaborador,
+    statusAtual
+) {
+
+    const novoStatus =
+        statusAtual === "ativo"
+            ? "inativo"
+            : "ativo";
+
+
+    const acao =
+        novoStatus === "ativo"
+            ? "ativar"
+            : "desativar";
+
+
+    const confirmar =
+        confirm(
+            `Deseja realmente ${acao} este colaborador?`
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    try {
+
+        await updateDoc(
+            doc(
+                db,
+                "colaboradores",
+                idColaborador
+            ),
+            {
+                status: novoStatus
+            }
+        );
+
+
+        alert(
+            novoStatus === "ativo"
+                ? "Colaborador ativado com sucesso!"
+                : "Colaborador desativado com sucesso!"
+        );
+
+
+        await carregarColaboradores();
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao alterar status do colaborador:",
+            erro
+        );
+
+
+        alert(
+            "Não foi possível alterar o status do colaborador."
+        );
+
+    }
+
+}
 // ==========================================
 // BOTÃO SAIR
 // ==========================================
@@ -597,6 +667,26 @@ async function carregarColaboradores() {
             `;
 
         });
+
+        document
+    .querySelectorAll(
+        ".btn-acao-colaborador"
+    )
+    .forEach((botao) => {
+
+        botao.addEventListener(
+            "click",
+            () => {
+
+                alterarStatusColaborador(
+                    botao.dataset.id,
+                    botao.dataset.status
+                );
+
+            }
+        );
+
+    });
 
 
     } catch (erro) {
