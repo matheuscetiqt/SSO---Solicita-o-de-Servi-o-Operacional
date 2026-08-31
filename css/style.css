@@ -2555,3 +2555,20 @@ textarea{
     display: block;
     margin-bottom: 45px;
 }
+/* ==========================================
+   LOGO SENAI CETIQT - LATERAL
+========================================== */
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 45px;
+}
+
+.logo-senai-sidebar {
+    width: 180px;
+    height: auto;
+    display: block;
+}
