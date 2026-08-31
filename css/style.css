@@ -2551,3 +2551,9 @@ textarea{
 #modalAdicionarColaborador .form-configuracao .btn-configuracao:hover {
     background: #173f63;
 }
+.logo-senai {
+    width: 220px;
+    height: auto;
+    display: block;
+    margin-bottom: 45px;
+}
