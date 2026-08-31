@@ -114,22 +114,178 @@ return resultado;
 
 }
 
-onAuthStateChanged(auth, async (user) => {
+// ==========================================
+// VERIFICAR ACESSO AO SISTEMA
+// ==========================================
 
-    if (!user) {
+const ADMINISTRADORES = [
 
-        window.location.href = "index.html";
-        return;
+    "mdrconceicao@cetiqt.senai.br",
+    "rbenites@cetiqt.senai.br"
+
+];
+
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        // ==========================================
+        // USUÁRIO NÃO ESTÁ LOGADO
+        // ==========================================
+
+        if (!user) {
+
+            window.location.href =
+                "index.html";
+
+            return;
+
+        }
+
+
+        // ==========================================
+        // VERIFICAR SE É ADMINISTRADOR
+        // ==========================================
+
+        const email =
+            (user.email || "")
+                .toLowerCase()
+                .trim();
+
+
+        const ehAdministrador =
+            ADMINISTRADORES.includes(email);
+
+
+        // ==========================================
+        // ADMINISTRADOR TEM ACESSO
+        // ==========================================
+
+        if (ehAdministrador) {
+
+            carregarSolicitacoes();
+
+            iniciarNotificacoes(user);
+
+            carregarFotoUsuario(user);
+
+            return;
+
+        }
+
+
+        // ==========================================
+        // VERIFICAR COLABORADOR
+        // ==========================================
+
+        try {
+
+            const consulta =
+                query(
+                    collection(db, "colaboradores"),
+                    where(
+                        "uid",
+                        "==",
+                        user.uid
+                    )
+                );
+
+
+            const resultado =
+                await getDocs(consulta);
+
+
+            // ==========================================
+            // NÃO ENCONTROU COLABORADOR
+            // ==========================================
+
+            if (resultado.empty) {
+
+                await signOut(auth);
+
+                alert(
+                    "Seu acesso não está cadastrado no sistema."
+                );
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            // ==========================================
+            // PEGAR DADOS DO COLABORADOR
+            // ==========================================
+
+            const colaborador =
+                resultado.docs[0].data();
+
+
+            const status =
+                String(
+                    colaborador.status || ""
+                )
+                .toLowerCase()
+                .trim();
+
+
+            // ==========================================
+            // COLABORADOR INATIVO
+            // ==========================================
+
+            if (status !== "ativo") {
+
+                await signOut(auth);
+
+                alert(
+                    "Seu acesso está inativo. Entre em contato com o administrador."
+                );
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            // ==========================================
+            // ACESSO LIBERADO
+            // ==========================================
+
+            carregarSolicitacoes();
+
+            iniciarNotificacoes(user);
+
+            carregarFotoUsuario(user);
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao verificar acesso:",
+                erro
+            );
+
+
+            await signOut(auth);
+
+
+            alert(
+                "Não foi possível verificar seu acesso ao sistema."
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
 
     }
-
-    carregarSolicitacoes();
-
-    iniciarNotificacoes(user);
-
-    carregarFotoUsuario(user);
-
-});
+);
 
 async function carregarSolicitacoes() {
 
