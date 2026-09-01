@@ -2572,3 +2572,446 @@ textarea{
     height: auto;
     display: block;
 }
+/* =========================================================
+   AJUSTE FINAL — NOVA SOLICITAÇÃO
+   Layout mais compacto e profissional
+   ========================================================= */
+
+/* Área principal */
+main {
+    padding: 28px 40px;
+}
+
+/* Cabeçalho */
+main > header {
+    margin-bottom: 22px;
+}
+
+main > header h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #003B71;
+}
+
+main > header p {
+    margin: 5px 0 0;
+    color: #6B7280;
+}
+
+
+/* =========================================================
+   CARDS DA NOVA SOLICITAÇÃO
+   ========================================================= */
+
+.box {
+    width: 100%;
+    max-width: none;
+
+    background: #ffffff;
+
+    padding: 24px 30px;
+
+    margin: 0 0 18px;
+
+    border-radius: 16px;
+
+    border: 1px solid #E4EAF0;
+
+    box-shadow:
+        0 4px 15px rgba(0, 59, 113, 0.05);
+}
+
+
+/* Títulos das seções */
+
+.box h2 {
+    margin: 0 0 18px;
+
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid #E7EDF3;
+
+    color: #003B71;
+
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SOLICITANTE
+   ========================================================= */
+
+.info-user {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+}
+
+.info-item {
+    background: #F6F8FB;
+
+    padding: 15px 18px;
+
+    border: 1px solid #E3EAF1;
+
+    border-radius: 10px;
+}
+
+.info-item span {
+    font-size: 12px;
+
+    color: #718096;
+
+    margin-bottom: 5px;
+}
+
+.info-item strong {
+    font-size: 15px;
+
+    color: #003B71;
+}
+
+
+/* =========================================================
+   ANALISTA
+   ========================================================= */
+
+.analista {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid #D8E1E9;
+
+    border-radius: 9px;
+
+    background: #F8FAFC;
+
+    color: #003B71;
+
+    font-family: Poppins, sans-serif;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   TIPOS DE SERVIÇO
+   ========================================================= */
+
+.cards-servicos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.card-servico {
+    min-height: 150px;
+
+    padding: 18px 14px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    border: 1px solid #DCE5ED;
+
+    border-radius: 12px;
+
+    background: #FFFFFF;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+.card-servico:hover {
+    transform: translateY(-2px);
+
+    border-color: #005A9C;
+
+    box-shadow:
+        0 6px 16px rgba(0, 90, 156, 0.10);
+}
+
+
+.card-servico i {
+    font-size: 34px;
+
+    color: #005A9C;
+
+    margin-bottom: 10px;
+}
+
+
+.card-servico h3 {
+    margin: 0 0 6px;
+
+    color: #003B71;
+
+    font-size: 16px;
+
+    line-height: 1.35;
+}
+
+
+.card-servico p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+
+/* SERVIÇO SELECIONADO */
+
+.card-servico.active {
+    background: #005A9C;
+
+    border-color: #005A9C;
+
+    box-shadow:
+        0 6px 18px rgba(0, 90, 156, 0.18);
+}
+
+.card-servico.active i,
+.card-servico.active h3,
+.card-servico.active p {
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   FORMULÁRIOS DE PRODUTO / SERVIÇO
+   ========================================================= */
+
+#formProduto,
+#formServico {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px 20px;
+
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+.grupo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.grupo label {
+    color: #30465A;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.grupo input:not([type="radio"]):not([type="checkbox"]),
+.grupo select,
+.grupo textarea {
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    min-height: 44px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #D7E0E8;
+
+    border-radius: 9px;
+
+    font-family: Poppins, sans-serif;
+
+    font-size: 14px;
+
+    color: #263B50;
+
+    outline: none;
+
+    transition: .2s ease;
+}
+
+
+.grupo input:not([type="radio"]):not([type="checkbox"]):focus,
+.grupo select:focus,
+.grupo textarea:focus {
+
+    border-color: #005A9C;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 90, 156, 0.08);
+}
+
+
+.grupo textarea {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   CAMPOS QUE OCUPAM A LINHA INTEIRA
+   ========================================================= */
+
+.full {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   RADIO BUTTONS
+   ========================================================= */
+
+.grupo input[type="radio"] {
+
+    width: 16px;
+
+    height: 16px;
+
+    accent-color: #005A9C;
+
+    margin-right: 6px;
+}
+
+
+/* =========================================================
+   BOTÃO ENVIAR
+   ========================================================= */
+
+.enviar {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 4px;
+
+    margin-bottom: 20px;
+}
+
+
+.enviar button {
+
+    width: 220px;
+
+    padding: 13px 22px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #005A9C;
+
+    color: #FFFFFF;
+
+    font-family: Poppins, sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+
+.enviar button:hover {
+
+    background: #003B71;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .cards-servicos {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    main {
+        padding: 22px 18px;
+    }
+
+    .info-user,
+    #formProduto,
+    #formServico {
+
+        grid-template-columns: 1fr;
+    }
+
+    .cards-servicos {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .enviar button {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .box {
+        padding: 20px;
+    }
+
+    .cards-servicos {
+        grid-template-columns: 1fr;
+    }
+}
