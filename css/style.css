@@ -3016,42 +3016,20 @@ main > header p {
     }
 }
 /* ==========================================
-   POSIÇÃO DA LOGO NA TELA DE LOGIN
+   TELA DE LOGIN — AJUSTE DA LOGO
    ========================================== */
 
 .login-left {
     position: relative;
-    justify-content: flex-start;
-    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
 }
 
-.login-left .overlay {
-    width: 100%;
-    max-width: none;
-    position: relative;
-}
-
+/* Logo no canto superior esquerdo */
 .login-left .logo-senai {
     position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 190px;
-    height: auto;
-
-    margin: 0;
-}
-/* ==========================================
-   LOGO — CANTO SUPERIOR ESQUERDO
-   ========================================== */
-
-.login-left {
-    position: relative;
-}
-
-.login-left .logo-senai {
-    position: absolute;
-
     top: 45px;
     left: 50px;
 
@@ -3059,14 +3037,29 @@ main > header p {
     height: auto;
 
     margin: 0;
-
-    z-index: 10;
 }
 
-
-/* Mantém o restante do conteúdo centralizado */
-
+/* Conteúdo principal */
 .login-left .overlay {
     width: 100%;
     max-width: 600px;
+
+    /* espaço para não bater na logo */
+    padding-top: 80px;
+}
+
+/* SSO */
+.login-left .overlay h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Título */
+.login-left .overlay h2 {
+    margin-bottom: 30px;
+}
+
+/* Descrição */
+.login-left .overlay p {
+    margin: 0;
 }
