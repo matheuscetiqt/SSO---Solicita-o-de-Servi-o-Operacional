@@ -3041,3 +3041,32 @@ main > header p {
 
     margin: 0;
 }
+/* ==========================================
+   LOGO — CANTO SUPERIOR ESQUERDO
+   ========================================== */
+
+.login-left {
+    position: relative;
+}
+
+.login-left .logo-senai {
+    position: absolute;
+
+    top: 45px;
+    left: 50px;
+
+    width: 190px;
+    height: auto;
+
+    margin: 0;
+
+    z-index: 10;
+}
+
+
+/* Mantém o restante do conteúdo centralizado */
+
+.login-left .overlay {
+    width: 100%;
+    max-width: 600px;
+}
