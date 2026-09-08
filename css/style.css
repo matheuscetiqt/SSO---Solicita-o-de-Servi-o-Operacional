@@ -3063,3 +3063,28 @@ main > header p {
 .login-left .overlay p {
     margin: 0;
 }
+/* ==========================================
+   AJUSTE — DESCRIÇÃO DA CONCLUSÃO
+   ========================================== */
+
+.detalhe-conclusao {
+    grid-column: 1 / 3;
+    text-align: left !important;
+}
+
+.titulo-conclusao {
+    display: block;
+    text-align: left !important;
+}
+
+.texto-conclusao {
+    display: block;
+    width: 100%;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #222;
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
