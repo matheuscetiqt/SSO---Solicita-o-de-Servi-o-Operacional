@@ -312,11 +312,38 @@ async function enviarAnexosParaSharePoint(protocolo) {
     return linksArquivos;
 
 }
+
+let enviandoSolicitacao = false;
 const formulario = document.querySelector("form");
 
 formulario.addEventListener("submit", async (e) => {
 
     e.preventDefault();
+
+    // ==========================================
+// TRAVA CONTRA DUPLO ENVIO
+// ==========================================
+
+if (enviandoSolicitacao) {
+    return;
+}
+
+enviandoSolicitacao = true;
+
+const botaoEnviar = formulario.querySelector('button[type="submit"]');
+
+if (botaoEnviar) {
+    botaoEnviar.disabled = true;
+    botaoEnviar.dataset.textoOriginal = botaoEnviar.innerHTML;
+
+    botaoEnviar.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Enviando...
+    `;
+
+    botaoEnviar.style.opacity = "0.7";
+    botaoEnviar.style.cursor = "not-allowed";
+}
 
     const nome =
         document.getElementById("nomeUsuario").textContent.trim();
@@ -810,15 +837,28 @@ descricaoOutro:
 
     } catch (erro) {
 
-        console.error(
-            "Erro ao salvar a solicitação:",
-            erro
-        );
+    console.error(
+        "Erro ao salvar a solicitação:",
+        erro
+    );
 
-        alert(
-            "Erro ao salvar a solicitação."
-        );
+    alert(
+        "Erro ao salvar a solicitação."
+    );
 
+    // Libera o botão para tentar novamente
+    enviandoSolicitacao = false;
+
+    if (botaoEnviar) {
+        botaoEnviar.disabled = false;
+
+        botaoEnviar.innerHTML =
+            botaoEnviar.dataset.textoOriginal || "Enviar solicitação";
+
+        botaoEnviar.style.opacity = "1";
+        botaoEnviar.style.cursor = "pointer";
     }
+
+}
 
 });
