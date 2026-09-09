@@ -3119,3 +3119,95 @@ main > header p {
     align-items: center;
     justify-content: space-between;
 }
+/* ==========================================
+   FILTROS DO DASHBOARD
+   ========================================== */
+
+.filtros-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.filtro-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 24px;
+}
+
+.filtro-texto h2 {
+    margin: 0 0 5px;
+    color: #003b71;
+    font-size: 18px;
+}
+
+.filtro-texto span {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.busca-protocolo-campo,
+.filtro-analista-campo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.busca-protocolo-campo input,
+.filtro-analista-campo select {
+    flex: 1;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #d7e0e8;
+    border-radius: 8px;
+    background: #fff;
+    font-family: Poppins, sans-serif;
+    font-size: 13px;
+    color: #263b50;
+    outline: none;
+}
+
+.filtro-analista-campo select {
+    width: 100%;
+    cursor: pointer;
+}
+
+.busca-protocolo-campo input:focus,
+.filtro-analista-campo select:focus {
+    border-color: #005a9c;
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.08);
+}
+
+.busca-protocolo-campo button {
+    height: 42px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 8px;
+    background: #005b96;
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.busca-protocolo-campo button:hover {
+    background: #003b71;
+}
+
+/* ==========================================
+   RESPONSIVO
+   ========================================== */
+
+@media (max-width: 900px) {
+
+    .filtros-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+}
