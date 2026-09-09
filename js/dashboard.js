@@ -408,6 +408,47 @@ abrirModalSolicitacao(dados);
 }
 
 // ==========================================
+// BOTÃO ATUALIZAR DASHBOARD
+// ==========================================
+
+const btnAtualizar = document.getElementById("btnAtualizar");
+
+if (btnAtualizar) {
+
+    btnAtualizar.addEventListener("click", async () => {
+
+        const textoOriginal = btnAtualizar.innerHTML;
+
+        btnAtualizar.disabled = true;
+
+        btnAtualizar.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Atualizando...
+        `;
+
+        try {
+
+            await carregarSolicitacoes();
+
+        } catch (erro) {
+
+            console.error("Erro ao atualizar dashboard:", erro);
+
+            alert("Não foi possível atualizar as solicitações.");
+
+        } finally {
+
+            btnAtualizar.disabled = false;
+
+            btnAtualizar.innerHTML = textoOriginal;
+
+        }
+
+    });
+
+}
+
+// ==========================================
 // BUSCAR SOLICITAÇÃO POR PROTOCOLO
 // ==========================================
 
