@@ -291,119 +291,321 @@ async function carregarSolicitacoes() {
 
     const tabela = document.getElementById("tabelaSolicitacoes");
 
+    if (!tabela) return;
+
     tabela.innerHTML = "";
 
     let total = 0;
-let pendentes = 0;
-let andamento = 0;
-let concluidas = 0;
+    let pendentes = 0;
+    let andamento = 0;
+    let concluidas = 0;
 
-    const q = query(
-        collection(db, "solicitacoes"),
-        orderBy("dataCriacao", "desc")
-    );
+    try {
 
-    const snapshot = await getDocs(q);
+        const q = query(
+            collection(db, "solicitacoes"),
+            orderBy("dataCriacao", "desc")
+        );
 
-    snapshot.forEach((doc) => {
+        const snapshot = await getDocs(q);
 
-        const dados = doc.data();
+        // ==========================================
+        // GUARDAR SOLICITAÇÕES CARREGADAS
+        // ==========================================
 
-        total++;
+        solicitacoesCarregadas = [];
 
-if (dados.status === "Pendente") {
-    pendentes++;
-}
+        snapshot.forEach((docSnap) => {
 
-if (dados.status === "Em andamento") {
-    andamento++;
-}
+            const dados = docSnap.data();
 
-if (dados.status === "Concluída") {
-    concluidas++;
-}
+            solicitacoesCarregadas.push({
+                id: docSnap.id,
+                ...dados
+            });
 
-       tabela.innerHTML += `
-    <tr>
+        });
 
-        <td>${dados.protocolo || "-"}</td>
+        // ==========================================
+        // PREENCHER FILTRO DE ANALISTAS
+        // ==========================================
 
-        <td>${dados.solicitante || "-"}</td>
+        const filtroAnalista =
+            document.getElementById("filtroAnalista");
 
-        <td>${dados.tipoServico || "-"}</td>
+        if (filtroAnalista) {
 
-        <td>
-            <span class="status pendente">
-                ${dados.status || "-"}
-            </span>
-        </td>
+            const valorSelecionado =
+                filtroAnalista.value;
 
-        <td>
-            ${formatarData(dados.dataCriacao)}
-        </td>
+            const analistas = [
+                ...new Set(
+                    solicitacoesCarregadas
+                        .map(solicitacao => solicitacao.analista)
+                        .filter(analista => analista)
+                )
+            ];
 
-        <td>
-            <button
-                type="button"
-                class="btn-visualizar"
-                data-id="${doc.id}">
-                <i class="fa-solid fa-eye"></i>
-                Visualizar
-            </button>
-        </td>
-
-    </tr>
-`;
-
-    });
-
-    document.getElementById("totalSolicitacoes").textContent = total;
-document.getElementById("totalPendentes").textContent = pendentes;
-document.getElementById("totalAndamento").textContent = andamento;
-document.getElementById("totalConcluidas").textContent = concluidas;
-
-    document.querySelectorAll(".btn-visualizar").forEach((botao) => {
-
-    botao.addEventListener("click", async () => {
-
-        const idSolicitacao = botao.dataset.id;
-
-        console.log("Solicitação selecionada:", idSolicitacao);
-
-        try {
-
-            const referencia = doc(
-                db,
-                "solicitacoes",
-                idSolicitacao
+            analistas.sort((a, b) =>
+                a.localeCompare(b, "pt-BR")
             );
 
-            const resultado = await getDoc(referencia);
+            filtroAnalista.innerHTML = `
+                <option value="">
+                    Todos os analistas
+                </option>
+            `;
 
-            if (!resultado.exists()) {
+            analistas.forEach((analista) => {
 
-                alert("Solicitação não encontrada.");
-                return;
+                const option =
+                    document.createElement("option");
+
+                option.value = analista;
+                option.textContent = analista;
+
+                filtroAnalista.appendChild(option);
+
+            });
+
+            // Mantém o analista selecionado após atualizar
+            if (
+                analistas.includes(valorSelecionado)
+            ) {
+
+                filtroAnalista.value =
+                    valorSelecionado;
 
             }
 
-            const dados = resultado.data();
+        }
 
-dados.id = resultado.id;
+        // ==========================================
+        // VERIFICAR FILTRO SELECIONADO
+        // ==========================================
 
-abrirModalSolicitacao(dados);
+        let solicitacoesParaExibir =
+            solicitacoesCarregadas;
 
-        } catch (erro) {
+        if (
+            filtroAnalista &&
+            filtroAnalista.value
+        ) {
 
-            console.error("Erro ao buscar solicitação:", erro);
-
-            alert("Não foi possível carregar a solicitação.");
+            solicitacoesParaExibir =
+                solicitacoesCarregadas.filter(
+                    solicitacao =>
+                        solicitacao.analista ===
+                        filtroAnalista.value
+                );
 
         }
 
-    });
+        // ==========================================
+        // MONTAR TABELA
+        // ==========================================
 
-});
+        solicitacoesParaExibir.forEach((dados) => {
+
+            const status =
+                dados.status || "-";
+
+            // ==========================================
+            // CONTADORES
+            // ==========================================
+
+            total++;
+
+            if (status === "Pendente") {
+                pendentes++;
+            }
+
+            if (status === "Em andamento") {
+                andamento++;
+            }
+
+            if (status === "Concluída") {
+                concluidas++;
+            }
+
+            // ==========================================
+            // LINHA DA TABELA
+            // ==========================================
+
+            tabela.innerHTML += `
+                <tr>
+
+                    <td>
+                        ${dados.protocolo || "-"}
+                    </td>
+
+                    <td>
+                        ${dados.solicitante || "-"}
+                    </td>
+
+                    <td>
+                        ${dados.tipoServico || "-"}
+                    </td>
+
+                    <td>
+                        <span class="status pendente">
+                            ${status}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${formatarData(dados.dataCriacao)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="btn-visualizar"
+                            data-id="${dados.id}"
+                        >
+
+                            <i class="fa-solid fa-eye"></i>
+
+                            Visualizar
+
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+        // ==========================================
+        // CASO NÃO TENHA RESULTADOS
+        // ==========================================
+
+        if (solicitacoesParaExibir.length === 0) {
+
+            tabela.innerHTML = `
+                <tr>
+                    <td
+                        colspan="6"
+                        style="text-align:center;"
+                    >
+                        Nenhuma solicitação encontrada.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+        // ==========================================
+        // ATUALIZAR INDICADORES
+        // ==========================================
+
+        document.getElementById(
+            "totalSolicitacoes"
+        ).textContent = total;
+
+        document.getElementById(
+            "totalPendentes"
+        ).textContent = pendentes;
+
+        document.getElementById(
+            "totalAndamento"
+        ).textContent = andamento;
+
+        document.getElementById(
+            "totalConcluidas"
+        ).textContent = concluidas;
+
+        // ==========================================
+        // BOTÕES VISUALIZAR
+        // ==========================================
+
+        document
+            .querySelectorAll(".btn-visualizar")
+            .forEach((botao) => {
+
+                botao.addEventListener(
+                    "click",
+                    async () => {
+
+                        const idSolicitacao =
+                            botao.dataset.id;
+
+                        console.log(
+                            "Solicitação selecionada:",
+                            idSolicitacao
+                        );
+
+                        try {
+
+                            const referencia = doc(
+                                db,
+                                "solicitacoes",
+                                idSolicitacao
+                            );
+
+                            const resultado =
+                                await getDoc(
+                                    referencia
+                                );
+
+                            if (!resultado.exists()) {
+
+                                alert(
+                                    "Solicitação não encontrada."
+                                );
+
+                                return;
+                            }
+
+                            const dados =
+                                resultado.data();
+
+                            dados.id =
+                                resultado.id;
+
+                            abrirModalSolicitacao(
+                                dados
+                            );
+
+                        } catch (erro) {
+
+                            console.error(
+                                "Erro ao buscar solicitação:",
+                                erro
+                            );
+
+                            alert(
+                                "Não foi possível carregar a solicitação."
+                            );
+
+                        }
+
+                    }
+                );
+
+            });
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar solicitações:",
+            erro
+        );
+
+        tabela.innerHTML = `
+            <tr>
+                <td
+                    colspan="6"
+                    style="text-align:center;"
+                >
+                    Não foi possível carregar as solicitações.
+                </td>
+            </tr>
+        `;
+
+    }
 
 }
 
