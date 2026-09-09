@@ -651,6 +651,210 @@ if (btnAtualizar) {
 }
 
 // ==========================================
+// FILTRO POR ANALISTA
+// ==========================================
+
+const filtroAnalista =
+    document.getElementById("filtroAnalista");
+
+if (filtroAnalista) {
+
+    filtroAnalista.addEventListener("change", () => {
+
+        const analistaSelecionado =
+            filtroAnalista.value;
+
+        const tabela =
+            document.getElementById("tabelaSolicitacoes");
+
+        if (!tabela) return;
+
+        // Se "Todos os analistas" estiver selecionado
+        if (!analistaSelecionado) {
+
+            carregarSolicitacoes();
+
+            return;
+        }
+
+        // Filtra as solicitações pelo analista
+        const solicitacoesFiltradas =
+            solicitacoesCarregadas.filter(
+                solicitacao =>
+                    solicitacao.analista ===
+                    analistaSelecionado
+            );
+
+        // Reaproveita a função de carregamento
+        // criando apenas as linhas filtradas
+        tabela.innerHTML = "";
+
+        let total = 0;
+        let pendentes = 0;
+        let andamento = 0;
+        let concluidas = 0;
+
+        solicitacoesFiltradas.forEach((dados) => {
+
+            total++;
+
+            if (dados.status === "Pendente") {
+                pendentes++;
+            }
+
+            if (dados.status === "Em andamento") {
+                andamento++;
+            }
+
+            if (dados.status === "Concluída") {
+                concluidas++;
+            }
+
+            tabela.innerHTML += `
+                <tr>
+
+                    <td>
+                        ${dados.protocolo || "-"}
+                    </td>
+
+                    <td>
+                        ${dados.solicitante || "-"}
+                    </td>
+
+                    <td>
+                        ${dados.tipoServico || "-"}
+                    </td>
+
+                    <td>
+                        <span class="status pendente">
+                            ${dados.status || "-"}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${formatarData(dados.dataCriacao)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="btn-visualizar"
+                            data-id="${dados.id}"
+                        >
+
+                            <i class="fa-solid fa-eye"></i>
+                            Visualizar
+
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+        // Caso não encontre solicitações
+        if (solicitacoesFiltradas.length === 0) {
+
+            tabela.innerHTML = `
+                <tr>
+                    <td
+                        colspan="6"
+                        style="text-align:center;"
+                    >
+                        Nenhuma solicitação encontrada para este analista.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+        // Atualiza os indicadores
+        document.getElementById(
+            "totalSolicitacoes"
+        ).textContent = total;
+
+        document.getElementById(
+            "totalPendentes"
+        ).textContent = pendentes;
+
+        document.getElementById(
+            "totalAndamento"
+        ).textContent = andamento;
+
+        document.getElementById(
+            "totalConcluidas"
+        ).textContent = concluidas;
+
+        // Reativa os botões "Visualizar"
+        document
+            .querySelectorAll(".btn-visualizar")
+            .forEach((botao) => {
+
+                botao.addEventListener(
+                    "click",
+                    async () => {
+
+                        const idSolicitacao =
+                            botao.dataset.id;
+
+                        try {
+
+                            const referencia = doc(
+                                db,
+                                "solicitacoes",
+                                idSolicitacao
+                            );
+
+                            const resultado =
+                                await getDoc(
+                                    referencia
+                                );
+
+                            if (!resultado.exists()) {
+
+                                alert(
+                                    "Solicitação não encontrada."
+                                );
+
+                                return;
+                            }
+
+                            const dados =
+                                resultado.data();
+
+                            dados.id =
+                                resultado.id;
+
+                            abrirModalSolicitacao(
+                                dados
+                            );
+
+                        } catch (erro) {
+
+                            console.error(
+                                "Erro ao buscar solicitação:",
+                                erro
+                            );
+
+                            alert(
+                                "Não foi possível carregar a solicitação."
+                            );
+
+                        }
+
+                    }
+                );
+
+            });
+
+    });
+
+}
+
+// ==========================================
 // BUSCAR SOLICITAÇÃO POR PROTOCOLO
 // ==========================================
 
