@@ -314,23 +314,93 @@ async function enviarAnexosParaSharePoint(protocolo) {
 }
 
 let enviandoSolicitacao = false;
+let envioAutorizado = false;
+
 const formulario = document.querySelector("form");
+
+const botaoEnviar =
+    formulario.querySelector('button[type="submit"]');
+
+
+// ==========================================
+// AUTORIZAR ENVIO SOMENTE PELO BOTÃO
+// ==========================================
+
+if (botaoEnviar) {
+
+    botaoEnviar.addEventListener("click", () => {
+
+        envioAutorizado = true;
+
+    });
+
+}
+
+
+// ==========================================
+// BLOQUEAR ENTER COMO SUBMIT
+// ==========================================
+
+formulario.addEventListener("keydown", (e) => {
+
+    if (e.key === "Enter") {
+
+        e.preventDefault();
+
+    }
+
+});
+
+
+// ==========================================
+// ENVIO DO FORMULÁRIO
+// ==========================================
 
 formulario.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
+
     // ==========================================
-// TRAVA CONTRA DUPLO ENVIO
-// ==========================================
+    // SÓ PERMITE SE CLICOU NO BOTÃO
+    // ==========================================
 
-if (enviandoSolicitacao) {
-    return;
-}
+    if (!envioAutorizado) {
 
-enviandoSolicitacao = true;
+        return;
 
-const botaoEnviar = formulario.querySelector('button[type="submit"]');
+    }
+
+
+    // ==========================================
+    // TRAVA CONTRA DUPLO ENVIO
+    // ==========================================
+
+    if (enviandoSolicitacao) {
+
+        return;
+
+    }
+
+    enviandoSolicitacao = true;
+
+    if (botaoEnviar) {
+
+        botaoEnviar.disabled = true;
+
+        botaoEnviar.dataset.textoOriginal =
+            botaoEnviar.innerHTML;
+
+        botaoEnviar.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Enviando...
+        `;
+
+        botaoEnviar.style.opacity = "0.7";
+
+        botaoEnviar.style.cursor = "not-allowed";
+
+    }
 
 if (botaoEnviar) {
     botaoEnviar.disabled = true;
