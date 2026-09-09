@@ -157,38 +157,70 @@
 
 
         <!-- PESQUISA POR PROTOCOLO -->
-        <section class="busca-protocolo">
+       <section class="filtros-dashboard">
 
-            <div class="busca-protocolo-texto">
+    <!-- CONSULTA POR PROTOCOLO -->
+    <div class="filtro-box">
 
-                <h2>Consultar solicitação</h2>
+        <div class="filtro-texto">
 
-                <span>
-                    Digite o número do protocolo para visualizar uma solicitação.
-                </span>
+            <h2>Consultar solicitação</h2>
 
-            </div>
+            <span>
+                Digite o número do protocolo para visualizar uma solicitação.
+            </span>
+
+        </div>
+
+        <div class="busca-protocolo-campo">
+
+            <input
+                type="text"
+                id="inputBuscaProtocolo"
+                placeholder="Ex: SSO-123456789"
+            >
+
+            <button
+                type="button"
+                id="btnBuscarProtocolo"
+            >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Buscar
+            </button>
+
+        </div>
+
+    </div>
 
 
-            <div class="busca-protocolo-campo">
+    <!-- FILTRO POR ANALISTA -->
+    <div class="filtro-box">
 
-                <input
-                    type="text"
-                    id="inputBuscaProtocolo"
-                    placeholder="Ex: SSO-123456789"
-                >
+        <div class="filtro-texto">
 
-                <button
-                    type="button"
-                    id="btnBuscarProtocolo"
-                >
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    Buscar
-                </button>
+            <h2>Filtrar por analista</h2>
 
-            </div>
+            <span>
+                Selecione um analista para visualizar suas solicitações.
+            </span>
 
-        </section>
+        </div>
+
+        <div class="filtro-analista-campo">
+
+            <select id="filtroAnalista">
+
+                <option value="">
+                    Todos os analistas
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
 
 
         <section class="cards">
