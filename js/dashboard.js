@@ -286,7 +286,7 @@ onAuthStateChanged(
 
     }
 );
-
+let solicitacoesCarregadas = [];
 async function carregarSolicitacoes() {
 
     const tabela = document.getElementById("tabelaSolicitacoes");
