@@ -3114,3 +3114,8 @@ main > header p {
     cursor: not-allowed;
     transform: none;
 }
+.table-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
