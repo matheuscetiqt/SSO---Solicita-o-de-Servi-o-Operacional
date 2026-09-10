@@ -222,6 +222,16 @@ const camposArquivo =
 const arquivos = [];
 
 // ==========================================
+// ANEXOS DE OUTRO SERVIÇO
+// ==========================================
+
+if (arquivosOutro.length > 0) {
+
+    arquivos.push(...arquivosOutro);
+
+}
+    
+// ==========================================
 // ANEXOS DA SC - PRODUTO
 // ==========================================
 
@@ -357,6 +367,113 @@ camposArquivo.forEach((campo) => {
 
 let enviandoSolicitacao = false;
 let envioAutorizado = false;
+
+
+// ==========================================
+// ANEXOS DE OUTRO SERVIÇO
+// ==========================================
+
+let arquivosOutro = [];
+
+const inputAnexosOutro =
+    document.getElementById("arquivoOutro");
+
+const btnAdicionarAnexoOutro =
+    document.getElementById("btnAdicionarAnexoOutro");
+
+const listaAnexosOutro =
+    document.getElementById("listaAnexosOutro");
+
+
+// ==========================================
+// ADICIONAR ANEXOS UM POR VEZ
+// ==========================================
+
+if (btnAdicionarAnexoOutro && inputAnexosOutro) {
+
+    btnAdicionarAnexoOutro.addEventListener("click", () => {
+        inputAnexosOutro.click();
+    });
+
+    inputAnexosOutro.addEventListener("change", () => {
+
+        const novosArquivos =
+            Array.from(inputAnexosOutro.files);
+
+        if (novosArquivos.length === 0) {
+            return;
+        }
+
+        if (arquivosOutro.length + novosArquivos.length > 10) {
+
+            alert("É possível anexar no máximo 10 arquivos.");
+
+            inputAnexosOutro.value = "";
+
+            return;
+        }
+
+        arquivosOutro.push(...novosArquivos);
+
+        atualizarListaAnexosOutro();
+
+        inputAnexosOutro.value = "";
+    });
+}
+
+
+// ==========================================
+// MOSTRA OS ANEXOS NA TELA
+// ==========================================
+
+function atualizarListaAnexosOutro() {
+
+    if (!listaAnexosOutro) {
+        return;
+    }
+
+    listaAnexosOutro.innerHTML = "";
+
+    arquivosOutro.forEach((arquivo, index) => {
+
+        const item = document.createElement("div");
+
+        item.className = "anexo-item";
+
+        item.innerHTML = `
+            <span>
+                <i class="fa-solid fa-file"></i>
+                ${arquivo.name}
+            </span>
+
+            <button
+                type="button"
+                class="btn-remover-anexo"
+                data-index="${index}"
+                title="Remover arquivo"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        listaAnexosOutro.appendChild(item);
+    });
+
+    listaAnexosOutro
+        .querySelectorAll(".btn-remover-anexo")
+        .forEach((botao) => {
+
+            botao.addEventListener("click", () => {
+
+                const index =
+                    Number(botao.dataset.index);
+
+                arquivosOutro.splice(index, 1);
+
+                atualizarListaAnexosOutro();
+            });
+        });
+}
 
 // ==========================================
 // ANEXOS DO DOCUMENTO DE ENTRADA
@@ -1247,6 +1364,17 @@ if (listaAnexosEntrada) {
 
 if (inputAnexosEntrada) {
     inputAnexosEntrada.value = "";
+}
+
+// Limpa os anexos de Outro Serviço
+arquivosOutro = [];
+
+if (listaAnexosOutro) {
+    listaAnexosOutro.innerHTML = "";
+}
+
+if (inputAnexosOutro) {
+    inputAnexosOutro.value = "";
 }
 
         // Remove seleção dos cards
