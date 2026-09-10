@@ -889,19 +889,35 @@ Carregando...
 
     <div class="grupo">
 
-        <label>Incluir arquivo caso necessário</label>
+    <label>Incluir arquivo caso necessário</label>
 
-        <input
-            type="file"
-            id="arquivoOutro"
-            multiple
-        >
+    <input
+        type="file"
+        id="arquivoOutro"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.mp3"
+        style="display:none;"
+    >
 
-        <small>
-            Você pode anexar documentos, imagens, PDF, Word, Excel ou outros arquivos necessários.
-        </small>
+    <button
+        type="button"
+        id="btnAdicionarAnexoOutro"
+        class="btn-adicionar-anexo"
+    >
+        <i class="fa-solid fa-paperclip"></i>
+        Adicionar anexo
+    </button>
 
+    <div
+        id="listaAnexosOutro"
+        class="lista-anexos"
+    >
     </div>
+
+    <small>
+        Você pode adicionar até 10 arquivos, um por vez.
+    </small>
+
+</div>
 
 </div>
 
