@@ -2923,27 +2923,8 @@ main > header p {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 15px 0;
-    position: sticky;
-    bottom: 0;
-    z-index: 100;
-    background: #F4F7FB;
-}
-
-.enviar button {
-    width: 220px;
-    min-height: 48px;
-    padding: 13px 22px;
-    border: none;
-    border-radius: 9px;
-    background: #005A9C;
-    color: #FFFFFF;
-    font-family: Poppins, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .2s ease;
 }
 
 .enviar button {
@@ -2964,40 +2945,9 @@ main > header p {
     opacity: 1;
 }
 
-
-.enviar button {
-
-    width: 220px;
-
-    padding: 13px 22px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background: #005A9C;
-
-    color: #FFFFFF;
-
-    font-family: Poppins, sans-serif;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: .2s ease;
-}
-
-
 .enviar button:hover {
-
     background: #003B71;
-
-    transform: translateY(-1px);
 }
-
 
 /* =========================================================
    RESPONSIVIDADE
