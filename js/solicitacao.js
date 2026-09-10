@@ -216,24 +216,46 @@ function arquivoParaBase64(arquivo) {
 
 async function enviarAnexosParaSharePoint(protocolo) {
 
-    const camposArquivo =
-        document.querySelectorAll('input[type="file"]');
+const camposArquivo =
+    document.querySelectorAll('input[type="file"]');
 
-    const arquivos = [];
+const arquivos = [];
 
-    camposArquivo.forEach((campo) => {
+// ==========================================
+// ANEXOS DA SC - PRODUTO
+// ==========================================
 
-        if (campo.files && campo.files.length > 0) {
+// Adiciona os arquivos que foram selecionados
+// um por vez pelo botão "Adicionar anexo"
+if (arquivosProduto.length > 0) {
 
-            for (const arquivo of campo.files) {
+    arquivos.push(...arquivosProduto);
 
-                arquivos.push(arquivo);
+}
 
-            }
+// ==========================================
+// DEMAIS CAMPOS DE ARQUIVO
+// ==========================================
+
+camposArquivo.forEach((campo) => {
+
+    // Ignora o campo da SC Produto,
+    // pois ele já foi tratado acima
+    if (campo.id === "documentosProduto") {
+        return;
+    }
+
+    if (campo.files && campo.files.length > 0) {
+
+        for (const arquivo of campo.files) {
+
+            arquivos.push(arquivo);
 
         }
 
-    });
+    }
+
+});
 
     // Se não houver anexo, retorna lista vazia
     if (arquivos.length === 0) {
@@ -316,12 +338,117 @@ async function enviarAnexosParaSharePoint(protocolo) {
 let enviandoSolicitacao = false;
 let envioAutorizado = false;
 
+// ==========================================
+// ANEXOS DA SOLICITAÇÃO DE COMPRA - PRODUTO
+// ==========================================
+
+let arquivosProduto = [];
+
+const inputAnexosProduto =
+    document.getElementById("documentosProduto");
+
+const btnAdicionarAnexoProduto =
+    document.getElementById("btnAdicionarAnexoProduto");
+
+const listaAnexosProduto =
+    document.getElementById("listaAnexosProduto");
+
 const formulario = document.querySelector("form");
 
 const botaoEnviar =
     formulario.querySelector('button[type="submit"]');
 
+// ==========================================
+// ADICIONAR ANEXOS UM POR VEZ
+// ==========================================
 
+if (btnAdicionarAnexoProduto && inputAnexosProduto) {
+
+    btnAdicionarAnexoProduto.addEventListener("click", () => {
+        inputAnexosProduto.click();
+    });
+
+    inputAnexosProduto.addEventListener("change", () => {
+
+        const novosArquivos = Array.from(inputAnexosProduto.files);
+
+        if (novosArquivos.length === 0) {
+            return;
+        }
+
+        // Limite de 10 arquivos
+        if (arquivosProduto.length + novosArquivos.length > 10) {
+
+            alert("É possível anexar no máximo 10 arquivos.");
+
+            inputAnexosProduto.value = "";
+
+            return;
+        }
+
+        // Adiciona os novos arquivos sem apagar os anteriores
+        arquivosProduto.push(...novosArquivos);
+
+        atualizarListaAnexosProduto();
+
+        // Limpa o input para permitir selecionar
+        // outro arquivo no próximo clique
+        inputAnexosProduto.value = "";
+    });
+}
+
+// ==========================================
+// MOSTRA OS ANEXOS NA TELA
+// ==========================================
+
+function atualizarListaAnexosProduto() {
+
+    if (!listaAnexosProduto) {
+        return;
+    }
+
+    listaAnexosProduto.innerHTML = "";
+
+    arquivosProduto.forEach((arquivo, index) => {
+
+        const item = document.createElement("div");
+
+        item.className = "anexo-item";
+
+        item.innerHTML = `
+            <span>
+                <i class="fa-solid fa-file"></i>
+                ${arquivo.name}
+            </span>
+
+            <button
+                type="button"
+                class="btn-remover-anexo"
+                data-index="${index}"
+                title="Remover arquivo"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        listaAnexosProduto.appendChild(item);
+    });
+
+    document
+        .querySelectorAll(".btn-remover-anexo")
+        .forEach((botao) => {
+
+            botao.addEventListener("click", () => {
+
+                const index =
+                    Number(botao.dataset.index);
+
+                arquivosProduto.splice(index, 1);
+
+                atualizarListaAnexosProduto();
+            });
+        });
+}
 // ==========================================
 // AUTORIZAR ENVIO SOMENTE PELO BOTÃO
 // ==========================================
@@ -853,6 +980,17 @@ descricaoOutro:
         // Limpa o formulário
 
         formulario.reset();
+
+        // Limpa os anexos da SC Produto
+arquivosProduto = [];
+
+if (listaAnexosProduto) {
+    listaAnexosProduto.innerHTML = "";
+}
+
+if (inputAnexosProduto) {
+    inputAnexosProduto.value = "";
+}
 
 
         // Remove seleção dos cards
