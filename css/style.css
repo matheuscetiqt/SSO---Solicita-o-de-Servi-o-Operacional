@@ -3286,3 +3286,18 @@ main > header p {
 .btn-remover-anexo:hover {
     background: #fee2e2;
 }
+body {
+    background: #F4F7FB;
+    min-height: 100vh;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background: #F5F7FA;
+}
+
+main {
+    flex: 1;
+    padding: 40px;
+}
