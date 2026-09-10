@@ -243,6 +243,16 @@ if (arquivosPrenota.length > 0) {
 
 }
 
+
+    // ==========================================
+// ANEXOS DO DOCUMENTO DE ENTRADA
+// ==========================================
+
+if (arquivosEntrada.length > 0) {
+
+    arquivos.push(...arquivosEntrada);
+
+}
 // ==========================================
 // DEMAIS CAMPOS DE ARQUIVO
 // ==========================================
@@ -347,6 +357,112 @@ camposArquivo.forEach((campo) => {
 
 let enviandoSolicitacao = false;
 let envioAutorizado = false;
+
+// ==========================================
+// ANEXOS DO DOCUMENTO DE ENTRADA
+// ==========================================
+
+let arquivosEntrada = [];
+
+const inputAnexosEntrada =
+    document.getElementById("documentosEntrada");
+
+const btnAdicionarAnexoEntrada =
+    document.getElementById("btnAdicionarAnexoEntrada");
+
+const listaAnexosEntrada =
+    document.getElementById("listaAnexosEntrada");
+
+
+// ==========================================
+// ADICIONAR ANEXOS UM POR VEZ
+// ==========================================
+
+if (btnAdicionarAnexoEntrada && inputAnexosEntrada) {
+
+    btnAdicionarAnexoEntrada.addEventListener("click", () => {
+        inputAnexosEntrada.click();
+    });
+
+    inputAnexosEntrada.addEventListener("change", () => {
+
+        const novosArquivos =
+            Array.from(inputAnexosEntrada.files);
+
+        if (novosArquivos.length === 0) {
+            return;
+        }
+
+        if (arquivosEntrada.length + novosArquivos.length > 10) {
+
+            alert("É possível anexar no máximo 10 arquivos.");
+
+            inputAnexosEntrada.value = "";
+
+            return;
+        }
+
+        arquivosEntrada.push(...novosArquivos);
+
+        atualizarListaAnexosEntrada();
+
+        inputAnexosEntrada.value = "";
+    });
+}
+
+
+// ==========================================
+// MOSTRA OS ANEXOS NA TELA
+// ==========================================
+
+function atualizarListaAnexosEntrada() {
+
+    if (!listaAnexosEntrada) {
+        return;
+    }
+
+    listaAnexosEntrada.innerHTML = "";
+
+    arquivosEntrada.forEach((arquivo, index) => {
+
+        const item = document.createElement("div");
+
+        item.className = "anexo-item";
+
+        item.innerHTML = `
+            <span>
+                <i class="fa-solid fa-file"></i>
+                ${arquivo.name}
+            </span>
+
+            <button
+                type="button"
+                class="btn-remover-anexo"
+                data-index="${index}"
+                title="Remover arquivo"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        listaAnexosEntrada.appendChild(item);
+    });
+
+    listaAnexosEntrada
+        .querySelectorAll(".btn-remover-anexo")
+        .forEach((botao) => {
+
+            botao.addEventListener("click", () => {
+
+                const index =
+                    Number(botao.dataset.index);
+
+                arquivosEntrada.splice(index, 1);
+
+                atualizarListaAnexosEntrada();
+            });
+        });
+}
 
 // ==========================================
 // ANEXOS DA PRÉ-NOTA
@@ -1122,6 +1238,16 @@ if (inputAnexosPrenota) {
     inputAnexosPrenota.value = "";
 }
 
+// Limpa os anexos do Documento de Entrada
+arquivosEntrada = [];
+
+if (listaAnexosEntrada) {
+    listaAnexosEntrada.innerHTML = "";
+}
+
+if (inputAnexosEntrada) {
+    inputAnexosEntrada.value = "";
+}
 
         // Remove seleção dos cards
 
