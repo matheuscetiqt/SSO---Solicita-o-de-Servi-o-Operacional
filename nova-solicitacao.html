@@ -398,22 +398,34 @@ Carregando...
     </div>
 
 
-    <div class="grupo">
+<div class="grupo">
 
-        <label>Anexar Documentos</label>
+    <label>Anexar Documentos</label>
 
-        <input
-            type="file"
-            id="documentosProduto"
-            multiple
-            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.mp3"
-        >
+    <input
+        type="file"
+        id="documentosProduto"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.mp3"
+        style="display:none;"
+    >
 
-        <small>
-            É possível anexar até 10 arquivos.
-        </small>
+    <button
+        type="button"
+        id="btnAdicionarAnexoProduto"
+        class="btn-adicionar-anexo"
+    >
+        <i class="fa-solid fa-paperclip"></i>
+        Adicionar anexo
+    </button>
 
+    <div id="listaAnexosProduto" class="lista-anexos">
     </div>
+
+    <small>
+        É possível anexar até 10 arquivos.
+    </small>
+
+</div>
 
 </div>
 
