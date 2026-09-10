@@ -233,16 +233,6 @@ if (arquivosProduto.length > 0) {
 
 }
 
-    // ==========================================
-// ANEXOS DA PRÉ-NOTA
-// ==========================================
-
-if (arquivosPrenota.length > 0) {
-
-    arquivos.push(...arquivosPrenota);
-
-}
-
 // ==========================================
 // DEMAIS CAMPOS DE ARQUIVO
 // ==========================================
@@ -347,115 +337,6 @@ camposArquivo.forEach((campo) => {
 
 let enviandoSolicitacao = false;
 let envioAutorizado = false;
-
-// ==========================================
-// ANEXOS DA PRÉ-NOTA
-// ==========================================
-
-let arquivosPrenota = [];
-
-const inputAnexosPrenota =
-    document.getElementById("documentosPrenota");
-
-const btnAdicionarAnexoPrenota =
-    document.getElementById("btnAdicionarAnexoPrenota");
-
-const listaAnexosPrenota =
-    document.getElementById("listaAnexosPrenota");
-
-
-// ==========================================
-// ADICIONAR ANEXOS UM POR VEZ
-// ==========================================
-
-if (btnAdicionarAnexoPrenota && inputAnexosPrenota) {
-
-    btnAdicionarAnexoPrenota.addEventListener("click", () => {
-        inputAnexosPrenota.click();
-    });
-
-    inputAnexosPrenota.addEventListener("change", () => {
-
-        const novosArquivos =
-            Array.from(inputAnexosPrenota.files);
-
-        if (novosArquivos.length === 0) {
-            return;
-        }
-
-        // Limite de 10 arquivos
-        if (arquivosPrenota.length + novosArquivos.length > 10) {
-
-            alert("É possível anexar no máximo 10 arquivos.");
-
-            inputAnexosPrenota.value = "";
-
-            return;
-        }
-
-        // Adiciona sem substituir os anteriores
-        arquivosPrenota.push(...novosArquivos);
-
-        atualizarListaAnexosPrenota();
-
-        // Limpa o input para permitir novo anexo
-        inputAnexosPrenota.value = "";
-    });
-}
-
-
-// ==========================================
-// MOSTRA OS ANEXOS NA TELA
-// ==========================================
-
-function atualizarListaAnexosPrenota() {
-
-    if (!listaAnexosPrenota) {
-        return;
-    }
-
-    listaAnexosPrenota.innerHTML = "";
-
-    arquivosPrenota.forEach((arquivo, index) => {
-
-        const item = document.createElement("div");
-
-        item.className = "anexo-item";
-
-        item.innerHTML = `
-            <span>
-                <i class="fa-solid fa-file"></i>
-                ${arquivo.name}
-            </span>
-
-            <button
-                type="button"
-                class="btn-remover-anexo"
-                data-index="${index}"
-                title="Remover arquivo"
-            >
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        `;
-
-        listaAnexosPrenota.appendChild(item);
-    });
-
-    listaAnexosPrenota
-        .querySelectorAll(".btn-remover-anexo")
-        .forEach((botao) => {
-
-            botao.addEventListener("click", () => {
-
-                const index =
-                    Number(botao.dataset.index);
-
-                arquivosPrenota.splice(index, 1);
-
-                atualizarListaAnexosPrenota();
-            });
-        });
-}
 
 // ==========================================
 // ANEXOS DA SOLICITAÇÃO DE COMPRA - PRODUTO
@@ -1109,17 +990,6 @@ if (listaAnexosProduto) {
 
 if (inputAnexosProduto) {
     inputAnexosProduto.value = "";
-}
-
-        // Limpa os anexos da Pré-nota
-arquivosPrenota = [];
-
-if (listaAnexosPrenota) {
-    listaAnexosPrenota.innerHTML = "";
-}
-
-if (inputAnexosPrenota) {
-    inputAnexosPrenota.value = "";
 }
 
         // Remove seleção dos cards
