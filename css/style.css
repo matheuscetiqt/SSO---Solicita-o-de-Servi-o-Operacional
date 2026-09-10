@@ -3211,3 +3211,78 @@ main > header p {
     }
 
 }
+/* ==========================================
+   ANEXOS - SOLICITAÇÃO DE COMPRA
+   ========================================== */
+
+.btn-adicionar-anexo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #005b96;
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-adicionar-anexo:hover {
+    background: #003b71;
+    transform: translateY(-1px);
+}
+
+.lista-anexos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.anexo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.anexo-item span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.anexo-item span i {
+    color: #005b96;
+}
+
+.btn-remover-anexo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #dc2626;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.btn-remover-anexo:hover {
+    background: #fee2e2;
+}
