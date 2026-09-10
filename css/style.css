@@ -2919,16 +2919,32 @@ main > header p {
    ========================================================= */
 
 .enviar {
-
     width: 100%;
-
     display: flex;
-
     justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    position: relative;
+    z-index: 10;
+}
 
-    margin-top: 4px;
-
-    margin-bottom: 20px;
+.enviar button {
+    width: 220px;
+    min-height: 48px;
+    padding: 13px 22px;
+    border: none;
+    border-radius: 9px;
+    background: #005A9C;
+    color: #FFFFFF;
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s ease;
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 
