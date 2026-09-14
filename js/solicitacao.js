@@ -251,6 +251,16 @@ if (arquivosEntrada.length > 0) {
 
 }
 
+    // ==========================================
+// ANEXOS DE OUTRO SERVIÇO
+// ==========================================
+
+if (arquivosOutro.length > 0) {
+
+    arquivos.push(...arquivosOutro);
+
+}
+
 // ==========================================
 // DEMAIS CAMPOS DE ARQUIVO
 // ==========================================
@@ -1349,6 +1359,17 @@ if (listaAnexosEntrada) {
 
 if (inputAnexosEntrada) {
     inputAnexosEntrada.value = "";
+}
+
+// Limpa os anexos de Outro Serviço
+arquivosOutro = [];
+
+if (listaAnexosOutro) {
+    listaAnexosOutro.innerHTML = "";
+}
+
+if (inputAnexosOutro) {
+    inputAnexosOutro.value = "";
 }
         // Remove seleção dos cards
 
