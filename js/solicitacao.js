@@ -685,6 +685,20 @@ function atualizarListaAnexosPrenota() {
             });
         });
 }
+// ==========================================
+// ANEXOS DO PEDIDO DE VENDA
+// ==========================================
+
+let arquivosPedidoVenda = [];
+
+const inputAnexosPedidoVenda =
+    document.getElementById("documentosPedidoVenda");
+
+const btnAdicionarAnexoPedidoVenda =
+    document.getElementById("btnAdicionarAnexoPedidoVenda");
+
+const listaAnexosPedidoVenda =
+    document.getElementById("listaAnexosPedidoVenda");
 
 // ==========================================
 // ANEXOS DA SOLICITAÇÃO DE COMPRA - PRODUTO
