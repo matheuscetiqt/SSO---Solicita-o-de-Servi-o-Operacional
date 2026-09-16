@@ -701,6 +701,130 @@ const btnAdicionarAnexoProduto =
 const listaAnexosProduto =
     document.getElementById("listaAnexosProduto");
 
+// ==========================================
+// ANEXOS DO PEDIDO DE VENDA
+// ==========================================
+
+let arquivosPedidoVenda = [];
+
+const inputAnexosPedidoVenda =
+    document.getElementById("documentosPedidoVenda");
+
+const btnAdicionarAnexoPedidoVenda =
+    document.getElementById("btnAdicionarAnexoPedidoVenda");
+
+const listaAnexosPedidoVenda =
+    document.getElementById("listaAnexosPedidoVenda");
+
+
+// ==========================================
+// ADICIONAR ANEXOS UM POR VEZ
+// ==========================================
+
+if (btnAdicionarAnexoPedidoVenda && inputAnexosPedidoVenda) {
+
+    btnAdicionarAnexoPedidoVenda.addEventListener("click", () => {
+        inputAnexosPedidoVenda.click();
+    });
+
+    inputAnexosPedidoVenda.addEventListener("change", () => {
+
+        const novosArquivos =
+            Array.from(inputAnexosPedidoVenda.files);
+
+        if (novosArquivos.length === 0) {
+            return;
+        }
+
+        // Limite de 10 arquivos
+        if (
+            arquivosPedidoVenda.length +
+            novosArquivos.length > 10
+        ) {
+
+            alert(
+                "É possível anexar no máximo 10 arquivos."
+            );
+
+            inputAnexosPedidoVenda.value = "";
+
+            return;
+        }
+
+        // Adiciona os novos arquivos
+        arquivosPedidoVenda.push(
+            ...novosArquivos
+        );
+
+        atualizarListaAnexosPedidoVenda();
+
+        // Limpa o input para permitir
+        // adicionar outro arquivo
+        inputAnexosPedidoVenda.value = "";
+    });
+}
+
+
+// ==========================================
+// MOSTRA OS ANEXOS DO PEDIDO DE VENDA
+// ==========================================
+
+function atualizarListaAnexosPedidoVenda() {
+
+    if (!listaAnexosPedidoVenda) {
+        return;
+    }
+
+    listaAnexosPedidoVenda.innerHTML = "";
+
+    arquivosPedidoVenda.forEach((arquivo, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "anexo-item";
+
+        item.innerHTML = `
+            <span>
+                <i class="fa-solid fa-file"></i>
+                ${arquivo.name}
+            </span>
+
+            <button
+                type="button"
+                class="btn-remover-anexo-pedido-venda"
+                data-index="${index}"
+                title="Remover arquivo"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        listaAnexosPedidoVenda.appendChild(item);
+    });
+
+
+    listaAnexosPedidoVenda
+        .querySelectorAll(
+            ".btn-remover-anexo-pedido-venda"
+        )
+        .forEach((botao) => {
+
+            botao.addEventListener("click", () => {
+
+                const index =
+                    Number(botao.dataset.index);
+
+                arquivosPedidoVenda.splice(
+                    index,
+                    1
+                );
+
+                atualizarListaAnexosPedidoVenda();
+            });
+        });
+}
+
 const formulario = document.querySelector("form");
 
 const botaoEnviar =
