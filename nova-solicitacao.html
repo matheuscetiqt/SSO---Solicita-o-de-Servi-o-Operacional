@@ -780,7 +780,7 @@ Carregando...
     </div>
 
 
-    <div class="grupo">
+        <div class="grupo">
 
         <label>Número da Natureza</label>
 
@@ -788,6 +788,53 @@ Carregando...
             type="text"
             id="numeroNatureza"
         >
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Anexar Documentos</label>
+
+        <input
+            type="file"
+            id="documentosPedidoVenda"
+            multiple
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.mp3"
+            style="display:none;"
+        >
+
+        <button
+            type="button"
+            id="btnAdicionarAnexoPedidoVenda"
+            class="btn-adicionar-anexo"
+        >
+            <i class="fa-solid fa-paperclip"></i>
+            Adicionar anexo
+        </button>
+
+        <div
+            id="listaAnexosPedidoVenda"
+            class="lista-anexos"
+        >
+        </div>
+
+        <small>
+            É possível anexar até 10 arquivos.
+        </small>
+
+    </div>
+
+
+    <div class="grupo">
+
+        <label>Observações</label>
+
+        <textarea
+            id="observacoesPedidoVenda"
+            rows="5"
+            placeholder="Informe alguma observação, caso necessário."
+        ></textarea>
 
     </div>
 
