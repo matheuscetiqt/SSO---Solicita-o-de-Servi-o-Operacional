@@ -1141,9 +1141,11 @@ if (botaoEnviar) {
             numeroLoja:
                 document.getElementById("numeroLoja")?.value || "",
 
-            numeroNatureza:
-                document.getElementById("numeroNatureza")?.value || ""
+           numeroNatureza:
+    document.getElementById("numeroNatureza")?.value || "",
 
+observacoesPedidoVenda:
+    document.getElementById("observacoesPedidoVenda")?.value || ""
         };
 
     }
@@ -1384,6 +1386,9 @@ const referenciaSolicitacao = await addDoc(
 
                 numeroNatureza:
                     dadosPedidoVenda.numeroNatureza,
+        
+        observacoesPedidoVenda:
+    dadosPedidoVenda.observacoesPedidoVenda,
 
                 // ------------------------------
 // DADOS DO DOCUMENTO DE ENTRADA
