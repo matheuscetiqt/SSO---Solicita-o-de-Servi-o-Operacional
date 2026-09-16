@@ -1095,18 +1095,19 @@ if (botaoEnviar) {
 
     let dadosPedidoVenda = {
 
-        numeroNotaFiscalSGF: "",
-        valorPedidoVenda: "",
-        favorecido: "",
-        previsaoRepasse: "",
-        numeroUO: "",
-        numeroCR: "",
-        numeroProduto: "",
-        numeroCliente: "",
-        numeroLoja: "",
-        numeroNatureza: ""
+    numeroNotaFiscalSGF: "",
+    valorPedidoVenda: "",
+    favorecido: "",
+    previsaoRepasse: "",
+    numeroUO: "",
+    numeroCR: "",
+    numeroProduto: "",
+    numeroCliente: "",
+    numeroLoja: "",
+    numeroNatureza: "",
+    observacoesPedidoVenda: ""
 
-    };
+};
 
 
     if (tipoServico === "Pedido de Venda") {
