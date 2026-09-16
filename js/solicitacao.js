@@ -232,6 +232,16 @@ if (arquivosProduto.length > 0) {
     arquivos.push(...arquivosProduto);
 
 }
+
+    // ==========================================
+// ANEXOS DO PEDIDO DE VENDA
+// ==========================================
+
+if (arquivosPedidoVenda.length > 0) {
+
+    arquivos.push(...arquivosPedidoVenda);
+
+}
     // ==========================================
 // ANEXOS DA PRÉ-NOTA
 // ==========================================
@@ -1463,6 +1473,18 @@ if (listaAnexosProduto) {
 if (inputAnexosProduto) {
     inputAnexosProduto.value = "";
 }
+
+// Limpa os anexos do Pedido de Venda
+arquivosPedidoVenda = [];
+
+if (listaAnexosPedidoVenda) {
+    listaAnexosPedidoVenda.innerHTML = "";
+}
+
+if (inputAnexosPedidoVenda) {
+    inputAnexosPedidoVenda.value = "";
+}
+        
 // Limpa os anexos da Pré-nota
 arquivosPrenota = [];
 
