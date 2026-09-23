@@ -73,12 +73,37 @@ async function carregarMinhasSolicitacoes() {
 
         }
 
-        const emailUsuario =
-            usuarioLogado.email
-                .toLowerCase();
+       const emailUsuario =
+    usuarioLogado.email
+        .toLowerCase();
 
-        const ANALISTA_RESPONSAVEL =
-    usuarioLogado.displayName;
+let ANALISTA_RESPONSAVEL = null;
+
+const usuarios =
+    await getDocs(
+        collection(
+            db,
+            "usuarios"
+        )
+    );
+
+usuarios.forEach((docUsuario) => {
+
+    const dadosUsuario =
+        docUsuario.data();
+
+    if (
+        dadosUsuario.email &&
+        dadosUsuario.email.toLowerCase() ===
+        emailUsuario
+    ) {
+
+        ANALISTA_RESPONSAVEL =
+            dadosUsuario.analista;
+
+    }
+
+});
 
         const snapshot =
             await getDocs(
@@ -107,6 +132,7 @@ console.log(dados);
 
 if (
     dados.analista &&
+    ANALISTA_RESPONSAVEL &&
     dados.analista.toLowerCase() ===
     ANALISTA_RESPONSAVEL.toLowerCase()
 ) {
