@@ -282,22 +282,35 @@ if (
                     ${dataFormatada}
                 </td>
 
-                <td>
+<td>
 
-                    <button
-                        class="btn-visualizar"
-                    >
+    <div style="display: flex; gap: 8px;">
 
-                        <i
-                            class="fa-solid fa-eye"
-                        ></i>
+        <button
+            class="btn-visualizar"
+            title="Visualizar solicitação"
+        >
 
-                        Visualizar
+            <i class="fa-solid fa-eye"></i>
 
-                    </button>
+            Visualizar
 
-                </td>
+        </button>
 
+        <button
+            class="btn-editar"
+            title="Editar solicitação"
+        >
+
+            <i class="fa-solid fa-pen"></i>
+
+            Editar
+
+        </button>
+
+    </div>
+
+</td>
             `;
 
 
@@ -317,6 +330,21 @@ if (
 
                     }
                 );
+
+            linha
+    .querySelector(
+        ".btn-editar"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            editarSolicitacao(
+                dados
+            );
+
+        }
+    );
 
 
             tabela.appendChild(
@@ -505,7 +533,28 @@ function abrirModalSolicitacao(dados) {
 
 }
 
+// ==========================================
+// EDITAR SOLICITAÇÃO
+// ==========================================
 
+function editarSolicitacao(dados) {
+
+    console.log(
+        "SOLICITAÇÃO SELECIONADA PARA EDIÇÃO:",
+        dados
+    );
+
+    console.log(
+        "ID DO DOCUMENTO:",
+        dados.id
+    );
+
+    console.log(
+        "PROTOCOLO:",
+        dados.protocolo
+    );
+
+}
 // ==========================================
 // FECHAR MODAL
 // ==========================================
