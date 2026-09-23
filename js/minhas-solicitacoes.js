@@ -563,6 +563,10 @@ function abrirModalSolicitacao(dados) {
 // EDITAR SOLICITAÇÃO
 // ==========================================
 
+// ==========================================
+// EDITAR SOLICITAÇÃO
+// ==========================================
+
 function editarSolicitacao(dados) {
 
     console.log(
@@ -579,6 +583,19 @@ function editarSolicitacao(dados) {
         "PROTOCOLO:",
         dados.protocolo
     );
+
+    // Guarda a solicitação selecionada
+    // temporariamente para a página de edição
+
+    sessionStorage.setItem(
+        "solicitacaoEmEdicao",
+        JSON.stringify(dados)
+    );
+
+    // Abre o formulário
+
+    window.location.href =
+        "nova-solicitacao.html?modo=edicao";
 
 }
 // ==========================================
