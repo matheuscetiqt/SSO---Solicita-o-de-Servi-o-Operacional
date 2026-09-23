@@ -106,9 +106,9 @@ console.log(dados);
     console.log("Analista procurado:", ANALISTA_RESPONSAVEL);
 
 if (
-    dados.email &&
-    dados.email.toLowerCase() ===
-    emailUsuario
+    dados.analista &&
+    dados.analista.toLowerCase() ===
+    ANALISTA_RESPONSAVEL.toLowerCase()
 ) {
 
     minhasSolicitacoes.push({
