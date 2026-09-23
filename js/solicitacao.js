@@ -17,8 +17,9 @@ window.addEventListener("load", () => {
 
     configurarCards();
 
-});
+    carregarSolicitacaoParaEdicao();
 
+});
 async function carregarUsuario() {
 
     onAuthStateChanged(auth, async (user) => {
