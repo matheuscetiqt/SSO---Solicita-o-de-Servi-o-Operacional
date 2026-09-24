@@ -1073,6 +1073,17 @@ formulario.addEventListener("keydown", (e) => {
 
         e.preventDefault();
 
+        const parametros = new URLSearchParams(window.location.search);
+const modoEdicao = parametros.get("modo");
+
+const dadosEdicao = sessionStorage.getItem("solicitacaoEmEdicao");
+
+let solicitacaoEdicao = null;
+
+if (modoEdicao === "edicao" && dadosEdicao) {
+    solicitacaoEdicao = JSON.parse(dadosEdicao);
+}
+
     }
 
 });
