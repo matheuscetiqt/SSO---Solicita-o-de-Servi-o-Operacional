@@ -23,6 +23,77 @@ window.addEventListener("load", () => {
 async function carregarUsuario() {
 
     // ==========================================
+    // PRÉ-NOTA
+    // ==========================================
+
+    if (
+        dados.tipoServico ===
+        "Abertura de Pré-nota"
+    ) {
+
+        document.getElementById(
+            "valorPrenota"
+        ).value =
+            dados.valorPrenota || "";
+
+        document.getElementById(
+            "bancoPrenota"
+        ).value =
+            dados.bancoPrenota || "";
+
+        document.getElementById(
+            "agenciaPrenota"
+        ).value =
+            dados.agenciaPrenota || "";
+
+        document.getElementById(
+            "contaCorrentePrenota"
+        ).value =
+            dados.contaCorrentePrenota || "";
+
+        document.getElementById(
+            "observacoesPrenota"
+        ).value =
+            dados.observacoesPrenota || "";
+
+    }
+
+}
+
+    onAuthStateChanged(auth, async (user) => {
+
+        if (!user) {
+
+            window.location.href = "index.html";
+            return;
+
+        }
+
+        const emailUsuario = user.email.toLowerCase();
+
+        const usuarios = await getDocs(collection(db, "usuarios"));
+
+        usuarios.forEach((doc) => {
+
+            const dados = doc.data();
+
+           if (dados.email.toLowerCase() === emailUsuario) {
+
+    document.getElementById("nomeUsuario").textContent = dados.nome;
+
+    document.getElementById("emailUsuario").textContent = dados.email;
+
+    document.getElementById("analistaResponsavel").textContent = dados.analista;
+
+}
+
+        });
+
+    });
+
+}
+
+   // ==========================================
 // CARREGAR SOLICITAÇÃO PARA EDIÇÃO
 // ==========================================
 
@@ -98,78 +169,6 @@ function carregarSolicitacaoParaEdicao() {
         }
 
     });
-
-
-    // ==========================================
-    // PRÉ-NOTA
-    // ==========================================
-
-    if (
-        dados.tipoServico ===
-        "Abertura de Pré-nota"
-    ) {
-
-        document.getElementById(
-            "valorPrenota"
-        ).value =
-            dados.valorPrenota || "";
-
-        document.getElementById(
-            "bancoPrenota"
-        ).value =
-            dados.bancoPrenota || "";
-
-        document.getElementById(
-            "agenciaPrenota"
-        ).value =
-            dados.agenciaPrenota || "";
-
-        document.getElementById(
-            "contaCorrentePrenota"
-        ).value =
-            dados.contaCorrentePrenota || "";
-
-        document.getElementById(
-            "observacoesPrenota"
-        ).value =
-            dados.observacoesPrenota || "";
-
-    }
-
-}
-
-    onAuthStateChanged(auth, async (user) => {
-
-        if (!user) {
-
-            window.location.href = "index.html";
-            return;
-
-        }
-
-        const emailUsuario = user.email.toLowerCase();
-
-        const usuarios = await getDocs(collection(db, "usuarios"));
-
-        usuarios.forEach((doc) => {
-
-            const dados = doc.data();
-
-           if (dados.email.toLowerCase() === emailUsuario) {
-
-    document.getElementById("nomeUsuario").textContent = dados.nome;
-
-    document.getElementById("emailUsuario").textContent = dados.email;
-
-    document.getElementById("analistaResponsavel").textContent = dados.analista;
-
-}
-
-        });
-
-    });
-
-}
 
 function configurarCards() {
 
