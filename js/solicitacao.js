@@ -17,8 +17,6 @@ window.addEventListener("load", () => {
 
     configurarCards();
 
-    carregarSolicitacaoParaEdicao();
-
 });
 async function carregarUsuario() {
 
@@ -67,83 +65,6 @@ async function carregarUsuario() {
     });
 
 }
-
-   // ==========================================
-// CARREGAR SOLICITAÇÃO PARA EDIÇÃO
-// ==========================================
-
-function carregarSolicitacaoParaEdicao() {
-
-    const parametros =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const modo =
-        parametros.get("modo");
-
-    // Se não estiver em modo edição,
-    // não faz nada.
-
-    if (modo !== "edicao") {
-
-        return;
-
-    }
-
-    const dadosSalvos =
-        sessionStorage.getItem(
-            "solicitacaoEmEdicao"
-        );
-
-    if (!dadosSalvos) {
-
-        console.warn(
-            "Nenhuma solicitação encontrada para edição."
-        );
-
-        return;
-
-    }
-
-    const dados =
-        JSON.parse(dadosSalvos);
-
-    console.log(
-        "SOLICITAÇÃO CARREGADA PARA EDIÇÃO:",
-        dados
-    );
-
-
-    // ==========================================
-    // IDENTIFICAR O SERVIÇO
-    // ==========================================
-
-    const cards =
-        document.querySelectorAll(
-            ".card-servico"
-        );
-
-    cards.forEach((card) => {
-
-        const titulo =
-            card
-                .querySelector("h3")
-                .textContent
-                .trim();
-
-        if (
-            titulo ===
-            dados.tipoServico
-        ) {
-
-            // Simula o clique no card
-
-            card.click();
-
-        }
-
-    });
 
 function configurarCards() {
 
