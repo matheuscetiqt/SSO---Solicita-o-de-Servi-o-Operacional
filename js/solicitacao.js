@@ -244,6 +244,15 @@ if (arquivosProduto.length > 0) {
     arquivos.push(...arquivosProduto);
 
 }
+    // ==========================================
+// ANEXOS DA SC - SERVIÇO
+// ==========================================
+
+if (arquivosServico.length > 0) {
+
+    arquivos.push(...arquivosServico);
+
+}
 
     // ==========================================
 // ANEXOS DO PEDIDO DE VENDA
@@ -724,6 +733,21 @@ const listaAnexosProduto =
     document.getElementById("listaAnexosProduto");
 
 // ==========================================
+// ANEXOS DA SOLICITAÇÃO DE COMPRA - SERVIÇO
+// ==========================================
+
+let arquivosServico = [];
+
+const inputAnexosServico =
+    document.getElementById("proposta");
+
+const btnAdicionarAnexoServico =
+    document.getElementById("btnAdicionarAnexoServico");
+
+const listaAnexosServico =
+    document.getElementById("listaAnexosServico");
+
+// ==========================================
 // ANEXOS DO PEDIDO DE VENDA
 // ==========================================
 
@@ -942,6 +966,136 @@ function atualizarListaAnexosProduto() {
                 atualizarListaAnexosProduto();
             });
         });
+}
+
+// ==========================================
+// ADICIONAR ANEXOS DO SERVIÇO UM POR VEZ
+// ==========================================
+
+if (btnAdicionarAnexoServico && inputAnexosServico) {
+
+    btnAdicionarAnexoServico.addEventListener("click", () => {
+
+        inputAnexosServico.click();
+
+    });
+
+
+    inputAnexosServico.addEventListener("change", () => {
+
+        const novosArquivos =
+            Array.from(inputAnexosServico.files);
+
+        if (novosArquivos.length === 0) {
+            return;
+        }
+
+
+        // Limite de 10 arquivos
+
+        if (
+            arquivosServico.length +
+            novosArquivos.length > 10
+        ) {
+
+            alert(
+                "É possível anexar no máximo 10 arquivos."
+            );
+
+            inputAnexosServico.value = "";
+
+            return;
+        }
+
+
+        // Adiciona os novos arquivos
+        // sem apagar os anteriores
+
+        arquivosServico.push(
+            ...novosArquivos
+        );
+
+
+        atualizarListaAnexosServico();
+
+
+        // Limpa o input para permitir
+        // adicionar outro arquivo
+
+        inputAnexosServico.value = "";
+
+    });
+
+}
+
+
+// ==========================================
+// MOSTRA OS ANEXOS DO SERVIÇO
+// ==========================================
+
+function atualizarListaAnexosServico() {
+
+    if (!listaAnexosServico) {
+        return;
+    }
+
+
+    listaAnexosServico.innerHTML = "";
+
+
+    arquivosServico.forEach((arquivo, index) => {
+
+        const item =
+            document.createElement("div");
+
+
+        item.className = "anexo-item";
+
+
+        item.innerHTML = `
+            <span>
+                <i class="fa-solid fa-file"></i>
+                ${arquivo.name}
+            </span>
+
+            <button
+                type="button"
+                class="btn-remover-anexo"
+                data-index="${index}"
+                title="Remover arquivo"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+
+        listaAnexosServico.appendChild(item);
+
+    });
+
+
+    listaAnexosServico
+        .querySelectorAll(".btn-remover-anexo")
+        .forEach((botao) => {
+
+            botao.addEventListener("click", () => {
+
+                const index =
+                    Number(botao.dataset.index);
+
+
+                arquivosServico.splice(
+                    index,
+                    1
+                );
+
+
+                atualizarListaAnexosServico();
+
+            });
+
+        });
+
 }
 // ==========================================
 // AUTORIZAR ENVIO SOMENTE PELO BOTÃO
@@ -1490,6 +1644,18 @@ if (listaAnexosProduto) {
 
 if (inputAnexosProduto) {
     inputAnexosProduto.value = "";
+}
+
+// Limpa os anexos da SC Serviço
+
+arquivosServico = [];
+
+if (listaAnexosServico) {
+    listaAnexosServico.innerHTML = "";
+}
+
+if (inputAnexosServico) {
+    inputAnexosServico.value = "";
 }
 
 // Limpa os anexos do Pedido de Venda
