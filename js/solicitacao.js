@@ -1084,6 +1084,13 @@ if (modoEdicao === "edicao" && dadosEdicao) {
     solicitacaoEdicao = JSON.parse(dadosEdicao);
 }
 
+if (solicitacaoEdicao) {
+    console.log("MODO DE EDIÇÃO ATIVO");
+    console.log("ID DA SOLICITAÇÃO:", solicitacaoEdicao.id);
+    console.log("PROTOCOLO:", solicitacaoEdicao.protocolo);
+    console.log("TIPO DE SERVIÇO:", solicitacaoEdicao.tipoServico);
+}
+
     }
 
 });
