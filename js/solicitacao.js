@@ -22,42 +22,6 @@ window.addEventListener("load", () => {
 });
 async function carregarUsuario() {
 
-    // ==========================================
-    // PRÉ-NOTA
-    // ==========================================
-
-    if (
-        dados.tipoServico ===
-        "Abertura de Pré-nota"
-    ) {
-
-        document.getElementById(
-            "valorPrenota"
-        ).value =
-            dados.valorPrenota || "";
-
-        document.getElementById(
-            "bancoPrenota"
-        ).value =
-            dados.bancoPrenota || "";
-
-        document.getElementById(
-            "agenciaPrenota"
-        ).value =
-            dados.agenciaPrenota || "";
-
-        document.getElementById(
-            "contaCorrentePrenota"
-        ).value =
-            dados.contaCorrentePrenota || "";
-
-        document.getElementById(
-            "observacoesPrenota"
-        ).value =
-            dados.observacoesPrenota || "";
-
-    }
-
 }
 
     onAuthStateChanged(auth, async (user) => {
