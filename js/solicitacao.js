@@ -22,8 +22,6 @@ window.addEventListener("load", () => {
 });
 async function carregarUsuario() {
 
-}
-
     onAuthStateChanged(auth, async (user) => {
 
         if (!user) {
@@ -33,23 +31,36 @@ async function carregarUsuario() {
 
         }
 
-        const emailUsuario = user.email.toLowerCase();
+        const emailUsuario =
+            user.email.toLowerCase();
 
-        const usuarios = await getDocs(collection(db, "usuarios"));
+        const usuarios =
+            await getDocs(
+                collection(db, "usuarios")
+            );
 
         usuarios.forEach((doc) => {
 
             const dados = doc.data();
 
-           if (dados.email.toLowerCase() === emailUsuario) {
+            if (
+                dados.email.toLowerCase() ===
+                emailUsuario
+            ) {
 
-    document.getElementById("nomeUsuario").textContent = dados.nome;
+                document.getElementById(
+                    "nomeUsuario"
+                ).textContent = dados.nome;
 
-    document.getElementById("emailUsuario").textContent = dados.email;
+                document.getElementById(
+                    "emailUsuario"
+                ).textContent = dados.email;
 
-    document.getElementById("analistaResponsavel").textContent = dados.analista;
+                document.getElementById(
+                    "analistaResponsavel"
+                ).textContent = dados.analista;
 
-}
+            }
 
         });
 
