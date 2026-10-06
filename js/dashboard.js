@@ -412,6 +412,20 @@ let reprovadas = 0;
             const status =
                 dados.status || "-";
 
+            let classeStatus = "pendente";
+
+if (status === "Pendente") {
+    classeStatus = "pendente";
+} else if (status === "Em andamento") {
+    classeStatus = "andamento";
+} else if (status === "Concluída") {
+    classeStatus = "concluida";
+} else if (status === "Cancelada") {
+    classeStatus = "cancelada";
+} else if (status === "Reprovada") {
+    classeStatus = "reprovada";
+}
+
             // ==========================================
             // CONTADORES
             // ==========================================
@@ -457,10 +471,9 @@ if (status === "Reprovada") {
                         ${dados.tipoServico || "-"}
                     </td>
 
-                    <td>
-                        <span class="status pendente">
-                            ${status}
-                        </span>
+                    <span class="status ${classeStatus}">
+    ${status}
+</span>
                     </td>
 
                     <td>
@@ -716,7 +729,21 @@ let reprovadas = 0;
 
         solicitacoesFiltradas.forEach((dados) => {
 
-            total++;
+    let classeStatus = "pendente";
+
+    if (dados.status === "Pendente") {
+        classeStatus = "pendente";
+    } else if (dados.status === "Em andamento") {
+        classeStatus = "andamento";
+    } else if (dados.status === "Concluída") {
+        classeStatus = "concluida";
+    } else if (dados.status === "Cancelada") {
+        classeStatus = "cancelada";
+    } else if (dados.status === "Reprovada") {
+        classeStatus = "reprovada";
+    }
+
+    total++;
 
             if (dados.status === "Pendente") {
                 pendentes++;
@@ -754,9 +781,9 @@ if (dados.status === "Reprovada") {
                     </td>
 
                     <td>
-                        <span class="status pendente">
-                            ${dados.status || "-"}
-                        </span>
+                        <span class="status ${classeStatus}">
+    ${dados.status || "-"}
+</span>
                     </td>
 
                     <td>
