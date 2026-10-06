@@ -423,6 +423,21 @@ color:#004085;
 
 }
 
+.concluida{
+    background:#D4EDDA;
+    color:#155724;
+}
+
+.cancelada{
+    background:#E2E3E5;
+    color:#383D41;
+}
+
+.reprovada{
+    background:#F8D7DA;
+    color:#721C24;
+}
+
 .prioridade{
 
 padding:6px 12px;
