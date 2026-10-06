@@ -468,13 +468,14 @@ if (status === "Reprovada") {
                     </td>
 
                     <td>
-                        ${dados.tipoServico || "-"}
-                    </td>
+    ${dados.tipoServico || "-"}
+</td>
 
-                    <span class="status ${classeStatus}">
-    ${status}
-</span>
-                    </td>
+<td>
+    <span class="status ${classeStatus}">
+        ${status}
+    </span>
+</td>
 
                     <td>
                         ${formatarData(dados.dataCriacao)}
