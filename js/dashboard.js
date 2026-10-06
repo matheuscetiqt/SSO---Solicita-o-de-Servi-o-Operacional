@@ -295,10 +295,12 @@ async function carregarSolicitacoes() {
 
     tabela.innerHTML = "";
 
-    let total = 0;
-    let pendentes = 0;
-    let andamento = 0;
-    let concluidas = 0;
+let total = 0;
+let pendentes = 0;
+let andamento = 0;
+let concluidas = 0;
+let canceladas = 0;
+let reprovadas = 0;
 
     try {
 
@@ -428,6 +430,14 @@ async function carregarSolicitacoes() {
                 concluidas++;
             }
 
+            if (status === "Cancelada") {
+    canceladas++;
+}
+
+if (status === "Reprovada") {
+    reprovadas++;
+}
+
             // ==========================================
             // LINHA DA TABELA
             // ==========================================
@@ -516,6 +526,14 @@ async function carregarSolicitacoes() {
         document.getElementById(
             "totalConcluidas"
         ).textContent = concluidas;
+
+        document.getElementById(
+    "totalCanceladas"
+).textContent = canceladas;
+
+document.getElementById(
+    "totalReprovadas"
+).textContent = reprovadas;
 
         // ==========================================
         // BOTÕES VISUALIZAR
