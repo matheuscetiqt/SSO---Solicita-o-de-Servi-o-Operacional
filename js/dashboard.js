@@ -707,10 +707,12 @@ if (filtroAnalista) {
         // criando apenas as linhas filtradas
         tabela.innerHTML = "";
 
-        let total = 0;
-        let pendentes = 0;
-        let andamento = 0;
-        let concluidas = 0;
+       let total = 0;
+let pendentes = 0;
+let andamento = 0;
+let concluidas = 0;
+let canceladas = 0;
+let reprovadas = 0;
 
         solicitacoesFiltradas.forEach((dados) => {
 
@@ -727,6 +729,14 @@ if (filtroAnalista) {
             if (dados.status === "Concluída") {
                 concluidas++;
             }
+
+            if (dados.status === "Cancelada") {
+    canceladas++;
+}
+
+if (dados.status === "Reprovada") {
+    reprovadas++;
+}
 
             tabela.innerHTML += `
                 <tr>
@@ -805,6 +815,14 @@ if (filtroAnalista) {
         document.getElementById(
             "totalConcluidas"
         ).textContent = concluidas;
+
+        document.getElementById(
+    "totalCanceladas"
+).textContent = canceladas;
+
+document.getElementById(
+    "totalReprovadas"
+).textContent = reprovadas;
 
         // Reativa os botões "Visualizar"
         document
