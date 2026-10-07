@@ -22,7 +22,8 @@ window.addEventListener("load", () => {
     "carga3",
     "valorHora",
     "valorPrenota",
-    "valorPedidoVenda"
+    "valorPedidoVenda",
+    "valorEntrada"
 ];
 
     camposNumericos.forEach((id) => {
