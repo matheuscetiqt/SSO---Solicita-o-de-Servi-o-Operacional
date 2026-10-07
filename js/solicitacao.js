@@ -156,40 +156,49 @@ function configurarCards() {
 
     });
 
+    
+// ==========================================
+// PRODUTO / SERVIÇO DA SC
+// ==========================================
 
-    // ==========================================
-    // PRODUTO / SERVIÇO DA SC
-    // ==========================================
+const radiosSC = document.querySelectorAll(
+    'input[name="tipoSC"]'
+);
 
-    const radiosSC = document.querySelectorAll(
-        'input[name="tipoSC"]'
+function atualizarTipoSC() {
+
+    const tipoSelecionado =
+        document.querySelector(
+            'input[name="tipoSC"]:checked'
+        )?.value;
+
+    if (tipoSelecionado === "Produto") {
+
+        formProduto.style.display = "block";
+        formServico.style.display = "none";
+
+    } else if (tipoSelecionado === "Servico") {
+
+        formProduto.style.display = "none";
+        formServico.style.display = "block";
+
+    } else {
+
+        formProduto.style.display = "none";
+        formServico.style.display = "none";
+
+    }
+
+}
+
+radiosSC.forEach((radio) => {
+
+    radio.addEventListener(
+        "change",
+        atualizarTipoSC
     );
 
-
-    radiosSC.forEach((radio) => {
-
-        radio.addEventListener("change", () => {
-
-            if (radio.value === "Produto" && radio.checked) {
-
-                formProduto.style.display = "block";
-
-                formServico.style.display = "none";
-
-            }
-
-
-            if (radio.value === "Servico" && radio.checked) {
-
-                formProduto.style.display = "none";
-
-                formServico.style.display = "block";
-
-            }
-
-        });
-
-    });
+});
 
 }
 
