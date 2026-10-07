@@ -1509,48 +1509,77 @@ const referenciaSolicitacao = await addDoc(
                     dadosPrenota.observacoesPrenota,
 
 
-                // ------------------------------
-                // DADOS DA SOLICITAÇÃO DE COMPRA
-                // ------------------------------
+              // ------------------------------
+// DADOS DA SOLICITAÇÃO DE COMPRA
+// ------------------------------
 
-                tipoSC:
-                    dadosSC.tipoSC,
+tipoSC:
+    dadosSC.tipoSC,
 
-                professor:
-                    dadosSC.professor,
+// ------------------------------
+// DADOS DE PRODUTO
+// ------------------------------
 
-                scAnterior:
-                    dadosSC.scAnterior,
+nomeProduto:
+    dadosSC.nomeProduto,
 
-                cpfCnpj:
-                    dadosSC.cpfCnpj,
+scAnteriorProduto:
+    dadosSC.scAnteriorProduto,
 
-                curso:
-                    dadosSC.curso,
+cursoProduto:
+    dadosSC.cursoProduto,
 
-                atividade1:
-                    dadosSC.atividade1,
+quantidadeProduto:
+    dadosSC.quantidadeProduto,
 
-                carga1:
-                    dadosSC.carga1,
+unidadeProduto:
+    dadosSC.unidadeProduto,
 
-                atividade2:
-                    dadosSC.atividade2,
+descricaoProduto:
+    dadosSC.descricaoProduto,
 
-                carga2:
-                    dadosSC.carga2,
+justificativaProduto:
+    dadosSC.justificativaProduto,
 
-                disciplina:
-                    dadosSC.disciplina,
+// ------------------------------
+// DADOS DE SERVIÇO
+// ------------------------------
 
-                datasAulas:
-                    dadosSC.datasAulas,
+professor:
+    dadosSC.professor,
 
-                valorHora:
-                    dadosSC.valorHora,
+scAnterior:
+    dadosSC.scAnterior,
 
-                                historico:
-                    dadosSC.historico,
+cpfCnpj:
+    dadosSC.cpfCnpj,
+
+curso:
+    dadosSC.curso,
+
+atividade1:
+    dadosSC.atividade1,
+
+carga1:
+    dadosSC.carga1,
+
+atividade2:
+    dadosSC.atividade2,
+
+carga2:
+    dadosSC.carga2,
+
+disciplina:
+    dadosSC.disciplina,
+
+datasAulas:
+    dadosSC.datasAulas,
+
+valorHora:
+    dadosSC.valorHora,
+
+historico:
+    dadosSC.historico,
 
 
                 // ------------------------------
