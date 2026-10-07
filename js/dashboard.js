@@ -1510,6 +1510,12 @@ ${
 
                     : ""
         }
+
+        `                     // NOVO: fecha o template da Solicitação de Compra
+        : ""                  // NOVO
+}                             // NOVO: fecha o ${ tipoServico === "Solicitação de Compra" ... }
+
+        
                        
 
         ${
