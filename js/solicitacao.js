@@ -16,12 +16,13 @@ window.addEventListener("load", () => {
     configurarCards();
 
     const camposNumericos = [
-        "valorProduto",
-        "carga1",
-        "carga2",
-        "carga3",
-        "valorHora"
-    ];
+    "valorProduto",
+    "carga1",
+    "carga2",
+    "carga3",
+    "valorHora",
+    "valorPrenota"
+];
 
     camposNumericos.forEach((id) => {
         const campo = document.getElementById(id);
