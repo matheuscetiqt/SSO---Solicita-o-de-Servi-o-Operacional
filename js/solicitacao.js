@@ -12,11 +12,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 window.addEventListener("load", () => {
-
     carregarUsuario();
-
     configurarCards();
 
+    const valorProduto = document.getElementById("valorProduto");
+
+    if (valorProduto) {
+        valorProduto.addEventListener("wheel", (event) => {
+            event.preventDefault();
+        });
+    }
 });
 async function carregarUsuario() {
 
