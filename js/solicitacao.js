@@ -15,13 +15,23 @@ window.addEventListener("load", () => {
     carregarUsuario();
     configurarCards();
 
-    const valorProduto = document.getElementById("valorProduto");
+    const camposNumericos = [
+        "valorProduto",
+        "carga1",
+        "carga2",
+        "carga3",
+        "valorHora"
+    ];
 
-    if (valorProduto) {
-        valorProduto.addEventListener("wheel", (event) => {
-            event.preventDefault();
-        });
-    }
+    camposNumericos.forEach((id) => {
+        const campo = document.getElementById(id);
+
+        if (campo) {
+            campo.addEventListener("wheel", (event) => {
+                event.preventDefault();
+            });
+        }
+    });
 });
 async function carregarUsuario() {
 
