@@ -1876,8 +1876,6 @@ if (selectStatus) {
     "
 >
 
-</div>
-
                 <button
                     type="button"
                     id="btnSalvarStatus"
