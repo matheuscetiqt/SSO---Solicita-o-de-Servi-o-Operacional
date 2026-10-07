@@ -1384,50 +1384,75 @@ if (tipoServico === "Outro") {
 
     const dadosSC = {
 
-        tipoSC:
-            document.querySelector(
-                'input[name="tipoSC"]:checked'
-            )?.value || "",
+    // TIPO DA SOLICITAÇÃO DE COMPRA
+    tipoSC:
+        document.querySelector('input[name="tipoSC"]:checked')?.value || "",
 
-        professor:
-            document.getElementById("professor")?.value || "",
+    // ==============================
+    // DADOS DE PRODUTO
+    // ==============================
 
-        scAnterior:
-            document.getElementById("scAnterior")?.value || "",
+    nomeProduto:
+        document.getElementById("nomeProduto")?.value || "",
 
-        cpfCnpj:
-            document.querySelector(
-                'input[name="cpfcnpj"]:checked'
-            )?.value || "",
+    scAnteriorProduto:
+        document.getElementById("scAnteriorProduto")?.value || "",
 
-        curso:
-            document.getElementById("curso")?.value || "",
+    cursoProduto:
+        document.getElementById("cursoProduto")?.value || "",
 
-        atividade1:
-            document.getElementById("atividade1")?.value || "",
+    quantidadeProduto:
+        document.getElementById("quantidadeProduto")?.value || "",
 
-        carga1:
-            document.getElementById("carga1")?.value || "",
+    unidadeProduto:
+        document.getElementById("unidadeProduto")?.value || "",
 
-        atividade2:
-            document.getElementById("atividade2")?.value || "",
+    descricaoProduto:
+        document.getElementById("descricaoProduto")?.value || "",
 
-        carga2:
-            document.getElementById("carga2")?.value || "",
+    justificativaProduto:
+        document.getElementById("justificativaProduto")?.value || "",
 
-        disciplina:
-            document.getElementById("disciplina")?.value || "",
+    // ==============================
+    // DADOS DE SERVIÇO
+    // ==============================
 
-        datasAulas:
-            document.getElementById("datasAulas")?.value || "",
+    professor:
+        document.getElementById("professor")?.value || "",
 
-        valorHora:
-            document.getElementById("valorHora")?.value || "",
+    scAnterior:
+        document.getElementById("scAnterior")?.value || "",
 
-        historico:
-            document.getElementById("historico")?.value || ""
+    cpfCnpj:
+        document.querySelector('input[name="cpfcnpj"]:checked')?.value || "",
 
-    };
+    curso:
+        document.getElementById("curso")?.value || "",
+
+    atividade1:
+        document.getElementById("atividade1")?.value || "",
+
+    carga1:
+        document.getElementById("carga1")?.value || "",
+
+    atividade2:
+        document.getElementById("atividade2")?.value || "",
+
+    carga2:
+        document.getElementById("carga2")?.value || "",
+
+    disciplina:
+        document.getElementById("disciplina")?.value || "",
+
+    datasAulas:
+        document.getElementById("datasAulas")?.value || "",
+
+    valorHora:
+        document.getElementById("valorHora")?.value || "",
+
+    historico:
+        document.getElementById("historico")?.value || ""
+};
 
 
     // ==========================================
