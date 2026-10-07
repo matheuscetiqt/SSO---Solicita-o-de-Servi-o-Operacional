@@ -1250,25 +1250,42 @@ function abrirModalSolicitacao(dados) {
 
 
         <!-- ====================================== -->
-        <!-- SOLICITAÇÃO DE COMPRA                  -->
-        <!-- ====================================== -->
+<!-- SOLICITAÇÃO DE COMPRA                  -->
+<!-- ====================================== -->
+
+${
+    dados.tipoServico === "Solicitação de Compra"
+        ? `
+
+        <div style="grid-column: 1 / 3; margin-top: 15px;">
+            <h3>📦 Dados da Solicitação de Compra</h3>
+        </div>
+
+        <div class="detalhe-grupo">
+
+            <span>Tipo de Solicitação</span>
+
+            <strong>
+                ${dados.tipoSC || "-"}
+            </strong>
+
+        </div>
+
 
         ${
-            dados.tipoServico === "Solicitação de Compra"
+            dados.tipoSC === "Produto"
+                ? `
 
-            ? `
-
-                <div style="grid-column: 1 / 3; margin-top: 15px;">
-                    <h3>📦 Dados da Solicitação de Compra</h3>
-                </div>
-
+                <!-- ============================== -->
+                <!-- DADOS DE PRODUTO                -->
+                <!-- ============================== -->
 
                 <div class="detalhe-grupo">
 
-                    <span>Tipo de Solicitação</span>
+                    <span>Nome do Produto</span>
 
                     <strong>
-                        ${dados.tipoSC || "-"}
+                        ${dados.nomeProduto || "-"}
                     </strong>
 
                 </div>
@@ -1276,32 +1293,10 @@ function abrirModalSolicitacao(dados) {
 
                 <div class="detalhe-grupo">
 
-                    <span>Professor / Especialista</span>
+                    <span>SC Anterior de Referência</span>
 
                     <strong>
-                        ${dados.professor || "-"}
-                    </strong>
-
-                </div>
-
-
-                <div class="detalhe-grupo">
-
-                    <span>SC anterior de Referência</span>
-
-                    <strong>
-                        ${dados.scAnterior || "-"}
-                    </strong>
-
-                </div>
-
-
-                <div class="detalhe-grupo">
-
-                    <span>CPF ou CNPJ</span>
-
-                    <strong>
-                        ${dados.cpfCnpj || "-"}
+                        ${dados.scAnteriorProduto || "-"}
                     </strong>
 
                 </div>
@@ -1312,7 +1307,7 @@ function abrirModalSolicitacao(dados) {
                     <span>Curso</span>
 
                     <strong>
-                        ${dados.curso || "-"}
+                        ${dados.cursoProduto || "-"}
                     </strong>
 
                 </div>
@@ -1320,10 +1315,10 @@ function abrirModalSolicitacao(dados) {
 
                 <div class="detalhe-grupo">
 
-                    <span>Atividade I</span>
+                    <span>Quantidade</span>
 
                     <strong>
-                        ${dados.atividade1 || "-"}
+                        ${dados.quantidadeProduto || "-"}
                     </strong>
 
                 </div>
@@ -1331,84 +1326,195 @@ function abrirModalSolicitacao(dados) {
 
                 <div class="detalhe-grupo">
 
-                    <span>Carga Horária I</span>
+                    <span>Unidade</span>
 
                     <strong>
-                        ${dados.carga1 || "-"}
+                        ${dados.unidadeProduto || "-"}
                     </strong>
 
                 </div>
 
 
-                <div class="detalhe-grupo">
+                <div
+                    class="detalhe-grupo"
+                    style="grid-column: 1 / 3;"
+                >
 
-                    <span>Atividade II</span>
+                    <span>Descrição do Produto</span>
 
                     <strong>
-                        ${dados.atividade2 || "-"}
+                        ${dados.descricaoProduto || "-"}
                     </strong>
 
                 </div>
 
 
-                <div class="detalhe-grupo">
+                <div
+                    class="detalhe-grupo"
+                    style="grid-column: 1 / 3;"
+                >
 
-                    <span>Carga Horária II</span>
+                    <span>Justificativa</span>
 
                     <strong>
-                        ${dados.carga2 || "-"}
+                        ${dados.justificativaProduto || "-"}
                     </strong>
 
                 </div>
 
+                `
 
-                <div class="detalhe-grupo">
+                : dados.tipoSC === "Servico"
+                    ? `
 
-                    <span>Unidade Curricular / Disciplina</span>
+                    <!-- ============================== -->
+                    <!-- DADOS DE SERVIÇO               -->
+                    <!-- ============================== -->
 
-                    <strong>
-                        ${dados.disciplina || "-"}
-                    </strong>
+                    <div class="detalhe-grupo">
 
-                </div>
+                        <span>Professor / Especialista</span>
 
+                        <strong>
+                            ${dados.professor || "-"}
+                        </strong>
 
-                <div class="detalhe-grupo">
-
-                    <span>Datas das Aulas</span>
-
-                    <strong>
-                        ${dados.datasAulas || "-"}
-                    </strong>
-
-                </div>
+                    </div>
 
 
-                <div class="detalhe-grupo">
+                    <div class="detalhe-grupo">
 
-                    <span>Valor da Hora Aula</span>
+                        <span>SC anterior de Referência</span>
 
-                    <strong>
-                        ${
-                            dados.valorHora
-                                ? "R$ " + dados.valorHora
-                                : "-"
-                        }
-                    </strong>
+                        <strong>
+                            ${dados.scAnterior || "-"}
+                        </strong>
 
-                </div>
+                    </div>
 
 
-                <div class="detalhe-grupo">
+                    <div class="detalhe-grupo">
 
-                    <span>Histórico de Contratação</span>
+                        <span>CPF ou CNPJ</span>
 
-                    <strong>
-                        ${dados.historico || "-"}
-                    </strong>
+                        <strong>
+                            ${dados.cpfCnpj || "-"}
+                        </strong>
 
-                </div>
+                    </div>
 
+
+                    <div class="detalhe-grupo">
+
+                        <span>Curso</span>
+
+                        <strong>
+                            ${dados.curso || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Atividade I</span>
+
+                        <strong>
+                            ${dados.atividade1 || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Carga Horária I</span>
+
+                        <strong>
+                            ${dados.carga1 || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Atividade II</span>
+
+                        <strong>
+                            ${dados.atividade2 || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Carga Horária II</span>
+
+                        <strong>
+                            ${dados.carga2 || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Unidade Curricular / Disciplina</span>
+
+                        <strong>
+                            ${dados.disciplina || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Datas das Aulas</span>
+
+                        <strong>
+                            ${dados.datasAulas || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Valor da Hora Aula</span>
+
+                        <strong>
+                            ${
+                                dados.valorHora
+                                    ? "R$ " + dados.valorHora
+                                    : "-"
+                            }
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detalhe-grupo">
+
+                        <span>Histórico de Contratação</span>
+
+                        <strong>
+                            ${dados.historico || "-"}
+                        </strong>
+
+                    </div>
+
+                    `
+
+                    : ""
+        }
+
+        `
+
+        : ""
+}
                        `
 
             : ""
