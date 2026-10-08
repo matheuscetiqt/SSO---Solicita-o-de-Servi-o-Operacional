@@ -192,13 +192,13 @@ function atualizarTipoSC() {
 
     if (tipoSelecionado === "Produto") {
 
-        formProduto.style.display = "block";
-        formServico.style.display = "none";
+    formProduto.style.display = "grid";
+    formServico.style.display = "none";
 
-    } else if (tipoSelecionado === "Servico") {
+} else if (tipoSelecionado === "Servico") {
 
-        formProduto.style.display = "none";
-        formServico.style.display = "block";
+    formProduto.style.display = "none";
+    formServico.style.display = "grid";
 
     } else {
 
