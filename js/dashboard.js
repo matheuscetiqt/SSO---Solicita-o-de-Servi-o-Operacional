@@ -1397,13 +1397,24 @@ ${
 
                     <div class="detalhe-grupo">
 
-                        <span>Professor / Especialista</span>
+    <span>Código da Pós</span>
 
-                        <strong>
-                            ${dados.professor || "-"}
-                        </strong>
+    <strong>
+        ${dados.codigoPosServico || "-"}
+    </strong>
 
-                    </div>
+</div>
+
+
+<div class="detalhe-grupo">
+
+    <span>Professor / Especialista</span>
+
+    <strong>
+        ${dados.professor || "-"}
+    </strong>
+
+</div>
 
 
                     <div class="detalhe-grupo">
