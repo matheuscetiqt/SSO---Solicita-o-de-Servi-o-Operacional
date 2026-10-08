@@ -3679,3 +3679,18 @@ input[type="number"] {
 #blocoSC input[type="radio"] {
     margin-bottom: 0;
 }
+/* =========================================================
+   AJUSTE FINAL — RADIO PRODUTO / SERVIÇO
+   ========================================================= */
+
+#blocoSC {
+    padding-bottom: 0;
+}
+
+#blocoSC > .grupo {
+    margin-bottom: 8px;
+}
+
+#blocoSC > .grupo + .grupo {
+    margin-top: 0;
+}
