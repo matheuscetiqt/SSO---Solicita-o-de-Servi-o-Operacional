@@ -1280,15 +1280,26 @@ ${
             <!-- DADOS DE PRODUTO                -->
             <!-- ============================== -->
 
-            <div class="detalhe-grupo">
+<div class="detalhe-grupo">
 
-                <span>Nome do Produto</span>
+    <span>Código da Pós</span>
 
-                <strong>
-                    ${dados.nomeProduto || "-"}
-                </strong>
+    <strong>
+        ${dados.codigoPosProduto || "-"}
+    </strong>
 
-            </div>
+</div>
+
+
+<div class="detalhe-grupo">
+
+    <span>Nome do Produto</span>
+
+    <strong>
+        ${dados.nomeProduto || "-"}
+    </strong>
+
+</div>
 
 
             <div class="detalhe-grupo">
