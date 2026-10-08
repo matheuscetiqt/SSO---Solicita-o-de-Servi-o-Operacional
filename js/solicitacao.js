@@ -1439,14 +1439,17 @@ const dadosSC = {
     quantidadeProduto:
     document.getElementById("quantidadeProduto")?.value || "",
     // ==============================
-    // DADOS DE SERVIÇO
-    // ==============================
+// DADOS DE SERVIÇO
+// ==============================
 
-    professor:
-        document.getElementById("professor")?.value || "",
+codigoPosServico:
+    document.getElementById("codigoPosServico")?.value || "",
 
-    scAnterior:
-        document.getElementById("scAnterior")?.value || "",
+professor:
+    document.getElementById("professor")?.value || "",
+
+scAnterior:
+    document.getElementById("scAnterior")?.value || "",
 
     cpfCnpj:
         document.querySelector('input[name="cpfcnpj"]:checked')?.value || "",
@@ -1575,6 +1578,9 @@ quantidadeProduto:
 // ------------------------------
 // DADOS DE SERVIÇO
 // ------------------------------
+
+codigoPosServico:
+    dadosSC.codigoPosServico,
 
 professor:
     dadosSC.professor,
