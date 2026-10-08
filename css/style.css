@@ -3664,3 +3664,18 @@ input[type="number"] {
     }
 
 }
+/* =========================================================
+   AJUSTE — ESPAÇAMENTO ENTRE PRODUTO E SERVIÇO
+   ========================================================= */
+
+#blocoSC .grupo {
+    gap: 6px;
+}
+
+#blocoSC .grupo label {
+    margin-bottom: 0;
+}
+
+#blocoSC input[type="radio"] {
+    margin-bottom: 0;
+}
