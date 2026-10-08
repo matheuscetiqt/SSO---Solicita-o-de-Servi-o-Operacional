@@ -1411,26 +1411,30 @@ if (tipoServico === "Outro") {
     // ==============================
 
     nomeProduto:
-        document.getElementById("nomeProduto")?.value || "",
+    document.getElementById("nomeProduto")?.value || "",
 
-    scAnteriorProduto:
-        document.getElementById("scAnteriorProduto")?.value || "",
+scAnteriorProduto:
+    document.getElementById("scAnteriorProduto")?.value || "",
 
-    cursoProduto:
-        document.getElementById("cursoProduto")?.value || "",
+cpfCnpjProduto:
+    document.querySelector(
+        'input[name="cpfcnpjProduto"]:checked'
+    )?.value || "",
 
-    quantidadeProduto:
-        document.getElementById("quantidadeProduto")?.value || "",
+cursoProduto:
+    document.getElementById("cursoProduto")?.value || "",
 
-    unidadeProduto:
-        document.getElementById("unidadeProduto")?.value || "",
+codigoProduto:
+    document.getElementById("codigoProduto")?.value || "",
 
-    descricaoProduto:
-        document.getElementById("descricaoProduto")?.value || "",
+datasNecessidades:
+    document.getElementById("datasNecessidades")?.value || "",
 
-    justificativaProduto:
-        document.getElementById("justificativaProduto")?.value || "",
+valorProduto:
+    document.getElementById("valorProduto")?.value || "",
 
+quantidadeProduto:
+    document.getElementById("quantidadeProduto")?.value || "",
     // ==============================
     // DADOS DE SERVIÇO
     // ==============================
@@ -1544,20 +1548,23 @@ nomeProduto:
 scAnteriorProduto:
     dadosSC.scAnteriorProduto,
 
+cpfCnpjProduto:
+    dadosSC.cpfCnpjProduto,
+
 cursoProduto:
     dadosSC.cursoProduto,
 
+codigoProduto:
+    dadosSC.codigoProduto,
+
+datasNecessidades:
+    dadosSC.datasNecessidades,
+
+valorProduto:
+    dadosSC.valorProduto,
+
 quantidadeProduto:
     dadosSC.quantidadeProduto,
-
-unidadeProduto:
-    dadosSC.unidadeProduto,
-
-descricaoProduto:
-    dadosSC.descricaoProduto,
-
-justificativaProduto:
-    dadosSC.justificativaProduto,
 
 // ------------------------------
 // DADOS DE SERVIÇO
