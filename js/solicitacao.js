@@ -1400,7 +1400,7 @@ if (tipoServico === "Outro") {
     // DADOS DA SOLICITAÇÃO DE COMPRA
     // ==========================================
 
-    const dadosSC = {
+const dadosSC = {
 
     // TIPO DA SOLICITAÇÃO DE COMPRA
     tipoSC:
@@ -1410,30 +1410,33 @@ if (tipoServico === "Outro") {
     // DADOS DE PRODUTO
     // ==============================
 
+    codigoPosProduto:
+    document.getElementById("codigoPosProduto")?.value || "",
+
     nomeProduto:
     document.getElementById("nomeProduto")?.value || "",
 
-scAnteriorProduto:
+    scAnteriorProduto:
     document.getElementById("scAnteriorProduto")?.value || "",
 
-cpfCnpjProduto:
+    cpfCnpjProduto:
     document.querySelector(
         'input[name="cpfcnpjProduto"]:checked'
     )?.value || "",
 
-cursoProduto:
+    cursoProduto:
     document.getElementById("cursoProduto")?.value || "",
 
-codigoProduto:
+    codigoProduto:
     document.getElementById("codigoProduto")?.value || "",
 
-datasNecessidades:
+    datasNecessidades:
     document.getElementById("datasNecessidades")?.value || "",
 
-valorProduto:
+    valorProduto:
     document.getElementById("valorProduto")?.value || "",
 
-quantidadeProduto:
+    quantidadeProduto:
     document.getElementById("quantidadeProduto")?.value || "",
     // ==============================
     // DADOS DE SERVIÇO
@@ -1544,6 +1547,9 @@ tipoSC:
 
 nomeProduto:
     dadosSC.nomeProduto,
+
+codigoPosProduto:
+    dadosSC.codigoPosProduto,
 
 scAnteriorProduto:
     dadosSC.scAnteriorProduto,
