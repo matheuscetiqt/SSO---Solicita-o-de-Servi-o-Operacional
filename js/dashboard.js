@@ -1272,97 +1272,110 @@ ${
         </div>
 
 
-        ${
-            dados.tipoSC === "Produto"
-                ? `
+       ${
+    dados.tipoSC === "Produto"
+        ? `
 
-                <!-- ============================== -->
-                <!-- DADOS DE PRODUTO                -->
-                <!-- ============================== -->
+            <!-- ============================== -->
+            <!-- DADOS DE PRODUTO                -->
+            <!-- ============================== -->
 
-                <div class="detalhe-grupo">
+            <div class="detalhe-grupo">
 
-                    <span>Nome do Produto</span>
+                <span>Nome do Produto</span>
 
-                    <strong>
-                        ${dados.nomeProduto || "-"}
-                    </strong>
+                <strong>
+                    ${dados.nomeProduto || "-"}
+                </strong>
 
-                </div>
-
-
-                <div class="detalhe-grupo">
-
-                    <span>SC Anterior de Referência</span>
-
-                    <strong>
-                        ${dados.scAnteriorProduto || "-"}
-                    </strong>
-
-                </div>
+            </div>
 
 
-                <div class="detalhe-grupo">
+            <div class="detalhe-grupo">
 
-                    <span>Curso</span>
+                <span>SC Anterior de Referência</span>
 
-                    <strong>
-                        ${dados.cursoProduto || "-"}
-                    </strong>
+                <strong>
+                    ${dados.scAnteriorProduto || "-"}
+                </strong>
 
-                </div>
-
-
-                <div class="detalhe-grupo">
-
-                    <span>Quantidade</span>
-
-                    <strong>
-                        ${dados.quantidadeProduto || "-"}
-                    </strong>
-
-                </div>
+            </div>
 
 
-                <div class="detalhe-grupo">
+            <div class="detalhe-grupo">
 
-                    <span>Unidade</span>
+                <span>CPF ou CNPJ</span>
 
-                    <strong>
-                        ${dados.unidadeProduto || "-"}
-                    </strong>
+                <strong>
+                    ${dados.cpfCnpjProduto || "-"}
+                </strong>
 
-                </div>
-
-
-                <div
-                    class="detalhe-grupo"
-                    style="grid-column: 1 / 3;"
-                >
-
-                    <span>Descrição do Produto</span>
-
-                    <strong>
-                        ${dados.descricaoProduto || "-"}
-                    </strong>
-
-                </div>
+            </div>
 
 
-                <div
-                    class="detalhe-grupo"
-                    style="grid-column: 1 / 3;"
-                >
+            <div class="detalhe-grupo">
 
-                    <span>Justificativa</span>
+                <span>Curso</span>
 
-                    <strong>
-                        ${dados.justificativaProduto || "-"}
-                    </strong>
+                <strong>
+                    ${dados.cursoProduto || "-"}
+                </strong>
 
-                </div>
+            </div>
 
-                `
+
+            <div class="detalhe-grupo">
+
+                <span>Código do Produto</span>
+
+                <strong>
+                    ${dados.codigoProduto || "-"}
+                </strong>
+
+            </div>
+
+
+            <div class="detalhe-grupo">
+
+                <span>Data da Necessidade</span>
+
+                <strong>
+                    ${dados.datasNecessidades || "-"}
+                </strong>
+
+            </div>
+
+
+            <div class="detalhe-grupo">
+
+                <span>Valor do Produto</span>
+
+                <strong>
+                    ${
+                        dados.valorProduto
+                            ? "R$ " +
+                              Number(dados.valorProduto)
+                                  .toLocaleString("pt-BR", {
+                                      minimumFractionDigits: 2
+                                  })
+                            : "-"
+                    }
+                </strong>
+
+            </div>
+
+
+            <div class="detalhe-grupo">
+
+                <span>Quantidade</span>
+
+                <strong>
+                    ${dados.quantidadeProduto || "-"}
+                </strong>
+
+            </div>
+
+        `
 
                 : dados.tipoSC === "Servico"
                     ? `
