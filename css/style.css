@@ -3694,3 +3694,27 @@ input[type="number"] {
 #blocoSC > .grupo + .grupo {
     margin-top: 0;
 }
+/* =========================================================
+   FORMULÁRIO — VOLTAR PARA UMA COLUNA
+   ========================================================= */
+
+#formProduto,
+#formServico {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+
+/* Título ocupa a coluna inteira */
+#formProduto h2,
+#formServico h2 {
+    grid-column: 1;
+}
+
+
+/* Campos ocupam a largura inteira */
+#formProduto .full,
+#formServico .full {
+    grid-column: 1;
+}
