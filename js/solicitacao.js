@@ -1463,14 +1463,22 @@ scAnterior:
     carga1:
         document.getElementById("carga1")?.value || "",
 
-    atividade2:
-        document.getElementById("atividade2")?.value || "",
+    
+atividade2:
+    document.getElementById("atividade2")?.value || "",
 
-    carga2:
-        document.getElementById("carga2")?.value || "",
+carga2:
+    document.getElementById("carga2")?.value || "",
 
-    disciplina:
-        document.getElementById("disciplina")?.value || "",
+atividade3:
+    document.getElementById("atividade3")?.value || "",
+
+carga3:
+    document.getElementById("carga3")?.value || "",
+
+disciplina:
+    document.getElementById("disciplina")?.value || "",
+
 
     datasAulas:
         document.getElementById("datasAulas")?.value || "",
@@ -1600,14 +1608,22 @@ atividade1:
 carga1:
     dadosSC.carga1,
 
+
 atividade2:
     dadosSC.atividade2,
 
 carga2:
     dadosSC.carga2,
 
+atividade3:
+    dadosSC.atividade3,
+
+carga3:
+    dadosSC.carga3,
+
 disciplina:
     dadosSC.disciplina,
+
 
 datasAulas:
     dadosSC.datasAulas,
