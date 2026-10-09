@@ -1493,6 +1493,29 @@ ${
 
                     </div>
 
+                    
+<div class="detalhe-grupo">
+
+    <span>Atividade III</span>
+
+    <strong>
+        ${dados.atividade3 || "-"}
+    </strong>
+
+</div>
+
+
+<div class="detalhe-grupo">
+
+    <span>Carga Horária III</span>
+
+    <strong>
+        ${dados.carga3 || "-"}
+    </strong>
+
+</div>
+
+
 
                     <div class="detalhe-grupo">
 
