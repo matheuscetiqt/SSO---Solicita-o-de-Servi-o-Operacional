@@ -15,33 +15,6 @@ window.addEventListener("load", () => {
     carregarUsuario();
     configurarCards();
 
-        const parametros = new URLSearchParams(window.location.search);
-    const modoEdicao = parametros.get("modo") === "edicao";
-
-    if (modoEdicao) {
-        console.log("Página aberta em modo de edição.");
-        console.log("Dados recebidos:", sessionStorage.getItem("solicitacaoEmEdicao"));
-    }
-
-    
-window.addEventListener("load", () => {
-    carregarUsuario();
-    configurarCards();
-
-    const parametros = new URLSearchParams(window.location.search);
-    const modoEdicao = parametros.get("modo") === "edicao";
-
-    if (modoEdicao) {
-        console.log("Página aberta em modo de edição.");
-        console.log("Dados recebidos:", sessionStorage.getItem("solicitacaoEmEdicao"));
-    }
-
-    if (modoEdicao) {
-        carregarSolicitacaoParaEdicao();
-    }
-
-    const camposNumericos = [
-
 
     const camposNumericos = [
     "valorProduto",
