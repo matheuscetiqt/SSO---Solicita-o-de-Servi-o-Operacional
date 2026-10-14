@@ -265,31 +265,29 @@ if (
             }
 
 
+
             // STATUS
+            let classeStatus = "pendente";
 
-            let classeStatus =
-                "pendente";
-
-
-            if (
-                status === "em andamento"
-            ) {
-
-                classeStatus =
-                    "andamento";
-
-            }
-
-
-            if (
+            if (status === "em andamento") {
+                classeStatus = "andamento";
+            } else if (
                 status === "concluída" ||
                 status === "concluida"
             ) {
-
-                classeStatus =
-                    "concluida";
-
+                classeStatus = "concluida";
+            } else if (
+                status === "cancelada" ||
+                status === "cancelado"
+            ) {
+                classeStatus = "cancelada";
+            } else if (
+                status === "reprovada" ||
+                status === "reprovado"
+            ) {
+                classeStatus = "reprovada";
             }
+
 
 
             // CRIA LINHA DA TABELA
