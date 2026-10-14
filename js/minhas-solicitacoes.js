@@ -52,6 +52,12 @@ const totalConcluidas =
         "totalConcluidas"
     );
 
+const totalCanceladas =
+    document.getElementById("totalCanceladas");
+
+const totalReprovadas =
+    document.getElementById("totalReprovadas");
+
 
 // ==========================================
 // CARREGAR MINHAS SOLICITAÇÕES
@@ -180,10 +186,10 @@ if (
         // CONTADORES
 
         let pendentes = 0;
-
-        let andamento = 0;
-
-        let concluidas = 0;
+let andamento = 0;
+let concluidas = 0;
+let canceladas = 0;
+let reprovadas = 0;
 
 
         // PERCORRE AS SOLICITAÇÕES
@@ -221,6 +227,22 @@ if (
                 concluidas++;
 
             }
+
+            
+if (
+    status === "cancelada" ||
+    status === "cancelado"
+) {
+    canceladas++;
+}
+
+if (
+    status === "reprovada" ||
+    status === "reprovado"
+) {
+    reprovadas++;
+}
+
 
 
             // FORMATA DATA
@@ -366,6 +388,12 @@ if (
 
         totalConcluidas.textContent =
             concluidas;
+
+        totalCanceladas.textContent =
+    canceladas;
+
+totalReprovadas.textContent =
+    reprovadas;
 
 
         // SE NÃO EXISTIREM SOLICITAÇÕES
