@@ -3718,3 +3718,71 @@ input[type="number"] {
 #formServico .full {
     grid-column: 1;
 }
+
+/* ==========================================
+   FILTRO DE PERÍODO — INDICADORES SSO
+   Identidade visual SENAI CETIQT
+========================================== */
+
+#filtroMes {
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
+    padding: 12px 14px;
+
+    background-color: #FFFFFF;
+    color: #123D60;
+
+    border: 1px solid #B8CCDE;
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#filtroMes:hover {
+    border-color: #0066A1;
+}
+
+#filtroMes:focus {
+    border-color: #0066A1;
+    box-shadow: 0 0 0 3px rgba(0, 102, 161, 0.15);
+}
+
+/* Cartão do filtro de período */
+main > section.grafico-card:first-of-type {
+    border-top: 4px solid #0066A1;
+}
+
+/* Título do filtro */
+main > section.grafico-card:first-of-type .grafico-cabecalho h3 {
+    color: #064477;
+    font-weight: 600;
+}
+
+/* Texto de apoio */
+main > section.grafico-card:first-of-type .grafico-cabecalho span {
+    color: #64788B;
+}
+
+/* Rótulo do campo */
+label[for="filtroMes"] {
+    color: #064477;
+    font-weight: 500;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 600px) {
+    #filtroMes {
+        max-width: 100%;
+    }
+}
+
