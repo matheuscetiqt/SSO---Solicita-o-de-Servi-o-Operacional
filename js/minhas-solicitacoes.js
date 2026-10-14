@@ -346,22 +346,6 @@ if (
                     }
                 );
 
-            linha
-    .querySelector(
-        ".btn-editar"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            editarSolicitacao(
-                dados
-            );
-
-        }
-    );
-
-
             tabela.appendChild(
                 linha
             );
