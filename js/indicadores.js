@@ -15,13 +15,11 @@ import {
 
 
 
+const filtroMes = document.getElementById("filtroMes");
+
 filtroMes.addEventListener("change", () => {
     carregarIndicadores();
 });
-
-
-
-const filtroMes = document.getElementById("filtroMes");
 
 const agora = new Date();
 
@@ -421,10 +419,10 @@ graficosIndicadores = [];
                             );
 
 
-                        return dataA - dataB;
+                                               return dataA - dataB;
 
                     }
-                ));
+                );
 
 
        graficosIndicadores.push(new Chart(
