@@ -13,11 +13,16 @@ import {
     signOut
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-
+const filtroModo = document.getElementById("filtroModo");
 
 const filtroMes = document.getElementById("filtroMes");
 
 filtroMes.addEventListener("change", () => {
+    carregarIndicadores();
+});
+
+filtroModo.addEventListener("change", () => {
+    filtroMes.disabled = filtroModo.value === "todos";
     carregarIndicadores();
 });
 
@@ -96,9 +101,12 @@ async function carregarIndicadores() {
         // ==========================================
 
         
+
 const periodoSelecionado = filtroMes.value;
+const modoSelecionado = filtroModo.value;
 
 snapshot.forEach((doc) => {
+
     const dados = doc.data();
 
     if (!dados.dataCriacao?.toDate) {
@@ -110,9 +118,12 @@ snapshot.forEach((doc) => {
     const anoMesSolicitacao =
         `${dataCriacao.getFullYear()}-${String(dataCriacao.getMonth() + 1).padStart(2, "0")}`;
 
-    if (anoMesSolicitacao !== periodoSelecionado) {
-        return;
-    }
+    if (
+    modoSelecionado !== "todos" &&
+    anoMesSolicitacao !== periodoSelecionado
+) {
+    return;
+}
 
     total++;
 
