@@ -1205,19 +1205,6 @@ formulario.addEventListener("submit", async (e) => {
 
     }
 
-if (botaoEnviar) {
-    botaoEnviar.disabled = true;
-    botaoEnviar.dataset.textoOriginal = botaoEnviar.innerHTML;
-
-    botaoEnviar.innerHTML = `
-        <i class="fa-solid fa-spinner fa-spin"></i>
-        Enviando...
-    `;
-
-    botaoEnviar.style.opacity = "0.7";
-    botaoEnviar.style.cursor = "not-allowed";
-}
-
     const nome =
         document.getElementById("nomeUsuario").textContent.trim();
 
@@ -1866,6 +1853,23 @@ if (inputAnexosOutro) {
         if (formServico) {
             formServico.style.display = "none";
         }
+
+        
+        // Restaura o botão após o envio bem-sucedido
+        enviandoSolicitacao = false;
+        envioAutorizado = false;
+
+        if (botaoEnviar) {
+            botaoEnviar.disabled = false;
+
+            botaoEnviar.innerHTML =
+                botaoEnviar.dataset.textoOriginal ||
+                "Enviar solicitação";
+
+            botaoEnviar.style.opacity = "1";
+            botaoEnviar.style.cursor = "pointer";
+        }
+
 
 
     } catch (erro) {
