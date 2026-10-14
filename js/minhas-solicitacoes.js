@@ -323,17 +323,6 @@ if (
 
         </button>
 
-        <button
-            class="btn-editar"
-            title="Editar solicitação"
-        >
-
-            <i class="fa-solid fa-pen"></i>
-
-            Editar
-
-        </button>
-
     </div>
 
 </td>
@@ -559,45 +548,6 @@ function abrirModalSolicitacao(dados) {
 
 }
 
-// ==========================================
-// EDITAR SOLICITAÇÃO
-// ==========================================
-
-// ==========================================
-// EDITAR SOLICITAÇÃO
-// ==========================================
-
-function editarSolicitacao(dados) {
-
-    console.log(
-        "SOLICITAÇÃO SELECIONADA PARA EDIÇÃO:",
-        dados
-    );
-
-    console.log(
-        "ID DO DOCUMENTO:",
-        dados.id
-    );
-
-    console.log(
-        "PROTOCOLO:",
-        dados.protocolo
-    );
-
-    // Guarda a solicitação selecionada
-    // temporariamente para a página de edição
-
-    sessionStorage.setItem(
-        "solicitacaoEmEdicao",
-        JSON.stringify(dados)
-    );
-
-    // Abre o formulário
-
-    window.location.href =
-        "nova-solicitacao.html?modo=edicao";
-
-}
 // ==========================================
 // FECHAR MODAL
 // ==========================================
