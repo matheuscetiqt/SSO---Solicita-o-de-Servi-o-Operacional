@@ -14,6 +14,23 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
+
+filtroMes.addEventListener("change", () => {
+    carregarIndicadores();
+});
+
+
+
+const filtroMes = document.getElementById("filtroMes");
+
+const agora = new Date();
+
+filtroMes.value =
+    `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}`;
+
+let graficosIndicadores = [];
+
+
 // ==========================================
 // AGUARDAR USUÁRIO LOGADO
 // ==========================================
@@ -80,12 +97,27 @@ async function carregarIndicadores() {
         // PERCORRER SOLICITAÇÕES
         // ==========================================
 
-        snapshot.forEach((doc) => {
+        
+const periodoSelecionado = filtroMes.value;
 
-            const dados =
-                doc.data();
+snapshot.forEach((doc) => {
+    const dados = doc.data();
 
-            total++;
+    if (!dados.dataCriacao?.toDate) {
+        return;
+    }
+
+    const dataCriacao = dados.dataCriacao.toDate();
+
+    const anoMesSolicitacao =
+        `${dataCriacao.getFullYear()}-${String(dataCriacao.getMonth() + 1).padStart(2, "0")}`;
+
+    if (anoMesSolicitacao !== periodoSelecionado) {
+        return;
+    }
+
+    total++;
+
 
 
             // ==========================================
@@ -238,11 +270,17 @@ async function carregarIndicadores() {
             taxaConclusao + "%";
 
 
+graficosIndicadores.forEach((grafico) => {
+    grafico.destroy();
+});
+
+graficosIndicadores = [];
+
         // ==========================================
         // GRÁFICO DE STATUS
         // ==========================================
 
-        new Chart(
+        graficosIndicadores.push(new Chart(
             document.getElementById(
                 "graficoStatus"
             ),
@@ -288,14 +326,14 @@ async function carregarIndicadores() {
 
             }
 
-        );
+       ));
 
 
         // ==========================================
         // GRÁFICO DE CATEGORIAS
         // ==========================================
 
-        new Chart(
+        graficosIndicadores.push(new Chart(
             document.getElementById(
                 "graficoCategoria"
             ),
@@ -348,7 +386,7 @@ async function carregarIndicadores() {
 
             }
 
-        );
+        ));
 
 
         // ==========================================
@@ -386,10 +424,10 @@ async function carregarIndicadores() {
                         return dataA - dataB;
 
                     }
-                );
+                ));
 
 
-        new Chart(
+       graficosIndicadores.push(new Chart(
             document.getElementById(
                 "graficoEvolucao"
             ),
@@ -435,14 +473,14 @@ async function carregarIndicadores() {
 
             }
 
-        );
+        ));
 
 
         // ==========================================
         // GRÁFICO DE ANALISTAS
         // ==========================================
 
-        new Chart(
+        graficosIndicadores.push(new Chart(
             document.getElementById(
                 "graficoAnalistas"
             ),
@@ -495,7 +533,7 @@ async function carregarIndicadores() {
 
             }
 
-        );
+        ));
 
 
     } catch (erro) {
