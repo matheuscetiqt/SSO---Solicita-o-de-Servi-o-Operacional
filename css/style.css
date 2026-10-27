@@ -3785,4 +3785,51 @@ label[for="filtroMes"] {
         max-width: 100%;
     }
 }
+/* IDENTIFICAÇÃO DO CPE ABAIXO DA LOGO */
+.identificacao-cpe {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px 18px;
+    text-align: center;
+}
 
+.identificacao-cpe h2 {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.identificacao-cpe p {
+    margin: 0;
+    color: #d7e7f5;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* TÍTULOS DAS SEÇÕES DO MENU */
+.menu-secao {
+    margin: 14px 16px 8px;
+    padding: 12px 0 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.menu-secao-titulo {
+    display: block;
+    color: #c5dced;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.menu-secao-sc {
+    margin-top: 18px;
+}
+
+/* EVITA QUE O NOME DO NOVO ITEM FIQUE APERTADO */
+.sidebar nav a {
+    box-sizing: border-box;
+}
