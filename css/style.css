@@ -4298,3 +4298,86 @@ label[for="filtroMes"] {
     }
 }
 
+/* CONTROLE SC — PRIORIDADES E AÇÕES */
+
+.sc-protocolo {
+    margin-top: 4px;
+    color: #718096;
+    font-size: 10px;
+    overflow-wrap: anywhere;
+}
+
+.sc-prioridade,
+.sc-entrega {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.sc-prioridade.urgente {
+    background: #fde8e8;
+    color: #b42318;
+}
+
+.sc-prioridade.atencao {
+    background: #fff0d9;
+    color: #975a00;
+}
+
+.sc-prioridade.noprazo {
+    background: #e2efff;
+    color: #175a9c;
+}
+
+.sc-prioridade.futuras {
+    background: #eee8ff;
+    color: #6541a5;
+}
+
+.sc-prioridade.concluido {
+    background: #dcf5e6;
+    color: #187342;
+}
+
+.sc-prioridade.vencido {
+    background: #ffdede;
+    color: #a11212;
+}
+
+.sc-prioridade.sem-data {
+    background: #edf0f3;
+    color: #596777;
+}
+
+.sc-entrega.sim {
+    background: #dcf5e6;
+    color: #187342;
+}
+
+.sc-entrega.nao {
+    background: #fff0d9;
+    color: #975a00;
+}
+
+.sc-link-acao {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: #1769aa;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sc-link-acao:hover {
+    color: #0e527f;
+    text-decoration: underline;
+}
+
