@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Controle de Dados de SC | CPE</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENU LATERAL CPE -->
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <img
+                src="Logosenai.png"
+                alt="SENAI CETIQT"
+                class="logo-senai-sidebar"
+            >
+
+            <div class="identificacao-cpe">
+                <h2>CPE</h2>
+                <p>Coordenação de Pós-Graduação e Extensão</p>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <div class="menu-secao">
+                <span class="menu-secao-titulo">
+                    SSO — Solicitações de Serviços Operacionais
+                </span>
+            </div>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="nova-solicitacao.html">
+                <i class="fa-solid fa-plus"></i>
+                Nova Solicitação
+            </a>
+
+            <a href="minhas-solicitacoes.html">
+                <i class="fa-solid fa-list"></i>
+                Minhas Solicitações
+            </a>
+
+            <a href="indicadores.html">
+                <i class="fa-solid fa-chart-column"></i>
+                Indicadores
+            </a>
+
+            <a href="configuracoes.html">
+                <i class="fa-solid fa-gear"></i>
+                Configurações
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">
+                    Controle de Dados de SC
+                </span>
+            </div>
+
+            <a href="controle-sc.html" class="active">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Acessar Controle de SC
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <button
+                type="button"
+                id="btnSair"
+                class="btn-sair"
+            >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="controle-sc-main">
+
+        <header>
+            <div>
+                <h1>Controle de Dados de SC</h1>
+                <span>
+                    Acompanhe prazos, prioridades e entregas dos pedidos de compra.
+                </span>
+            </div>
+        </header>
+
+        <!-- RESUMO -->
+        <section class="sc-resumo">
+
+            <div class="sc-card">
+                <div class="sc-card-icone azul">
+                    <i class="fa-solid fa-file-invoice"></i>
+                </div>
+                <div>
+                    <h2 id="scTotal">0</h2>
+                    <span>Total de SCs</span>
+                </div>
+            </div>
+
+            <div class="sc-card">
+                <div class="sc-card-icone vermelho">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <h2 id="scUrgentes">0</h2>
+                    <span>Urgentes</span>
+                </div>
+            </div>
+
+            <div class="sc-card">
+                <div class="sc-card-icone laranja">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                </div>
+                <div>
+                    <h2 id="scVencidas">0</h2>
+                    <span>Vencidas</span>
+                </div>
+            </div>
+
+            <div class="sc-card">
+                <div class="sc-card-icone verde">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <h2 id="scEntregues">0</h2>
+                    <span>Pedidos entregues</span>
+                </div>
+            </div>
+
+            <div class="sc-card">
+                <div class="sc-card-icone roxo">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                    <h2 id="scPendentes">0</h2>
+                    <span>Aguardando entrega</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- FILTROS -->
+        <section class="sc-filtros">
+
+            <div class="sc-secao-cabecalho">
+                <div>
+                    <h2>
+                        <i class="fa-solid fa-filter"></i>
+                        Consultar solicitações de compra
+                    </h2>
+                    <p>
+                        Pesquise e filtre as SCs cadastradas no controle.
+                    </p>
+                </div>
+            </div>
+
+            <div class="sc-filtros-grid">
+
+                <div class="sc-campo">
+                    <label for="scBusca">Número da SC ou produto</label>
+                    <input
+                        type="search"
+                        id="scBusca"
+                        placeholder="Digite o número ou nome"
+                    >
+                </div>
+
+                <div class="sc-campo">
+                    <label for="scFiltroAnalista">Analista</label>
+                    <select id="scFiltroAnalista">
+                        <option value="">Todos os analistas</option>
+                    </select>
+                </div>
+
+                <div class="sc-campo">
+                    <label for="scFiltroPrioridade">Prioridade</label>
+                    <select id="scFiltroPrioridade">
+                        <option value="">Todas as prioridades</option>
+                        <option value="1">1 - Urgente (até 5 dias)</option>
+                        <option value="2">2 - Atenção (6 a 10 dias)</option>
+                        <option value="3">3 - No prazo (11 a 28 dias)</option>
+                        <option value="4">4 - Futuras (29 dias ou mais)</option>
+                        <option value="5">5 - Concluído</option>
+                        <option value="6">6 - Vencido</option>
+                    </select>
+                </div>
+
+                <div class="sc-campo">
+                    <label for="scFiltroEntrega">Pedido entregue?</label>
+                    <select id="scFiltroEntrega">
+                        <option value="">Todos</option>
+                        <option value="nao">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TABELA -->
+        <section class="sc-tabela-area">
+
+            <div class="sc-tabela-cabecalho">
+                <div>
+                    <h2>Base de Controle de SCs</h2>
+                    <p id="scQuantidadeResultados">
+                        0 registros encontrados
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="btnAtualizarSC"
+                    class="sc-btn-atualizar"
+                >
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Atualizar
+                </button>
+            </div>
+
+            <div class="sc-tabela-scroll">
+
+                <table class="sc-tabela">
+
+                    <thead>
+                        <tr>
+                            <th>Analista</th>
+                            <th>Número da SC</th>
+                            <th>Especialista / Produto</th>
+                            <th>Data de abertura</th>
+                            <th>Data da necessidade</th>
+                            <th>Tipo de SC</th>
+                            <th>Prioridade</th>
+                            <th>Pedido entregue?</th>
+                            <th>Data de entrega</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="scTabelaCorpo">
+                        <tr>
+                            <td colspan="11" class="sc-tabela-vazia">
+                                As solicitações de compra serão carregadas aqui
+                                após a integração com o Firebase.
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <p class="sc-aviso">
+            <i class="fa-solid fa-circle-info"></i>
+            A prioridade será calculada automaticamente com base na data da
+            necessidade e no registro de entrega do pedido.
+        </p>
+
+    </main>
+
+</div>
+
+<!-- MODAL PARA REGISTRAR ENTREGA -->
+<div
+    id="modalEntregaSC"
+    class="modal-solicitacao"
+    style="display: none;"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloModalEntregaSC"
+>
+    <div class="modal-conteudo">
+
+        <div class="modal-cabecalho">
+            <h2 id="tituloModalEntregaSC">
+                <i class="fa-solid fa-truck-fast"></i>
+                Registrar entrega do pedido
+            </h2>
+
+            <button
+                type="button"
+                id="fecharModalEntregaSC"
+                class="fechar-modal"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+        </div>
+
+        <form id="formEntregaSC" class="sc-form-entrega">
+
+            <input type="hidden" id="scEntregaId">
+
+            <div class="sc-campo">
+                <label for="scEntregaNumero">Número da SC</label>
+                <input
+                    type="text"
+                    id="scEntregaNumero"
+                    readonly
+                >
+            </div>
+
+            <div class="sc-campo">
+                <label for="scDataEntrega">
+                    Data de entrega do pedido
+                </label>
+                <input
+                    type="date"
+                    id="scDataEntrega"
+                    required
+                >
+            </div>
+
+            <p class="sc-ajuda-entrega">
+                Ao salvar, a SC será marcada como entregue e sua prioridade
+                passará para Concluído.
+            </p>
+
+            <div class="sc-acoes-modal">
+                <button
+                    type="button"
+                    id="cancelarEntregaSC"
+                    class="sc-btn-cancelar"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    id="salvarEntregaSC"
+                    class="sc-btn-salvar"
+                >
+                    <i class="fa-solid fa-check"></i>
+                    Registrar entrega
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<!-- O JavaScript será conectado na próxima etapa -->
+<script type="module" src="js/controle-sc.js"></script>
+
+</body>
+</html>
