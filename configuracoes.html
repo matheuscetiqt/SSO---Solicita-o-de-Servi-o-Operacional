@@ -44,92 +44,88 @@
 
     <div class="layout">
 
-        <!-- MENU LATERAL -->
+       
+<!-- MENU LATERAL CPE -->
 
-        <aside class="sidebar">
+<aside class="sidebar">
 
-            <div class="logo">
+    <div class="logo">
 
-    <img
-        src="Logosenai.png"
-        alt="SENAI CETIQT"
-        class="logo-senai-sidebar"
-    >
+        <img
+            src="Logosenai.png"
+            alt="SENAI CETIQT"
+            class="logo-senai-sidebar"
+        >
 
-</div>
+        <div class="identificacao-cpe">
+            <h2>CPE</h2>
+            <p>Coordenação de Pós-Graduação e Extensão</p>
+        </div>
 
+    </div>
 
-            <nav>
+    <nav>
 
-                <a href="dashboard.html">
+        <!-- SEÇÃO SSO -->
+        <div class="menu-secao">
+            <span class="menu-secao-titulo">
+                SSO — Solicitações de Serviços Operacionais
+            </span>
+        </div>
 
-                    <i class="fa-solid fa-house"></i>
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
 
-                    Dashboard
+        <a href="nova-solicitacao.html">
+            <i class="fa-solid fa-plus"></i>
+            Nova Solicitação
+        </a>
 
-                </a>
+        <a href="minhas-solicitacoes.html">
+            <i class="fa-solid fa-list"></i>
+            Minhas Solicitações
+        </a>
 
+        <a href="indicadores.html">
+            <i class="fa-solid fa-chart-column"></i>
+            Indicadores
+        </a>
 
-                <a href="nova-solicitacao.html">
+        <a href="configuracoes.html" class="active">
+            <i class="fa-solid fa-gear"></i>
+            Configurações
+        </a>
 
-                    <i class="fa-solid fa-plus"></i>
+        <!-- SEÇÃO CONTROLE DE SC -->
+        <div class="menu-secao menu-secao-sc">
+            <span class="menu-secao-titulo">
+                Controle de Dados de SC
+            </span>
+        </div>
 
-                    Nova Solicitação
+        <a href="controle-sc.html">
+            <i class="fa-solid fa-cart-shopping"></i>
+            Acessar Controle de SC
+        </a>
 
-                </a>
+    </nav>
 
+    <div class="sidebar-footer">
 
-                <a href="minhas-solicitacoes.html">
+        <button
+            type="button"
+            id="btnSair"
+            class="btn-sair"
+        >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Sair
+        </button>
 
-                    <i class="fa-solid fa-list"></i>
+    </div>
 
-                    Minhas Solicitações
-
-                </a>
-
-
-                <a href="indicadores.html">
-
-                    <i class="fa-solid fa-chart-column"></i>
-
-                    Indicadores
-
-                </a>
-
-
-                <a
-                    href="configuracoes.html"
-                    class="active"
-                >
-
-                    <i class="fa-solid fa-gear"></i>
-
-                    Configurações
-
-                </a>
-
-            </nav>
-
-
-            <!-- BOTÃO SAIR -->
-
-            <div class="sidebar-footer">
-
-                <button
-                    type="button"
-                    id="btnSair"
-                    class="btn-sair"
-                >
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-
-                    Sair
-
-                </button>
-
-            </div>
-
-        </aside>
+</aside>
 
 
         <!-- CONTEÚDO -->
