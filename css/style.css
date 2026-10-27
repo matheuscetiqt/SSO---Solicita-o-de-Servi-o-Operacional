@@ -3833,3 +3833,156 @@ label[for="filtroMes"] {
 .sidebar nav a {
     box-sizing: border-box;
 }
+/* ==========================================
+   AJUSTE VISUAL DO MENU LATERAL CPE
+   ========================================== */
+
+/* Estrutura geral da lateral */
+.layout > .sidebar {
+    width: 260px;
+    min-width: 260px;
+    flex: 0 0 260px;
+    padding: 24px 18px 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Logo e identificação do CPE em coluna */
+.sidebar .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    width: 100%;
+    margin: 0;
+    padding: 4px 0 22px;
+    flex-shrink: 0;
+}
+
+/* Logo do SENAI */
+.sidebar .logo-senai-sidebar {
+    display: block;
+    width: 100%;
+    max-width: 175px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/* Identificação do CPE */
+.sidebar .identificacao-cpe {
+    width: 100%;
+    padding: 0 4px;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.sidebar .identificacao-cpe h2 {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 25px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.sidebar .identificacao-cpe p {
+    margin: 0;
+    color: #d5e5f3;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* Menu lateral */
+.layout > .sidebar nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    gap: 5px;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Links do menu */
+.layout > .sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    padding: 11px 10px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.layout > .sidebar nav a i {
+    flex: 0 0 16px;
+    width: 16px;
+    text-align: center;
+}
+
+.layout > .sidebar nav a:hover,
+.layout > .sidebar nav a.active {
+    background: #075f99;
+}
+
+/* Títulos das duas seções */
+.layout > .sidebar .menu-secao {
+    width: 100%;
+    margin: 8px 0 5px;
+    padding: 12px 0 7px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.layout > .sidebar .menu-secao-titulo {
+    display: block;
+    color: #c9ddec;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+/* Espaçamento entre os dois módulos */
+.layout > .sidebar .menu-secao-sc {
+    margin-top: 12px;
+}
+
+/* Botão Sair */
+.layout > .sidebar .sidebar-footer {
+    flex-shrink: 0;
+    margin-top: 14px;
+}
+
+.layout > .sidebar .btn-sair {
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 700px) {
+    .layout > .sidebar {
+        width: 220px;
+        min-width: 220px;
+        flex-basis: 220px;
+        padding: 18px 12px 12px;
+    }
+
+    .sidebar .logo-senai-sidebar {
+        max-width: 155px;
+    }
+
+    .layout > .sidebar nav a {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+}
