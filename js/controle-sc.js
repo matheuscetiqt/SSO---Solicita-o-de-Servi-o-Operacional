@@ -66,15 +66,28 @@ async function carregarSolicitacoesSC() {
             collection(db, "solicitacoes")
         );
 
-        solicitacoesSC = snapshot.docs
-            .map((registro) => ({
-                id: registro.id,
-                ...registro.data()
-            }))
-            .filter((item) =>
-                normalizar(item.tipoServico) ===
-                "solicitacao de compra"
-            );
+       
+solicitacoesSC = snapshot.docs
+    .map((registro) => ({
+        id: registro.id,
+        ...registro.data()
+    }))
+    .filter((item) =>
+        normalizar(item.tipoServico) ===
+        "solicitacao de compra"
+    )
+    .sort((a, b) => {
+        const dataA = a.dataCriacao?.toDate
+            ? a.dataCriacao.toDate().getTime()
+            : 0;
+
+        const dataB = b.dataCriacao?.toDate
+            ? b.dataCriacao.toDate().getTime()
+            : 0;
+
+        return dataB - dataA;
+    });
+
 
         atualizarFiltroAnalistas();
         atualizarResumo();
