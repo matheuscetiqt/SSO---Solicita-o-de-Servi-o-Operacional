@@ -1893,64 +1893,96 @@ if (selectStatus) {
             campo.className = "detalhe-grupo";
             campo.style.gridColumn = "1 / 3";
 
-            campo.innerHTML = `
-                <span>Descrição da conclusão *</span>
-
-                <textarea
-                    id="descricaoConclusao"
-                    rows="4"
-                    placeholder="Descreva o serviço realizado..."
-                    style="
-                        width: 100%;
-                        margin-top: 8px;
-                        padding: 10px;
-                        border: 1px solid #ccc;
-                        border-radius: 8px;
-                        resize: vertical;
-                        font-family: inherit;
-                    "
-                >${dados.descricaoConclusao || ""}</textarea>
-
+            
+campo.innerHTML = `
+    ${
+        dados.tipoServico === "Solicitação de Compra"
+            ? `
                 <label
-    style="
-        display: block;
-        margin-top: 18px;
-        font-weight: 500;
-    "
->
-    Anexo da conclusão
-</label>
+                    for="numeroSC"
+                    style="display:block; margin-bottom:8px; font-weight:600;"
+                >
+                    Número da SC *
+                </label>
 
-<input
-    type="file"
-    id="anexoConclusao"
-    style="
-        width: 100%;
-        margin-top: 8px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background: white;
-    "
->
-
-                <button
-                    type="button"
-                    id="btnSalvarStatus"
+                <input
+                    type="text"
+                    id="numeroSC"
+                    value="${dados.numeroSC || ""}"
+                    placeholder="Ex.: 021153"
+                    required
                     style="
-                        margin-top: 12px;
-                        padding: 10px 18px;
-                        border: none;
-                        border-radius: 8px;
-                        background: #005b96;
-                        color: white;
-                        cursor: pointer;
-                        font-weight: 600;
+                        box-sizing:border-box;
+                        width:100%;
+                        margin-bottom:18px;
+                        padding:10px;
+                        border:1px solid #ccc;
+                        border-radius:8px;
+                        font-family:inherit;
                     "
                 >
-                    Salvar alteração
-                </button>
-            `;
+            `
+            : ""
+    }
+
+    <span>Descrição da conclusão *</span>
+
+    <textarea
+        id="descricaoConclusao"
+        rows="4"
+        placeholder="Descreva o serviço realizado..."
+        style="
+            width:100%;
+            margin-top:8px;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            resize:vertical;
+            font-family:inherit;
+        "
+    >${dados.descricaoConclusao || ""}</textarea>
+
+    <label
+        style="
+            display:block;
+            margin-top:18px;
+            font-weight:500;
+        "
+    >
+        Anexo da conclusão
+    </label>
+
+    <input
+        type="file"
+        id="anexoConclusao"
+        style="
+            width:100%;
+            margin-top:8px;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            background:white;
+        "
+    >
+
+    <button
+        type="button"
+        id="btnSalvarStatus"
+        style="
+            margin-top:12px;
+            padding:10px 18px;
+            border:none;
+            border-radius:8px;
+            background:#005b96;
+            color:white;
+            cursor:pointer;
+            font-weight:600;
+        "
+    >
+        Salvar alteração
+    </button>
+`;
+
 
             selectStatus
                 .closest(".detalhe-grupo")
@@ -1960,67 +1992,62 @@ if (selectStatus) {
                 .getElementById("btnSalvarStatus")
                 .addEventListener("click", async () => {
 
-                    const descricao =
-                        document
-                            .getElementById("descricaoConclusao")
-                            .value
-                            .trim();
+                   
+const descricao = document
+    .getElementById("descricaoConclusao")
+    .value
+    .trim();
 
-                    const arquivo =
-    document.getElementById("anexoConclusao")?.files[0];
+const numeroSC = dados.tipoServico === "Solicitação de Compra"
+    ? document.getElementById("numeroSC").value.trim()
+    : "";
 
-                    let anexoEnviado = null;
+const arquivo = document
+    .getElementById("anexoConclusao")
+    ?.files[0];
+
+if (!descricao) {
+    alert("Informe a descrição da conclusão antes de salvar.");
+    return;
+}
 
 if (
-    novoStatus === "Concluída" &&
-    arquivo
+    dados.tipoServico === "Solicitação de Compra" &&
+    !numeroSC
 ) {
+    alert("Informe o Número da SC antes de concluir a solicitação.");
+    document.getElementById("numeroSC").focus();
+    return;
+}
 
+let anexoEnviado = null;
+
+if (arquivo) {
     try {
-
-        anexoEnviado =
-            await enviarAnexoConclusao(
-                dados.protocolo,
-                descricao,
-                arquivo
-            );
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao enviar anexo:",
-            erro
+        anexoEnviado = await enviarAnexoConclusao(
+            dados.protocolo,
+            descricao,
+            arquivo
         );
+    } catch (erro) {
+        console.error("Erro ao enviar anexo:", erro);
 
         alert(
             "Ocorreu um erro ao enviar o anexo. A solicitação não foi concluída."
         );
 
         return;
-
     }
-
 }
 
-                    if (!descricao) {
-
-                        alert(
-                            "Informe a descrição da conclusão antes de salvar."
-                        );
-
-                        return;
-                    }
-
-                    await alterarStatusSolicitacao(
+await alterarStatusSolicitacao(
     dados.id,
     novoStatus,
     descricao,
     "",
-    anexoEnviado?.arquivo || ""
+    anexoEnviado?.arquivo || "",
+    numeroSC
 );
-
-                });
-        }
 
         // ==========================================
         // REPROVADA
@@ -2133,8 +2160,9 @@ async function alterarStatusSolicitacao(
     novoStatus,
     descricaoConclusao = "",
     motivoReprovacao = "",
-    anexoConclusao = ""
-) 
+    anexoConclusao = "",
+    numeroSC = ""
+)
 
 {
 
