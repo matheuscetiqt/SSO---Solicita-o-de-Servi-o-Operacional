@@ -2220,6 +2220,10 @@ if (novoStatus === "Concluída") {
     dadosAtualizacao.anexoConclusao =
         anexoConclusao;
 
+    if (dados.tipoServico === "Solicitação de Compra") {
+        dadosAtualizacao.numeroSC = numeroSC.trim();
+    }
+
 }
 
 if (novoStatus === "Reprovada") {
