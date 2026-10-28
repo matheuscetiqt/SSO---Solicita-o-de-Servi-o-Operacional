@@ -2049,10 +2049,11 @@ await alterarStatusSolicitacao(
     numeroSC
 );
 
-        // ==========================================
-        // REPROVADA
-        // ==========================================
+}); // Fecha o evento do botão Salvar alteração
 
+// ==========================================
+// REPROVADA
+// ==========================================
         if (novoStatus === "Reprovada") {
 
             const campo = document.createElement("div");
