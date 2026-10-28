@@ -2050,8 +2050,8 @@ await alterarStatusSolicitacao(
 );
 
 }); // Fecha o evento do botão Salvar alteração
-            }         // fecha o if (selectStatus)
-}         // fecha a função abrirModalSolicitacao
+
+} // Fecha o if (novoStatus === "Concluída")
 
 // ==========================================
 // REPROVADA
