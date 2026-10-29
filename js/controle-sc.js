@@ -546,7 +546,20 @@ function renderizarTabela() {
 
                 <td>${formatarData(item.dataCriacao)}</td>
 
-                <td>${escaparHTML(obterDataNecessidadeTexto(item) || "—")}</td>
+                <td>
+    ${escaparHTML(obterDataNecessidadeTexto(item) || "—")}
+
+    <div>
+        <button
+            type="button"
+            class="sc-link-acao"
+            data-acao="editar-data"
+            data-id="${escaparHTML(item.id)}"
+        >
+            Editar data
+        </button>
+    </div>
+</td>
 
                 <td>${tipo}</td>
 
@@ -640,7 +653,76 @@ async function informarNumeroSC(id) {
         alert("Não foi possível salvar o número da SC.");
     }
 }
+// =====================================================
+// EDITAR DATA DA NECESSIDADE
+// =====================================================
 
+async function editarDataNecessidade(id) {
+    const item = solicitacoesSC.find(
+        (registro) => registro.id === id
+    );
+
+    if (!item) {
+        alert("Solicitação não encontrada.");
+        return;
+    }
+
+    // Identifica o campo correto conforme o tipo de SC
+    const campoData = item.tipoSC === "Servico"
+        ? "datasAulas"
+        : "datasNecessidades";
+
+    const dataAtual = item[campoData] || "";
+
+    const novaData = prompt(
+        "Corrija a data da necessidade.\n\n" +
+        "Digite a nova data no mesmo formato do cadastro atual:",
+        dataAtual
+    );
+
+    // Se cancelar, não altera nada
+    if (novaData === null) return;
+
+    const dataCorrigida = novaData.trim();
+
+    if (!dataCorrigida) {
+        alert("Informe a data da necessidade.");
+        return;
+    }
+
+    if (dataCorrigida === dataAtual) {
+        alert("Nenhuma alteração foi realizada.");
+        return;
+    }
+
+    try {
+        await updateDoc(doc(db, "solicitacoes", id), {
+            [campoData]: dataCorrigida,
+            controleSCAtualizadoEm: serverTimestamp(),
+            controleSCAtualizadoPor:
+                usuarioAutenticado.email || ""
+        });
+
+        // Atualiza o registro na tela
+        item[campoData] = dataCorrigida;
+
+        atualizarResumo();
+        renderizarTabela();
+
+        alert("Data da necessidade corrigida com sucesso!");
+
+    } catch (erro) {
+        console.error(
+            "Erro ao corrigir a data da necessidade:",
+            erro
+        );
+
+        alert(
+            "Não foi possível salvar a data. " +
+            "Verifique sua conexão e as permissões do Firebase."
+        );
+    }
+}
 // =====================================================
 // REGISTRAR ENTREGA
 // =====================================================
@@ -799,6 +881,10 @@ $("scTabelaCorpo")?.addEventListener("click", async (evento) => {
     if (acao === "numero") {
         await informarNumeroSC(id);
     }
+
+    if (acao === "editar-data") {
+    await editarDataNecessidade(id);
+}
 
     if (acao === "entrega") {
         abrirModalEntrega(id);
