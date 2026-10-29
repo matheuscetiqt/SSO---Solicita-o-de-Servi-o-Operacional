@@ -72,12 +72,12 @@ async function carregarSolicitacoesSC() {
                 id: registro.id,
                 ...registro.data()
             }))
-            .filter((item) =>
+                        .filter((item) =>
                 normalizar(item.tipoServico) ===
                     "solicitacao de compra" &&
                 normalizar(item.status) === "concluida"
-            );
-    .sort((a, b) => {
+            )
+            .sort((a, b) => {
         const dataA = a.dataCriacao?.toDate
             ? a.dataCriacao.toDate().getTime()
             : 0;
