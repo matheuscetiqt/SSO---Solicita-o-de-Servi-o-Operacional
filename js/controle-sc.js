@@ -412,10 +412,12 @@ function calcularDiasUteis(dataInicial, dataFinal) {
 }
 
 // =====================================================
-// PRIORIDADE AUTOMÁTICA
+// PRIORIDADE AUTOMÁTICA - DIAS ÚTEIS
 // =====================================================
 
 function calcularPrioridade(item) {
+
+    // Se o pedido foi entregue
     if (
         item.pedidoEntregue === true ||
         Boolean(item.dataEntregaSC)
@@ -429,6 +431,7 @@ function calcularPrioridade(item) {
 
     const necessidade = obterDataNecessidade(item);
 
+    // Se não houver data válida
     if (!necessidade) {
         return {
             numero: null,
@@ -439,11 +442,10 @@ function calcularPrioridade(item) {
 
     const hoje = dataLocalHoje();
 
-    const dias = Math.round(
-        (necessidade.getTime() - hoje.getTime()) /
-        86400000
-    );
+    // Calcula a diferença considerando apenas dias úteis
+    const dias = calcularDiasUteis(hoje, necessidade);
 
+    // Data já vencida
     if (dias < 0) {
         return {
             numero: 6,
@@ -452,33 +454,37 @@ function calcularPrioridade(item) {
         };
     }
 
+    // Até 5 dias úteis
     if (dias <= 5) {
         return {
             numero: 1,
-            texto: "1 - Urgente (≤ 5d)",
+            texto: "1 - Urgente (≤ 5 dias úteis)",
             classe: "urgente"
         };
     }
 
+    // De 6 a 10 dias úteis
     if (dias <= 10) {
         return {
             numero: 2,
-            texto: "2 - Atenção (6-10d)",
+            texto: "2 - Atenção (6-10 dias úteis)",
             classe: "atencao"
         };
     }
 
+    // De 11 a 28 dias úteis
     if (dias <= 28) {
         return {
             numero: 3,
-            texto: "3 - No prazo (11-28d)",
+            texto: "3 - No prazo (11-28 dias úteis)",
             classe: "noprazo"
         };
     }
 
+    // Acima de 28 dias úteis
     return {
         numero: 4,
-        texto: "4 - Futuras (≥ 29d)",
+        texto: "4 - Futuras (≥ 29 dias úteis)",
         classe: "futuras"
     };
 }
