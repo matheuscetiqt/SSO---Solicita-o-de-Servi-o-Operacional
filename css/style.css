@@ -4547,3 +4547,69 @@ label[for="filtroMes"] {
     }
 }
 
+/* CORREÇÃO DEFINITIVA DO MODAL DE ENTREGA */
+
+#modalEntregaSC > .modal-conteudo {
+    width: min(760px, calc(100vw - 48px)) !important;
+    max-width: 760px !important;
+    max-height: calc(100vh - 48px) !important;
+    height: auto !important;
+    margin: auto !important;
+    padding: 28px 32px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    border-radius: 18px !important;
+}
+
+#modalEntregaSC .sc-form-entrega {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 18px !important;
+    box-sizing: border-box !important;
+}
+
+#modalEntregaSC .sc-campo {
+    width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#modalEntregaSC .sc-campo input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+#modalEntregaSC .sc-acoes-modal {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 8px !important;
+}
+
+#modalEntregaSC .sc-btn-cancelar {
+    flex: 0 0 150px !important;
+}
+
+#modalEntregaSC .sc-btn-salvar {
+    flex: 1 !important;
+}
+
+@media (max-width: 600px) {
+    #modalEntregaSC > .modal-conteudo {
+        width: calc(100vw - 24px) !important;
+        max-height: calc(100vh - 24px) !important;
+        padding: 20px 16px !important;
+    }
+
+    #modalEntregaSC .sc-acoes-modal {
+        flex-direction: column-reverse !important;
+    }
+
+    #modalEntregaSC .sc-acoes-modal button {
+        width: 100% !important;
+        flex: auto !important;
+    }
+}
+
