@@ -103,7 +103,7 @@ async function carregarSolicitacoesSC() {
         if (corpo) {
             corpo.innerHTML = `
                 <tr>
-                    <td colspan="11" class="sc-tabela-vazia">
+                    <td colspan="12" class="sc-tabela-vazia">
                         Não foi possível carregar os dados.
                         Verifique sua conexão e as permissões do Firebase.
                     </td>
@@ -630,11 +630,9 @@ function renderizarTabela() {
 
         const p = calcularPrioridade(item);
 
-        const prazo = calcularPrazoSC(item);
-
-        const entregue =
-            item.pedidoEntregue === true ||
-            Boolean(item.dataEntregaSC);
+const entregue =
+    item.pedidoEntregue === true ||
+    Boolean(item.dataEntregaSC);
 
         if (busca && !textoBusca.includes(busca)) {
             return false;
@@ -670,7 +668,7 @@ function renderizarTabela() {
     if (filtradas.length === 0) {
         corpo.innerHTML = `
             <tr>
-                <td colspan="11" class="sc-tabela-vazia">
+                <td colspan="12" class="sc-tabela-vazia">
                     Nenhuma solicitação de compra encontrada.
                 </td>
             </tr>
@@ -678,11 +676,13 @@ function renderizarTabela() {
         return;
     }
 
-    corpo.innerHTML = filtradas.map((item) => {
-        const p = calcularPrioridade(item);
-        const entregue =
-            item.pedidoEntregue === true ||
-            Boolean(item.dataEntregaSC);
+corpo.innerHTML = filtradas.map((item) => {
+    const p = calcularPrioridade(item);
+    const prazo = calcularPrazoSC(item);
+
+    const entregue =
+        item.pedidoEntregue === true ||
+        Boolean(item.dataEntregaSC);
 
         const tipo = item.tipoSC === "Servico"
             ? "Serviço"
