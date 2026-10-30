@@ -278,6 +278,140 @@ function dataLocalHoje() {
 }
 
 // =====================================================
+// CALENDÁRIO DE FERIADOS - RIO DE JANEIRO/RJ
+// =====================================================
+
+// Calcula a data da Páscoa
+function calcularPascoa(ano) {
+    const a = ano % 19;
+    const b = Math.floor(ano / 100);
+    const c = ano % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const mes = Math.floor((h + l - 7 * m + 114) / 31);
+    const dia = ((h + l - 7 * m + 114) % 31) + 1;
+
+    return new Date(ano, mes - 1, dia);
+}
+
+function adicionarDias(data, quantidade) {
+    const resultado = new Date(
+        data.getFullYear(),
+        data.getMonth(),
+        data.getDate()
+    );
+
+    resultado.setDate(resultado.getDate() + quantidade);
+
+    return resultado;
+}
+
+function chaveData(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const dia = String(data.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
+}
+
+// Lista de feriados nacionais, estaduais e municipais
+function obterFeriadosRio(ano) {
+    const feriados = new Set([
+        // Feriados nacionais
+        `${ano}-01-01`, // Confraternização Universal
+        `${ano}-04-21`, // Tiradentes
+        `${ano}-05-01`, // Dia do Trabalho
+        `${ano}-09-07`, // Independência
+        `${ano}-10-12`, // Nossa Senhora Aparecida
+        `${ano}-11-02`, // Finados
+        `${ano}-11-15`, // Proclamação da República
+        `${ano}-11-20`, // Consciência Negra
+        `${ano}-12-25`, // Natal
+
+        // Feriados municipais - Rio de Janeiro
+        `${ano}-01-20`, // São Sebastião
+        `${ano}-04-23`  // São Jorge
+    ]);
+
+    const pascoa = calcularPascoa(ano);
+
+    // Sexta-feira Santa
+    const sextaSanta = adicionarDias(pascoa, -2);
+
+    // Terça-feira de Carnaval
+    const tercaCarnaval = adicionarDias(pascoa, -47);
+
+    feriados.add(chaveData(sextaSanta));
+    feriados.add(chaveData(tercaCarnaval));
+
+    return feriados;
+}
+
+// Verifica se determinada data é dia útil
+function ehDiaUtil(data, cacheFeriados = new Map()) {
+    const diaSemana = data.getDay();
+
+    // Domingo e sábado não são dias úteis
+    if (diaSemana === 0 || diaSemana === 6) {
+        return false;
+    }
+
+    const ano = data.getFullYear();
+
+    if (!cacheFeriados.has(ano)) {
+        cacheFeriados.set(ano, obterFeriadosRio(ano));
+    }
+
+    // Pontos facultativos continuam sendo considerados dias úteis
+    return !cacheFeriados.get(ano).has(chaveData(data));
+}
+
+// Calcula a diferença entre duas datas em dias úteis
+function calcularDiasUteis(dataInicial, dataFinal) {
+    const inicio = new Date(
+        dataInicial.getFullYear(),
+        dataInicial.getMonth(),
+        dataInicial.getDate()
+    );
+
+    const fim = new Date(
+        dataFinal.getFullYear(),
+        dataFinal.getMonth(),
+        dataFinal.getDate()
+    );
+
+    if (inicio.getTime() === fim.getTime()) {
+        return 0;
+    }
+
+    const cacheFeriados = new Map();
+
+    const sentido = inicio < fim ? 1 : -1;
+
+    let diasUteis = 0;
+
+    const data = new Date(inicio);
+
+    // O dia inicial não é contado; o dia final é considerado
+    while (data.getTime() !== fim.getTime()) {
+        data.setDate(data.getDate() + sentido);
+
+        if (ehDiaUtil(data, cacheFeriados)) {
+            diasUteis += sentido;
+        }
+    }
+
+    return diasUteis;
+}
+
+// =====================================================
 // PRIORIDADE AUTOMÁTICA
 // =====================================================
 
