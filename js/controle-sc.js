@@ -412,6 +412,31 @@ function calcularDiasUteis(dataInicial, dataFinal) {
 }
 
 // =====================================================
+// QUANTIDADE DE DIAS ATÉ A DATA DA NECESSIDADE
+// =====================================================
+
+function calcularPrazoSC(item) {
+
+    // Solicitação já entregue
+    if (
+        item.pedidoEntregue === true ||
+        Boolean(item.dataEntregaSC)
+    ) {
+        return "OK";
+    }
+
+    const necessidade = obterDataNecessidade(item);
+
+    if (!necessidade) {
+        return "";
+    }
+
+    const hoje = dataLocalHoje();
+
+    return calcularDiasUteis(hoje, necessidade);
+}
+
+// =====================================================
 // PRIORIDADE AUTOMÁTICA - DIAS ÚTEIS
 // =====================================================
 
@@ -605,6 +630,8 @@ function renderizarTabela() {
 
         const p = calcularPrioridade(item);
 
+        const prazo = calcularPrazoSC(item);
+
         const entregue =
             item.pedidoEntregue === true ||
             Boolean(item.dataEntregaSC);
@@ -708,6 +735,10 @@ function renderizarTabela() {
                         ${escaparHTML(p.texto)}
                     </span>
                 </td>
+
+                <td>
+    ${escaparHTML(prazo)}
+</td>
 
                 <td>
                     <span class="sc-entrega ${entregue ? "sim" : "nao"}">
