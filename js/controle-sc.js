@@ -54,7 +54,7 @@ async function carregarSolicitacoesSC() {
     if (corpo) {
         corpo.innerHTML = `
             <tr>
-                <td colspan="11" class="sc-tabela-vazia">
+                <td colspan="12" class="sc-tabela-vazia">
                     Carregando solicitações de compra...
                 </td>
             </tr>
