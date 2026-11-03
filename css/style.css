@@ -4612,4 +4612,10 @@ label[for="filtroMes"] {
         flex: auto !important;
     }
 }
+/* ==========================================
+   INDICADORES — ESPAÇAMENTO ENTRE FILTRO E CARDS
+========================================== */
 
+main > .indicadores-resumo {
+    margin-top: 40px !important;
+}
