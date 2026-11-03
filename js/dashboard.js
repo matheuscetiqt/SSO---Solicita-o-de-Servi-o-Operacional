@@ -328,6 +328,9 @@ let reprovadas = 0;
 
         });
 
+                // Atualiza os indicadores de Controle de SC
+        atualizarDashboardControleSC(solicitacoesCarregadas);
+
         // ==========================================
         // PREENCHER FILTRO DE ANALISTAS
         // ==========================================
@@ -2641,4 +2644,382 @@ if (btnSair) {
         }
     );
 
+}
+
+// =====================================================
+// DASHBOARD - INDICADORES DE CONTROLE DE SC
+// =====================================================
+
+let graficoSCStatus = null;
+let graficoSCMensal = null;
+let graficoSCAnalistas = null;
+
+function atualizarDashboardControleSC(solicitacoes) {
+
+    // Considera somente Solicitações de Compra.
+    // Não depende do status geral do SSO.
+    const solicitacoesSC = solicitacoes.filter(item => {
+
+        const tipo = String(item.tipoServico || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim()
+            .toLowerCase();
+
+        return tipo === "solicitacao de compra";
+    });
+
+    const entregues = solicitacoesSC.filter(item =>
+        item.pedidoEntregue === true || Boolean(item.dataEntregaSC)
+    );
+
+    const pendentes = solicitacoesSC.filter(item =>
+        !(item.pedidoEntregue === true || Boolean(item.dataEntregaSC))
+    );
+
+    const total = solicitacoesSC.length;
+
+    const taxa = total > 0
+        ? Math.round((entregues.length / total) * 100)
+        : 0;
+
+    // Atualiza os cards
+    document.getElementById("dashboardSCTotal").textContent = total;
+
+    document.getElementById("dashboardSCEntregues").textContent =
+        entregues.length;
+
+    document.getElementById("dashboardSCPendentes").textContent =
+        pendentes.length;
+
+    document.getElementById("dashboardSCTaxa").textContent =
+        taxa + "%";
+
+    atualizarGraficosControleSC(solicitacoesSC, entregues, pendentes);
+}
+
+
+// =====================================================
+// CONVERTER DATA DO FIRESTORE
+// =====================================================
+
+function obterDataDashboardSC(valor) {
+
+    if (!valor) return null;
+
+    if (typeof valor.toDate === "function") {
+        return valor.toDate();
+    }
+
+    if (typeof valor.seconds === "number") {
+        return new Date(valor.seconds * 1000);
+    }
+
+    if (typeof valor === "string") {
+
+        const texto = valor.trim();
+
+        const br = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+
+        if (br) {
+            return new Date(
+                Number(br[3]),
+                Number(br[2]) - 1,
+                Number(br[1])
+            );
+        }
+
+        const iso = texto.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+        if (iso) {
+            return new Date(
+                Number(iso[1]),
+                Number(iso[2]) - 1,
+                Number(iso[3])
+            );
+        }
+
+        const data = new Date(texto);
+
+        if (!Number.isNaN(data.getTime())) {
+            return data;
+        }
+    }
+
+    return null;
+}
+
+
+// =====================================================
+// ATUALIZAR GRÁFICOS
+// =====================================================
+
+function atualizarGraficosControleSC(solicitacoesSC, entregues, pendentes) {
+
+    if (typeof Chart === "undefined") {
+        console.error("Chart.js não foi carregado.");
+        return;
+    }
+
+    const azulSenai = "#0066A1";
+    const laranjaSenai = "#E94B0C";
+
+    // -------------------------------------------------
+    // GRÁFICO 1 - ENTREGUES X PENDENTES
+    // -------------------------------------------------
+
+    const ctxStatus = document.getElementById(
+        "dashboardGraficoSCStatus"
+    );
+
+    if (ctxStatus) {
+
+        if (graficoSCStatus) {
+            graficoSCStatus.destroy();
+        }
+
+        graficoSCStatus = new Chart(ctxStatus, {
+
+            type: "doughnut",
+
+            data: {
+                labels: ["Entregues", "Aguardando entrega"],
+
+                datasets: [{
+                    data: [
+                        entregues.length,
+                        pendentes.length
+                    ],
+
+                    backgroundColor: [
+                        azulSenai,
+                        laranjaSenai
+                    ],
+
+                    borderWidth: 2,
+                    borderColor: "#ffffff"
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        });
+    }
+
+
+    // -------------------------------------------------
+    // GRÁFICO 2 - EVOLUÇÃO MENSAL
+    // -------------------------------------------------
+
+    const meses = [
+        "Jan", "Fev", "Mar", "Abr",
+        "Mai", "Jun", "Jul", "Ago",
+        "Set", "Out", "Nov", "Dez"
+    ];
+
+    const agrupamentoMensal = {};
+
+    solicitacoesSC.forEach(item => {
+
+        const data = obterDataDashboardSC(item.dataCriacao);
+
+        if (!data) return;
+
+        const chave =
+            data.getFullYear() + "-" +
+            String(data.getMonth() + 1).padStart(2, "0");
+
+        agrupamentoMensal[chave] =
+            (agrupamentoMensal[chave] || 0) + 1;
+    });
+
+    const chavesOrdenadas = Object.keys(agrupamentoMensal).sort();
+
+    const labelsMensais = chavesOrdenadas.map(chave => {
+
+        const [ano, mes] = chave.split("-");
+
+        return meses[Number(mes) - 1] + "/" + ano;
+    });
+
+    const valoresMensais = chavesOrdenadas.map(chave =>
+        agrupamentoMensal[chave]
+    );
+
+    const ctxMensal = document.getElementById(
+        "dashboardGraficoSCMensal"
+    );
+
+    if (ctxMensal) {
+
+        if (graficoSCMensal) {
+            graficoSCMensal.destroy();
+        }
+
+        graficoSCMensal = new Chart(ctxMensal, {
+
+            type: "line",
+
+            data: {
+                labels: labelsMensais,
+
+                datasets: [{
+                    label: "SCs abertas",
+
+                    data: valoresMensais,
+
+                    borderColor: azulSenai,
+                    backgroundColor: "rgba(0, 102, 161, 0.12)",
+
+                    fill: true,
+                    tension: 0.3,
+
+                    pointRadius: 4,
+                    pointBackgroundColor: azulSenai
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    // -------------------------------------------------
+    // GRÁFICO 3 - ENTREGAS POR ANALISTA
+    // -------------------------------------------------
+
+    const agrupamentoAnalistas = {};
+
+    solicitacoesSC.forEach(item => {
+
+        const analista = item.analista || "Não informado";
+
+        if (!agrupamentoAnalistas[analista]) {
+            agrupamentoAnalistas[analista] = {
+                entregues: 0,
+                pendentes: 0
+            };
+        }
+
+        const foiEntregue =
+            item.pedidoEntregue === true ||
+            Boolean(item.dataEntregaSC);
+
+        if (foiEntregue) {
+            agrupamentoAnalistas[analista].entregues++;
+        } else {
+            agrupamentoAnalistas[analista].pendentes++;
+        }
+    });
+
+    const nomesAnalistas = Object.keys(agrupamentoAnalistas)
+        .sort((a, b) => {
+
+            const totalA =
+                agrupamentoAnalistas[a].entregues +
+                agrupamentoAnalistas[a].pendentes;
+
+            const totalB =
+                agrupamentoAnalistas[b].entregues +
+                agrupamentoAnalistas[b].pendentes;
+
+            return totalB - totalA;
+        });
+
+    const valoresEntregues = nomesAnalistas.map(nome =>
+        agrupamentoAnalistas[nome].entregues
+    );
+
+    const valoresPendentes = nomesAnalistas.map(nome =>
+        agrupamentoAnalistas[nome].pendentes
+    );
+
+    const ctxAnalistas = document.getElementById(
+        "dashboardGraficoSCAnalistas"
+    );
+
+    if (ctxAnalistas) {
+
+        if (graficoSCAnalistas) {
+            graficoSCAnalistas.destroy();
+        }
+
+        graficoSCAnalistas = new Chart(ctxAnalistas, {
+
+            type: "bar",
+
+            data: {
+                labels: nomesAnalistas,
+
+                datasets: [
+
+                    {
+                        label: "Entregues",
+                        data: valoresEntregues,
+                        backgroundColor: azulSenai
+                    },
+
+                    {
+                        label: "Pendentes",
+                        data: valoresPendentes,
+                        backgroundColor: laranjaSenai
+                    }
+
+                ]
+            },
+
+            options: {
+                indexAxis: "y",
+
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                },
+
+                scales: {
+                    x: {
+                        stacked: true,
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    },
+
+                    y: {
+                        stacked: true
+                    }
+                }
+            }
+        });
+    }
 }
