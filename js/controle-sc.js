@@ -79,10 +79,9 @@ async function carregarSolicitacoesSC() {
                 ...registro.data()
             }))
                         .filter((item) =>
-                normalizar(item.tipoServico) ===
-                    "solicitacao de compra" &&
-                normalizar(item.status) === "concluida"
-            )
+    normalizar(item.tipoServico) ===
+    "solicitacao de compra"
+)
             .sort((a, b) => {
         const dataA = a.dataCriacao?.toDate
             ? a.dataCriacao.toDate().getTime()
@@ -767,7 +766,11 @@ corpo.innerHTML = filtradas.map((item) => {
     }
 </td>
 
-                <td>${escaparHTML(item.status || "—")}</td>
+                <td>
+    <span class="sc-status ${entregue ? "concluida" : "pendente"}">
+        ${entregue ? "Concluída" : "Aguardando entrega"}
+    </span>
+</td>
 
                 <td>
                     ${
