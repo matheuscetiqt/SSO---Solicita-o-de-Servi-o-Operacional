@@ -4613,9 +4613,9 @@ label[for="filtroMes"] {
     }
 }
 /* ==========================================
-   INDICADORES — ESPAÇAMENTO ENTRE FILTRO E CARDS
+   INDICADORES — ESPAÇAMENTO DOS CARDS
 ========================================== */
 
-main > .indicadores-resumo {
-    margin-top: 40px !important;
+.indicadores-resumo {
+    margin-top: 30px !important;
 }
