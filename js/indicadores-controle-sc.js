@@ -790,7 +790,7 @@ function renderizarGraficoEntregaAnalista(base) {
                     data: ranking.map(
                         (item) => item[1].entregues
                     ),
-                    backgroundColor: "#26965b"
+                    backgroundColor: "#0066A1"
                 },
                 {
                     label: "Pendentes",
