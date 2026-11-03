@@ -20,6 +20,12 @@ let usuarioAutenticado = null;
 const $ = (id) => document.getElementById(id);
 
 // =====================================================
+// POWER AUTOMATE - PEDIDOS DO CONTROLE DE SC
+// =====================================================
+
+const POWER_AUTOMATE_URL = "https://defaultcd8472815bbf4642aa28142c41b273.a0.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/06/workflows/5e5b774af38b41ff914773b2a750a996/triggers/manual/paths/invoke?api-version=1";
+
+// =====================================================
 // INICIALIZAÇÃO E AUTENTICAÇÃO
 // =====================================================
 
@@ -748,6 +754,19 @@ corpo.innerHTML = filtradas.map((item) => {
 
                 <td>${formatarData(item.dataEntregaSC)}</td>
 
+                <td>
+    ${
+        item.anexoPedido?.url
+            ? `<a
+                class="sc-link-acao"
+                href="${escaparHTML(item.anexoPedido.url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >${escaparHTML(item.anexoPedido.nome || "Abrir pedido")}</a>`
+            : "—"
+    }
+</td>
+
                 <td>${escaparHTML(item.status || "—")}</td>
 
                 <td>
@@ -893,6 +912,95 @@ async function editarDataNecessidade(id) {
             "Verifique sua conexão e as permissões do Firebase."
         );
     }
+}
+
+// =====================================================
+// ENVIO DO PEDIDO DE COMPRA AO POWER AUTOMATE
+// =====================================================
+
+async function converterArquivoParaBase64(arquivo) {
+    const buffer = await arquivo.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+
+    let binario = "";
+    const tamanhoBloco = 0x8000;
+
+    for (let inicio = 0; inicio < bytes.length; inicio += tamanhoBloco) {
+        const bloco = bytes.subarray(
+            inicio,
+            inicio + tamanhoBloco
+        );
+
+        binario += String.fromCharCode(...bloco);
+    }
+
+    return btoa(binario);
+}
+
+async function enviarPedidoCompra(item, arquivo) {
+
+    if (
+        !POWER_AUTOMATE_URL ||
+        POWER_AUTOMATE_URL === "COLE_AQUI_A_URL_DO_FLUXO"
+    ) {
+        throw new Error(
+            "Configure a URL do Power Automate."
+        );
+    }
+
+    if (!item.protocolo) {
+        throw new Error(
+            "Solicitação sem protocolo. Não foi possível localizar a pasta."
+        );
+    }
+
+    const arquivoBase64 =
+        await converterArquivoParaBase64(arquivo);
+
+    const resposta = await fetch(POWER_AUTOMATE_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            protocolo: String(item.protocolo),
+            arquivoNome: arquivo.name,
+            arquivoBase64: arquivoBase64
+        })
+    });
+
+    const textoResposta = await resposta.text();
+
+    let resultado;
+
+    try {
+        resultado = textoResposta
+            ? JSON.parse(textoResposta)
+            : {};
+    } catch {
+        throw new Error(
+            "Resposta inválida do Power Automate."
+        );
+    }
+
+    if (!resposta.ok) {
+        throw new Error(
+            resultado.message ||
+            resultado.error ||
+            `Erro HTTP ${resposta.status}`
+        );
+    }
+
+    if (!resultado.arquivoUrl) {
+        throw new Error(
+            "O Power Automate não retornou o link do arquivo."
+        );
+    }
+
+    return {
+        url: resultado.arquivoUrl,
+        nome: resultado.arquivoNome || arquivo.name
+    };
 }
 // =====================================================
 // REGISTRAR ENTREGA
