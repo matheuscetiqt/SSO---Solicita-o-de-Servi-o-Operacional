@@ -1042,9 +1042,14 @@ $("modalEntregaSC")?.addEventListener("click", (evento) => {
     }
 });
 
+// =====================================================
+// REGISTRAR ENTREGA + ANEXAR PEDIDO DE COMPRA
+// =====================================================
+
 $("formEntregaSC")?.addEventListener(
     "submit",
     async (evento) => {
+
         evento.preventDefault();
 
         const id = $("scEntregaId").value;
@@ -1061,46 +1066,85 @@ $("formEntregaSC")?.addEventListener(
 
         if (!item) return;
 
-        const numeroSC = $("scEntregaNumero").value.trim();
+        const numeroSC =
+            $("scEntregaNumero").value.trim();
+
+        const campoAnexo = $("scAnexoPedido");
+        const arquivo = campoAnexo?.files?.[0];
 
         if (!numeroSC) {
-            alert(
-                "Informe primeiro o número oficial da SC antes de registrar a entrega."
-            );
+            alert("Informe o número oficial da SC.");
+            return;
+        }
+
+        if (!arquivo) {
+            alert("Anexe o pedido de compra.");
             return;
         }
 
         const botao = $("salvarEntregaSC");
+
         botao.disabled = true;
-        botao.textContent = "Salvando...";
+        botao.textContent = "Enviando arquivo...";
 
         try {
-            await updateDoc(doc(db, "solicitacoes", id), {
-                numeroSC,
-                pedidoEntregue: true,
-                dataEntregaSC: dataEntrega,
-                controleSCAtualizadoEm: serverTimestamp(),
-                controleSCAtualizadoPor: usuarioAutenticado.email || ""
-            });
 
+            // 1. Envia o pedido ao Power Automate
+            const anexoPedido =
+                await enviarPedidoCompra(item, arquivo);
+
+            botao.textContent = "Registrando entrega...";
+
+            // 2. Atualiza o Firestore
+            await updateDoc(
+                doc(db, "solicitacoes", id),
+                {
+                    numeroSC,
+                    pedidoEntregue: true,
+                    dataEntregaSC: dataEntrega,
+                    anexoPedido,
+
+                    controleSCAtualizadoEm:
+                        serverTimestamp(),
+
+                    controleSCAtualizadoPor:
+                        usuarioAutenticado.email || ""
+                }
+            );
+
+            // 3. Atualiza os dados locais
             item.numeroSC = numeroSC;
             item.pedidoEntregue = true;
             item.dataEntregaSC = dataEntrega;
+            item.anexoPedido = anexoPedido;
+
+            // 4. Limpa e fecha o formulário
+            $("formEntregaSC").reset();
 
             fecharModalEntrega();
             atualizarResumo();
             renderizarTabela();
 
             alert(
-                "Entrega registrada! A prioridade agora é 5 - Concluído."
+                "Entrega registrada e pedido de compra anexado com sucesso!"
             );
 
         } catch (erro) {
-            console.error("Erro ao registrar entrega:", erro);
-            alert("Não foi possível registrar a entrega.");
+
+            console.error(
+                "Erro ao registrar entrega:",
+                erro
+            );
+
+            alert(
+                erro.message ||
+                "Não foi possível registrar a entrega."
+            );
 
         } finally {
+
             botao.disabled = false;
+
             botao.innerHTML =
                 '<i class="fa-solid fa-check"></i>Registrar entrega';
         }
