@@ -17,19 +17,47 @@ const filtroModo = document.getElementById("filtroModo");
 
 const filtroMes = document.getElementById("filtroMes");
 
+const filtroMesContainer = document.getElementById("filtroMesContainer");
+
+// CONTROLAR EXIBIÇÃO DO FILTRO DE MÊS
+
+function atualizarFiltroMes() {
+
+    const modoGeral = filtroModo.value === "todos";
+
+    filtroMesContainer.style.display =
+        modoGeral ? "none" : "block";
+
+    filtroMes.disabled = modoGeral;
+
+}
+
+// ALTERAÇÃO DO MÊS
+
 filtroMes.addEventListener("change", () => {
     carregarIndicadores();
 });
 
+// ALTERAÇÃO DA VISUALIZAÇÃO
+
 filtroModo.addEventListener("change", () => {
-    filtroMes.disabled = filtroModo.value === "todos";
+
+    atualizarFiltroMes();
+
     carregarIndicadores();
+
 });
+
+// DEFINIR MÊS ATUAL
 
 const agora = new Date();
 
 filtroMes.value =
     `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}`;
+
+// APLICAR ESTADO INICIAL
+
+atualizarFiltroMes();
 
 let graficosIndicadores = [];
 
