@@ -19,9 +19,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- CHART.JS - GRÁFICOS DO DASHBOARD -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 
 <body>
@@ -307,92 +304,6 @@
         </section>
 
                 </section>
-
-        <!-- ====================================== -->
-        <!-- INDICADORES DE CONTROLE DE SC          -->
-        <!-- ====================================== -->
-
-        <section class="sc-dashboard">
-
-            <div class="sc-dashboard-titulo">
-                <div>
-                    <h2>
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Controle de SC
-                    </h2>
-                    <span>
-                        Acompanhamento das Solicitações de Compra.
-                    </span>
-                </div>
-
-                <a href="controle-sc.html">
-                    Acessar Controle de SC
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-            </div>
-
-            <!-- CARDS DE SC -->
-
-            <div class="sc-dashboard-cards">
-
-                <div class="sc-dashboard-card">
-                    <i class="fa-solid fa-file-lines"></i>
-                    <h3 id="dashboardSCTotal">0</h3>
-                    <span>Total de SCs</span>
-                </div>
-
-                <div class="sc-dashboard-card">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <h3 id="dashboardSCEntregues">0</h3>
-                    <span>Entregues</span>
-                </div>
-
-                <div class="sc-dashboard-card">
-                    <i class="fa-solid fa-hourglass-half"></i>
-                    <h3 id="dashboardSCPendentes">0</h3>
-                    <span>Aguardando entrega</span>
-                </div>
-
-                <div class="sc-dashboard-card">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <h3 id="dashboardSCTaxa">0%</h3>
-                    <span>Taxa de entrega</span>
-                </div>
-
-            </div>
-
-            <!-- GRÁFICOS -->
-
-            <div class="sc-dashboard-graficos">
-
-                <div class="sc-dashboard-grafico">
-                    <h3>Entregues x Pendentes</h3>
-                    <span>Comparativo da situação dos pedidos.</span>
-
-                    <div class="sc-dashboard-canvas">
-                        <canvas id="dashboardGraficoSCStatus"></canvas>
-                    </div>
-                </div>
-
-                <div class="sc-dashboard-grafico">
-                    <h3>Evolução Mensal</h3>
-                    <span>Quantidade de SCs abertas por mês.</span>
-
-                    <div class="sc-dashboard-canvas">
-                        <canvas id="dashboardGraficoSCMensal"></canvas>
-                    </div>
-                </div>
-
-                <div class="sc-dashboard-grafico sc-dashboard-grafico-grande">
-                    <h3>Entregas por Analista</h3>
-                    <span>Comparativo entre pedidos entregues e pendentes.</span>
-
-                    <div class="sc-dashboard-canvas sc-dashboard-canvas-grande">
-                        <canvas id="dashboardGraficoSCAnalistas"></canvas>
-                    </div>
-                </div>
-
-            </div>
 
         </section>
 
