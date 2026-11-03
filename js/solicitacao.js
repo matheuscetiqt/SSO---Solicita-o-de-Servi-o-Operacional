@@ -1,6 +1,9 @@
 import { auth, db } from "./firebase-config.js";
 
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 import {
     collection,
@@ -10,6 +13,26 @@ import {
     doc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+// =====================================================
+// SAIR DO SISTEMA
+// =====================================================
+
+document.getElementById("btnSair")?.addEventListener(
+    "click",
+    async () => {
+        try {
+            await signOut(auth);
+
+            window.location.href = "index.html";
+
+        } catch (erro) {
+            console.error("Erro ao sair:", erro);
+
+            alert("Não foi possível sair do sistema.");
+        }
+    }
+);
 
 window.addEventListener("load", () => {
     carregarUsuario();
