@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Indicadores de Controle de SC | CPE</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css?v=2">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img
+                src="Logosenai.png"
+                alt="SENAI CETIQT"
+                class="logo-senai-sidebar"
+            >
+
+            <div class="identificacao-cpe">
+                <h2>CPE</h2>
+                <p>Coordenação de Pós-Graduação e Extensão</p>
+            </div>
+        </div>
+
+        <nav>
+
+            <div class="menu-secao">
+                <span class="menu-secao-titulo">
+                    SSO — Solicitações de Serviços Operacionais
+                </span>
+            </div>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="nova-solicitacao.html">
+                <i class="fa-solid fa-plus"></i>
+                Nova Solicitação
+            </a>
+
+            <a href="minhas-solicitacoes.html">
+                <i class="fa-solid fa-list"></i>
+                Minhas Solicitações
+            </a>
+
+            <a href="indicadores.html">
+                <i class="fa-solid fa-chart-column"></i>
+                Indicadores
+            </a>
+
+            <a href="configuracoes.html">
+                <i class="fa-solid fa-gear"></i>
+                Configurações
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">
+                    Controle de Dados de SC
+                </span>
+            </div>
+
+            <a href="controle-sc.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Acessar Controle de SC
+            </a>
+
+            <a href="indicadores-controle-sc.html" class="active">
+                <i class="fa-solid fa-chart-pie"></i>
+                Indicadores de SC
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <button
+                type="button"
+                id="btnSair"
+                class="btn-sair"
+            >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </button>
+        </div>
+
+    </aside>
+
+    <main class="indicadores-sc-main">
+
+        <header class="indicadores-sc-header">
+            <div>
+                <h1>Indicadores de Controle de SC</h1>
+                <span>
+                    Painel gerencial de acompanhamento das solicitações de compra.
+                </span>
+            </div>
+
+            <button
+                type="button"
+                id="btnAtualizarIndicadores"
+                class="sc-btn-atualizar"
+            >
+                <i class="fa-solid fa-rotate-right"></i>
+                Atualizar dados
+            </button>
+        </header>
+
+        <!-- FILTROS -->
+
+        <section class="indicadores-sc-filtros">
+
+            <div class="sc-campo">
+                <label for="filtroAnoSC">Ano de abertura</label>
+                <select id="filtroAnoSC">
+                    <option value="todos">Todos os anos</option>
+                </select>
+            </div>
+
+            <div class="sc-campo">
+                <label for="filtroAnalistaSC">Analista</label>
+                <select id="filtroAnalistaSC">
+                    <option value="">Todos os analistas</option>
+                </select>
+            </div>
+
+            <div class="indicadores-sc-atualizacao">
+                <i class="fa-solid fa-circle-info"></i>
+                <span id="ultimaAtualizacaoSC">
+                    Aguardando carregamento dos dados...
+                </span>
+            </div>
+
+        </section>
+
+        <!-- CARDS -->
+
+        <section class="indicadores-sc-cards">
+
+            <div class="indicador-sc-card">
+                <div class="indicador-sc-icone azul">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                </div>
+                <div>
+                    <span>Total de SCs</span>
+                    <strong id="indTotalSC">0</strong>
+                </div>
+            </div>
+
+            <div class="indicador-sc-card">
+                <div class="indicador-sc-icone verde">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <span>Pedidos entregues</span>
+                    <strong id="indEntreguesSC">0</strong>
+                </div>
+            </div>
+
+            <div class="indicador-sc-card">
+                <div class="indicador-sc-icone laranja">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                    <span>Aguardando entrega</span>
+                    <strong id="indPendentesSC">0</strong>
+                </div>
+            </div>
+
+            <div class="indicador-sc-card">
+                <div class="indicador-sc-icone vermelho">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <span>Urgentes</span>
+                    <strong id="indUrgentesSC">0</strong>
+                </div>
+            </div>
+
+            <div class="indicador-sc-card">
+                <div class="indicador-sc-icone roxo">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                </div>
+                <div>
+                    <span>Vencidas</span>
+                    <strong id="indVencidasSC">0</strong>
+                </div>
+            </div>
+
+            <div class="indicador-sc-card">
+                <div class="indicador-sc-icone azul">
+                    <i class="fa-solid fa-percent"></i>
+                </div>
+                <div>
+                    <span>Taxa de entrega</span>
+                    <strong id="indTaxaEntregaSC">0%</strong>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- GRÁFICOS -->
+
+        <section class="indicadores-sc-graficos">
+
+            <div class="indicador-sc-grafico">
+                <div class="indicador-sc-grafico-titulo">
+                    <h2>Nível de Prioridade</h2>
+                    <p>Distribuição das SCs por situação de prazo.</p>
+                </div>
+                <div class="indicador-sc-canvas">
+                    <canvas id="graficoPrioridadeSC"></canvas>
+                </div>
+            </div>
+
+            <div class="indicador-sc-grafico">
+                <div class="indicador-sc-grafico-titulo">
+                    <h2>Solicitações por Analista</h2>
+                    <p>Quantidade de SCs sob responsabilidade de cada analista.</p>
+                </div>
+                <div class="indicador-sc-canvas">
+                    <canvas id="graficoAnalistaSC"></canvas>
+                </div>
+            </div>
+
+            <div class="indicador-sc-grafico">
+                <div class="indicador-sc-grafico-titulo">
+                    <h2>Entregues x Pendentes</h2>
+                    <p>Comparativo da situação dos pedidos.</p>
+                </div>
+                <div class="indicador-sc-canvas">
+                    <canvas id="graficoEntregaSC"></canvas>
+                </div>
+            </div>
+
+            <div class="indicador-sc-grafico">
+                <div class="indicador-sc-grafico-titulo">
+                    <h2>Evolução Mensal</h2>
+                    <p>Quantidade de SCs abertas por mês.</p>
+                </div>
+                <div class="indicador-sc-canvas">
+                    <canvas id="graficoMensalSC"></canvas>
+                </div>
+            </div>
+
+            <div class="indicador-sc-grafico indicador-sc-grafico-largo">
+                <div class="indicador-sc-grafico-titulo">
+                    <h2>Entregas por Analista</h2>
+                    <p>Comparativo entre pedidos entregues e pendentes.</p>
+                </div>
+                <div class="indicador-sc-canvas indicador-sc-canvas-alto">
+                    <canvas id="graficoEntregaAnalistaSC"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <p class="indicadores-sc-rodape">
+            <i class="fa-solid fa-circle-info"></i>
+            Os indicadores consideram somente registros identificados como
+            Solicitação de Compra na coleção do sistema.
+        </p>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/indicadores-controle-sc.js"></script>
+
+</body>
+</html>
