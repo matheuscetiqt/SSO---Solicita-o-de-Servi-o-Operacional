@@ -797,7 +797,7 @@ function renderizarGraficoEntregaAnalista(base) {
                     data: ranking.map(
                         (item) => item[1].pendentes
                     ),
-                    backgroundColor: "#e99a24"
+                    backgroundColor: "#E94B0C"
                 }
             ]
         },
