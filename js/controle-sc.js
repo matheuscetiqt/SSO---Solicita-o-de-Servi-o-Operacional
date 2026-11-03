@@ -983,13 +983,22 @@ async function enviarPedidoCompra(item, arquivo) {
         );
     }
 
-    if (!resposta.ok) {
-        throw new Error(
-            resultado.message ||
-            resultado.error ||
-            `Erro HTTP ${resposta.status}`
-        );
-    }
+   if (!resposta.ok) {
+    const detalheErro =
+        resultado?.message ??
+        resultado?.error ??
+        resultado?.detail ??
+        resultado;
+
+    const mensagemErro =
+        typeof detalheErro === "string"
+            ? detalheErro
+            : JSON.stringify(detalheErro, null, 2);
+
+    throw new Error(
+        `Power Automate (HTTP ${resposta.status}): ${mensagemErro}`
+    );
+}
 
     if (!resultado.arquivoUrl) {
         throw new Error(
@@ -1129,17 +1138,16 @@ $("formEntregaSC")?.addEventListener(
                 "Entrega registrada e pedido de compra anexado com sucesso!"
             );
 
-        } catch (erro) {
+} catch (erro) {
+    console.error("Erro ao registrar entrega:", erro);
 
-            console.error(
-                "Erro ao registrar entrega:",
-                erro
-            );
+    const mensagemErro = erro?.message ?? erro;
 
-            alert(
-                erro.message ||
-                "Não foi possível registrar a entrega."
-            );
+    alert(
+        typeof mensagemErro === "string"
+            ? mensagemErro
+            : JSON.stringify(mensagemErro, null, 2)
+    );
 
         } finally {
 
