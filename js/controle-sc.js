@@ -23,7 +23,7 @@ const $ = (id) => document.getElementById(id);
 // POWER AUTOMATE - PEDIDOS DO CONTROLE DE SC
 // =====================================================
 
-const POWER_AUTOMATE_URL = "https://defaultcd8472815bbf4642aa28142c41b273.a0.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/06/workflows/5e5b774af38b41ff914773b2a750a996/triggers/manual/paths/invoke?api-version=1";
+const POWER_AUTOMATE_URL = "https://defaultcd8472815bbf4642aa28142c41b273.a0.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/06/workflows/5e5b774af38b41ff914773b2a750a996/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=RtV6kuh3pSYKAC2_LZzjElRW2IBKOwxT0k36ATys8ns";
 
 // =====================================================
 // INICIALIZAÇÃO E AUTENTICAÇÃO
