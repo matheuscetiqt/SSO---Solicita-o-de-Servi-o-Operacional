@@ -4619,3 +4619,235 @@ label[for="filtroMes"] {
 .indicadores-resumo {
     margin-top: 30px !important;
 }
+
+/* ==========================================
+   INDICADORES DE CONTROLE DE SC
+========================================== */
+
+.indicadores-sc-main {
+    min-width: 0;
+    background: #F5F7FA;
+}
+
+.indicadores-sc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.indicadores-sc-header h1 {
+    color: #173c5a;
+    font-size: 25px;
+    margin-bottom: 6px;
+}
+
+.indicadores-sc-header span {
+    color: #718096;
+    font-size: 13px;
+}
+
+.indicadores-sc-filtros {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px;
+    margin-bottom: 24px;
+    background: #ffffff;
+    border: 1px solid #e4eaf0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(20, 45, 70, 0.04);
+}
+
+.indicadores-sc-filtros .sc-campo {
+    width: 220px;
+}
+
+.indicadores-sc-atualizacao {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    padding-bottom: 12px;
+    color: #718096;
+    font-size: 11px;
+}
+
+.indicadores-sc-atualizacao i {
+    color: #1769aa;
+}
+
+.indicadores-sc-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.indicador-sc-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 22px;
+    min-width: 0;
+    background: #ffffff;
+    border: 1px solid #e4eaf0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(20, 45, 70, 0.05);
+}
+
+.indicador-sc-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.indicador-sc-icone.azul {
+    background: #e7f1fb;
+    color: #1769aa;
+}
+
+.indicador-sc-icone.verde {
+    background: #e5f6ed;
+    color: #18864b;
+}
+
+.indicador-sc-icone.laranja {
+    background: #fff1df;
+    color: #b96900;
+}
+
+.indicador-sc-icone.vermelho {
+    background: #fdeaea;
+    color: #c62828;
+}
+
+.indicador-sc-icone.roxo {
+    background: #f0eaff;
+    color: #7044b5;
+}
+
+.indicador-sc-card span {
+    display: block;
+    color: #718096;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.indicador-sc-card strong {
+    display: block;
+    color: #173c5a;
+    font-size: 27px;
+    line-height: 1.2;
+}
+
+.indicadores-sc-graficos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.indicador-sc-grafico {
+    min-width: 0;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e4eaf0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(20, 45, 70, 0.05);
+}
+
+.indicador-sc-grafico-largo {
+    grid-column: 1 / -1;
+}
+
+.indicador-sc-grafico-titulo {
+    margin-bottom: 18px;
+}
+
+.indicador-sc-grafico-titulo h2 {
+    color: #173c5a;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.indicador-sc-grafico-titulo p {
+    color: #718096;
+    font-size: 11px;
+}
+
+.indicador-sc-canvas {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+
+.indicador-sc-canvas-alto {
+    height: 380px;
+}
+
+.indicadores-sc-rodape {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 14px 16px;
+    background: #eaf4fc;
+    border-radius: 8px;
+    color: #24577b;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.indicadores-sc-rodape i {
+    margin-top: 3px;
+}
+
+@media (max-width: 1100px) {
+    .indicadores-sc-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .indicadores-sc-graficos {
+        grid-template-columns: 1fr;
+    }
+
+    .indicador-sc-grafico-largo {
+        grid-column: auto;
+    }
+
+    .indicadores-sc-atualizacao {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .indicadores-sc-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .indicadores-sc-filtros .sc-campo {
+        width: 100%;
+    }
+
+    .indicador-sc-canvas {
+        height: 260px;
+    }
+
+    .indicador-sc-canvas-alto {
+        height: 320px;
+    }
+
+    .indicadores-sc-header h1 {
+        font-size: 21px;
+    }
+}
