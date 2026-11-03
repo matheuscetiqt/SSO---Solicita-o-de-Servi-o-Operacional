@@ -9,9 +9,29 @@ import {
 } from "./firebase-config.js";
 
 import {
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+// ==========================================
+// SAIR DO SISTEMA
+// ==========================================
+
+document.getElementById("btnSair")?.addEventListener(
+    "click",
+    async () => {
+        try {
+            await signOut(auth);
+
+            window.location.href = "index.html";
+
+        } catch (erro) {
+            console.error("Erro ao sair:", erro);
+
+            alert("Não foi possível sair do sistema.");
+        }
+    }
+);
 
 // ==========================================
 // USUÁRIO / ANALISTA LOGADO
