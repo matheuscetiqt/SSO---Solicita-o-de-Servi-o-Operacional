@@ -247,14 +247,28 @@
                     </p>
                 </div>
 
-                <button
-                    type="button"
-                    id="btnAtualizarSC"
-                    class="sc-btn-atualizar"
-                >
-                    <i class="fa-solid fa-rotate-right"></i>
-                    Atualizar
-                </button>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+
+    <button
+        type="button"
+        id="btnExportarExcel"
+        class="sc-btn-atualizar"
+        style="background: #16834a;"
+    >
+        <i class="fa-solid fa-file-excel"></i>
+        Exportar para Excel
+    </button>
+
+    <button
+        type="button"
+        id="btnAtualizarSC"
+        class="sc-btn-atualizar"
+    >
+        <i class="fa-solid fa-rotate-right"></i>
+        Atualizar
+    </button>
+
+</div>
             </div>
 
             <div class="sc-tabela-scroll">
@@ -399,6 +413,7 @@
     </div>
 </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <!-- O JavaScript será conectado na próxima etapa -->
 <script type="module" src="js/controle-sc.js"></script>
 
