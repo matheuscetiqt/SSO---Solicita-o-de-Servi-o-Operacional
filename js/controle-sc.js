@@ -74,15 +74,23 @@ async function carregarSolicitacoesSC() {
 
        
         solicitacoesSC = snapshot.docs
-            .map((registro) => ({
-                id: registro.id,
-                ...registro.data()
-            }))
-                        .filter((item) =>
-    normalizar(item.tipoServico) ===
-    "solicitacao de compra"
-)
-            .sort((a, b) => {
+    .map((registro) => ({
+        id: registro.id,
+        ...registro.data()
+    }))
+    .filter((item) => {
+        const tipoServicoValido =
+            normalizar(item.tipoServico) === "solicitacao de compra";
+
+        const status = normalizar(item.status);
+
+        const statusValido =
+            status !== "cancelado" &&
+            status !== "reprovado";
+
+        return tipoServicoValido && statusValido;
+    })
+    .sort((a, b) => {
         const dataA = a.dataCriacao?.toDate
             ? a.dataCriacao.toDate().getTime()
             : 0;
