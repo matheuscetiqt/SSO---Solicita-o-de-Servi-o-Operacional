@@ -58,13 +58,22 @@ async function carregarIndicadoresSC() {
         );
 
         solicitacoesSC = snapshot.docs
-            .map((registro) => ({
-                id: registro.id,
-                ...registro.data()
-            }))
-            .filter((item) =>
-                normalizar(item.tipoServico) === "solicitacao de compra"
-            );
+    .map((registro) => ({
+        id: registro.id,
+        ...registro.data()
+    }))
+    .filter((item) => {
+        const tipoServicoValido =
+            normalizar(item.tipoServico) === "solicitacao de compra";
+
+        const status = normalizar(item.status);
+
+        const statusValido =
+            status !== "cancelada" &&
+            status !== "reprovada";
+
+        return tipoServicoValido && statusValido;
+    });
 
         preencherFiltrosSC();
         atualizarIndicadoresSC();
