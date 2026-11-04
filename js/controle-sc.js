@@ -85,8 +85,8 @@ async function carregarSolicitacoesSC() {
         const status = normalizar(item.status);
 
         const statusValido =
-            status !== "cancelado" &&
-            status !== "reprovado";
+    status !== "cancelada" &&
+    status !== "reprovada";
 
         return tipoServicoValido && statusValido;
     })
