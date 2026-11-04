@@ -1262,3 +1262,155 @@ $("btnAtualizarSC")?.addEventListener(
     "click",
     carregarSolicitacoesSC
 );
+// =====================================================
+// EXPORTAR SOLICITAÇÕES DE COMPRA PARA EXCEL
+// =====================================================
+
+$("btnExportarExcel")?.addEventListener(
+    "click",
+    exportarSolicitacoesExcel
+);
+
+function exportarSolicitacoesExcel() {
+
+    if (typeof XLSX === "undefined") {
+        alert(
+            "Não foi possível carregar a biblioteca de Excel. " +
+            "Verifique sua conexão e tente novamente."
+        );
+        return;
+    }
+
+    if (!solicitacoesSC.length) {
+        alert("Não existem Solicitações de Compra para exportar.");
+        return;
+    }
+
+    const dados = solicitacoesSC.map((item) => {
+
+        const prioridade = calcularPrioridade(item);
+
+        const entregue =
+            item.pedidoEntregue === true ||
+            Boolean(item.dataEntregaSC);
+
+        return {
+            "ID Firestore": item.id || "",
+            "Protocolo": item.protocolo || "",
+            "Analista": item.analista || "",
+            "Solicitante": item.solicitante || "",
+            "Tipo de SC": item.tipoSC || "",
+            "Status": item.status || "",
+            "Número da SC": item.numeroSC || "",
+
+            "Data de abertura": converterDataExcel(
+                item.dataCriacao
+            ),
+
+            "Data da necessidade": obterDataNecessidadeTexto(item),
+
+            "Prioridade": prioridade.texto,
+
+            "Número da prioridade": prioridade.numero ?? "",
+
+            "Prazo em dias úteis": calcularPrazoSC(item),
+
+            "Pedido entregue": entregue ? "Sim" : "Não",
+
+            "Data de entrega": converterDataExcel(
+                item.dataEntregaSC
+            ),
+
+            "Nome do produto": item.nomeProduto || "",
+
+            "Professor": item.professor || "",
+
+            "Curso": item.curso || item.cursoProduto || "",
+
+            "Disciplina": item.disciplina || "",
+
+            "Atividade 1": item.atividade1 || "",
+
+            "Atividade 2": item.atividade2 || "",
+
+            "Valor do produto": item.valorProduto || "",
+
+            "Quantidade": item.quantidadeProduto || "",
+
+            "Valor hora": item.valorHora || "",
+
+            "Data da última atualização": converterDataExcel(
+                item.controleSCAtualizadoEm
+            ),
+
+            "Atualizado por": item.controleSCAtualizadoPor || "",
+
+            "Link do pedido de compra": item.anexoPedido?.url || ""
+        };
+    });
+
+    const planilha = XLSX.utils.json_to_sheet(dados);
+
+    // Ajusta a largura das colunas
+    planilha["!cols"] = Object.keys(dados[0]).map((coluna) => ({
+        wch: Math.max(
+            coluna.length + 3,
+            ...dados.map((linha) =>
+                String(linha[coluna] ?? "").length + 2
+            )
+        )
+    }));
+
+    // Cria o arquivo Excel
+    const livro = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        livro,
+        planilha,
+        "Solicitações de Compra"
+    );
+
+    // Identifica a data da exportação
+    const agora = new Date();
+
+    const dataArquivo =
+        agora.getFullYear() +
+        String(agora.getMonth() + 1).padStart(2, "0") +
+        String(agora.getDate()).padStart(2, "0");
+
+    XLSX.writeFile(
+        livro,
+        `Controle_SC_${dataArquivo}.xlsx`
+    );
+
+    alert(
+        `${dados.length} Solicitação(ões) de Compra exportada(s) com sucesso!`
+    );
+}
+
+// Converte datas do Firestore para datas legíveis
+function converterDataExcel(valor) {
+
+    if (!valor) return "";
+
+    let data;
+
+    if (typeof valor.toDate === "function") {
+        data = valor.toDate();
+
+    } else if (
+        typeof valor === "object" &&
+        typeof valor.seconds === "number"
+    ) {
+        data = new Date(valor.seconds * 1000);
+
+    } else {
+        data = new Date(valor);
+    }
+
+    if (Number.isNaN(data.getTime())) {
+        return String(valor);
+    }
+
+    return data.toLocaleDateString("pt-BR");
+}
