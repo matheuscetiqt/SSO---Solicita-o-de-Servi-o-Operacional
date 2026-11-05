@@ -4853,3 +4853,189 @@ label[for="filtroMes"] {
 }
 
 }
+
+/* ==========================================
+   CENTRAL DE AUTOMAÇÕES
+========================================== */
+
+.automacoes-main {
+    width: 100%;
+}
+
+.automacoes-intro {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 26px 30px;
+    margin: 10px 0 28px;
+    background: linear-gradient(120deg, #003B71, #075A9C);
+    color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,59,113,.12);
+}
+
+.automacoes-intro-icone {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    background: rgba(255,255,255,.15);
+    font-size: 25px;
+}
+
+.automacoes-intro h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.automacoes-intro p {
+    margin: 0;
+    color: rgba(255,255,255,.88);
+    font-size: 14px;
+}
+
+.automacoes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+.automacao-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 260px;
+    padding: 25px;
+    background: #fff;
+    border: 1px solid #E5EAF0;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(16,42,67,.06);
+}
+
+.automacao-card-destaque {
+    border-top: 4px solid #005A9C;
+}
+
+.automacao-card-vazio {
+    border-top: 4px solid #AAB7C4;
+}
+
+.automacao-card-topo,
+.automacao-card-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.automacao-icone {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #EAF2F9;
+    color: #003B71;
+    font-size: 20px;
+}
+
+.automacao-status {
+    padding: 6px 11px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-planejado {
+    background: #FFF4DF;
+    color: #936000;
+}
+
+.status-disponivel {
+    background: #EEF2F6;
+    color: #526273;
+}
+
+.automacao-card h2 {
+    margin: 23px 0 9px;
+    color: #003B71;
+    font-size: 19px;
+}
+
+.automacao-card p {
+    margin: 0 0 22px;
+    color: #64748B;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.automacao-card-rodape {
+    margin-top: auto;
+    padding-top: 17px;
+    border-top: 1px solid #EDF0F4;
+}
+
+.automacao-card-rodape > span {
+    color: #718096;
+    font-size: 12px;
+}
+
+.automacao-card-rodape > span i {
+    margin-right: 5px;
+}
+
+.btn-automacao {
+    border: 0;
+    border-radius: 9px;
+    padding: 10px 14px;
+    background: #DCE5ED;
+    color: #526273;
+    font: 600 12px Poppins, sans-serif;
+    cursor: not-allowed;
+}
+
+.automacao-em-breve {
+    font-weight: 600;
+}
+
+.automacoes-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px 18px;
+    background: #F4F7FB;
+    border: 1px solid #E5EAF0;
+    border-radius: 12px;
+    color: #526273;
+}
+
+.automacoes-nota > i {
+    margin-top: 3px;
+    color: #005A9C;
+}
+
+.automacoes-nota p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+    .automacoes-intro {
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .automacoes-intro h2 {
+        font-size: 17px;
+    }
+
+    .automacao-card {
+        padding: 20px;
+    }
+}
