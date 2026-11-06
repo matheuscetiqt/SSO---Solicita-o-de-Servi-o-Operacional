@@ -484,7 +484,8 @@ function obterDadosParaTR(dados) {
     }
 
     const disciplina = String(dados.disciplina || "").trim();
-    const curso = String(dados.curso || "").trim();
+    const cursoOriginal = String(dados.curso || "").trim();
+const curso = cursoOriginal.split("-").pop().trim();
 
     if (!disciplina || !curso) {
         throw new Error("Curso e disciplina precisam estar preenchidos.");
