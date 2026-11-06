@@ -453,6 +453,7 @@ function formatarDataDocumento(data) {
     return `${Number(dia)} de ${meses[Number(mes) - 1]} de ${ano}.`;
 }
 
+
 function obterDadosParaTR(dados) {
     const atividades = [];
 
@@ -472,9 +473,7 @@ function obterDadosParaTR(dados) {
         const tipo = identificarTipoAtividade(nome);
 
         if (tipo === "desconhecida") {
-            throw new Error(
-                `Não foi possível identificar a atividade "${nome}".`
-            );
+            throw new Error(`Atividade não reconhecida: ${nome}`);
         }
 
         atividades.push({ nome, carga, tipo });
@@ -484,32 +483,31 @@ function obterDadosParaTR(dados) {
         throw new Error("Nenhuma atividade válida foi encontrada.");
     }
 
-    if (atividades.some(a => a.tipo === "tutoria")) {
-        throw new Error(
-            "A atividade de Tutoria precisa de uma descrição institucional aprovada antes da geração do TR."
-        );
-    }
-
     const disciplina = String(dados.disciplina || "").trim();
     const curso = String(dados.curso || "").trim();
 
     if (!disciplina || !curso) {
-        throw new Error("A solicitação precisa ter curso e disciplina preenchidos.");
+        throw new Error("Curso e disciplina precisam estar preenchidos.");
     }
 
     const ministrar = atividades.filter(a => a.tipo === "ministrar");
     const desenvolver = atividades.filter(a => a.tipo === "desenvolver");
+    const tutorias = atividades.filter(a => a.tipo === "tutoria");
 
-    const totalMinistrar = ministrar.reduce((s, a) => s + a.carga, 0);
-    const totalDesenvolver = desenvolver.reduce((s, a) => s + a.carga, 0);
-    const totalGeral = totalMinistrar + totalDesenvolver;
+    const somar = lista => lista.reduce((s, a) => s + a.carga, 0);
 
-    const descricoesObjeto = [];
+    const totalMinistrar = somar(ministrar);
+    const totalDesenvolver = somar(desenvolver);
+    const totalTutoria = somar(tutorias);
 
-    if (ministrar.length) descricoesObjeto.push("ministrar aulas");
-    if (desenvolver.length) descricoesObjeto.push("desenvolver conteúdos");
+    const totalGeral =
+        totalMinistrar + totalDesenvolver + totalTutoria;
 
-    const objeto = descricoesObjeto.join(" e ");
+    const tiposObjeto = [];
+
+    if (ministrar.length) tiposObjeto.push("ministrar aulas");
+    if (desenvolver.length) tiposObjeto.push("desenvolver conteúdos");
+    if (tutorias.length) tiposObjeto.push("realizar tutorias");
 
     const descricaoMinistrar = ministrar.length
         ? `A atividade de ministrar aulas, na unidade curricular “${disciplina}”, consiste na apresentação, em formato de slides, do material didático previamente desenvolvido (dedicação de ${formatarHoras(totalMinistrar)} horas).`
@@ -519,7 +517,9 @@ function obterDadosParaTR(dados) {
         ? `A atividade de desenvolver conteúdo, na unidade curricular “${disciplina}”, compreende preparar os materiais didáticos e atualizar o estudo de caso (dedicação de ${formatarHoras(totalDesenvolver)} horas).`
         : "";
 
-    const datas = formatarDatas(dados.datasAulas);
+    const descricaoTutoria = tutorias.length
+        ? `As tutorias incluem e consistem em: acompanhar as aulas online, validar o material didático, auxiliar o especialista ao longo do curso, preparar e apresentar videotutorias de dúvidas, e corrigir os estudos de caso. A dedicação estimada para esses serviços é de ${formatarHoras(totalTutoria)} horas para a unidade curricular “${disciplina}”.`
+        : "";
 
     const detalhamento = [];
 
@@ -535,15 +535,22 @@ function obterDadosParaTR(dados) {
         );
     }
 
+    if (totalTutoria > 0) {
+        detalhamento.push(
+            `${formatarHoras(totalTutoria)} horas de tutoria`
+        );
+    }
+
     const datasECargas =
-        `${datas} = ${formatarHoras(totalGeral)} horas (${detalhamento.join(" + ")})`;
+        `${formatarDatas(dados.datasAulas)} = ${formatarHoras(totalGeral)} horas (${detalhamento.join(" + ")})`;
 
     return {
-        ATIVIDADES_OBJETO: objeto,
+        ATIVIDADES_OBJETO: tiposObjeto.join(" e "),
         UNIDADE_CURRICULAR: disciplina,
         CURSO: curso,
         DESCRICAO_MINISTRAR: descricaoMinistrar,
         DESCRICAO_DESENVOLVER: descricaoDesenvolver,
+        DESCRICAO_TUTORIA: descricaoTutoria,
         DATAS_E_CARGAS: datasECargas,
         CARGA_TOTAL: `${formatarHoras(totalGeral)} horas`
     };
