@@ -585,10 +585,8 @@ async function gerarTR() {
                 import("https://esm.sh/docxtemplater@3.62.0")
             ]);
 
-        const caminhoModelo = new URL(
-    "./modelos/Modelo_TR_SENAI_CETIQT_atualizado.docx",
-    window.location.href
-);
+        const caminhoModelo =
+    "https://raw.githubusercontent.com/matheuscetiqt/SSO---Solicita-o-de-Servi-o-Operacional/main/modelos/Modelo_TR_SENAI_CETIQT_atualizado.docx";
 
         const resposta = await fetch(caminhoModelo);
 
