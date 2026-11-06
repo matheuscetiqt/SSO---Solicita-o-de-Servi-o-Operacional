@@ -586,9 +586,9 @@ async function gerarTR() {
             ]);
 
         const caminhoModelo = new URL(
-            "./modelos/modelo-tr-automatizado.docx",
-            window.location.href
-        );
+    "./modelos/Modelo_TR_SENAI_CETIQT_atualizado.docx",
+    window.location.href
+);
 
         const resposta = await fetch(caminhoModelo);
 
