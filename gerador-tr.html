@@ -1,183 +1,239 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de TR | SSO</title>
+
+    <title>Gerador de TR | CPE - SENAI CETIQT</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        .tr-container {
-            padding: 30px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .tr-header {
-            margin-bottom: 25px;
-        }
-
-        .tr-header h1 {
-            font-size: 26px;
-            margin-bottom: 8px;
-        }
-
-        .tr-header p {
-            color: #777;
-        }
-
-        .tr-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 22px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
-        }
-
-        .tr-card h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .tr-search {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .tr-search input {
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .tr-field {
-            margin-bottom: 18px;
-        }
-
-        .tr-field label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 7px;
-        }
-
-        .tr-field input,
-        .tr-field textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        .tr-field textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
-        .tr-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-        }
-
-        .tr-btn {
-            border: none;
-            border-radius: 7px;
-            padding: 12px 20px;
-            cursor: pointer;
-            font-weight: 600;
-            background: #7b1f3a;
-            color: #fff;
-        }
-
-        .tr-btn:hover {
-            opacity: 0.9;
-        }
-
-        .tr-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .tr-status {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .tr-info {
-            background: #f8f5f6;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .tr-hidden {
-            display: none;
-        }
-
-        .tr-activity {
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 12px;
-        }
-
-        @media (max-width: 700px) {
-            .tr-container {
-                padding: 15px;
-            }
-
-            .tr-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tr-search {
-                flex-direction: column;
-            }
-        }
-    </style>
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
 <body>
 
-    <div class="tr-container">
+<div class="layout">
 
-        <div class="tr-header">
-            <h1>
-                <i class="fa-solid fa-file-contract"></i>
-                Gerador de Termo de Referência
-            </h1>
+    <!-- MENU LATERAL CPE -->
+    <aside class="sidebar">
 
-            <p>
-                Consulte uma Solicitação de Serviço Operacional e prepare
-                automaticamente as informações para o Termo de Referência.
-            </p>
+        <div class="logo">
+            <img src="Logosenai.png"
+                 alt="SENAI CETIQT"
+                 class="logo-senai-sidebar">
+
+            <div class="identificacao-cpe">
+                <h2>CPE</h2>
+                <p>Coordenação de Pós-Graduação e Extensão</p>
+            </div>
         </div>
 
-        <!-- PESQUISA DA SSO -->
+        <nav>
+
+            <div class="menu-secao">
+                <span class="menu-secao-titulo">
+                    SSO — Solicitações de Serviços Operacionais
+                </span>
+            </div>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="nova-solicitacao.html">
+                <i class="fa-solid fa-plus"></i>
+                Nova Solicitação
+            </a>
+
+            <a href="minhas-solicitacoes.html">
+                <i class="fa-solid fa-list"></i>
+                Minhas Solicitações
+            </a>
+
+            <a href="indicadores.html">
+                <i class="fa-solid fa-chart-column"></i>
+                Indicadores
+            </a>
+
+            <a href="configuracoes.html">
+                <i class="fa-solid fa-gear"></i>
+                Configurações
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">
+                    Controle de Dados de SC
+                </span>
+            </div>
+
+            <a href="controle-sc.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Acessar Controle de SC
+            </a>
+
+            <a href="indicadores-controle-sc.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Indicadores de SC
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">Automações</span>
+            </div>
+
+            <a href="automacoes.html">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Central de Automações
+            </a>
+
+            <a href="gerador-tr.html" class="active">
+                <i class="fa-solid fa-file-signature"></i>
+                Gerador de Termo de Referência
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <button type="button" id="btnSair" class="btn-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="tr-main">
+
+        <!-- CABEÇALHO -->
+        <header class="tr-header">
+
+            <div>
+                <div class="tr-breadcrumb">
+                    <span>CPE</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>Automações</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <strong>Gerador de TR</strong>
+                </div>
+
+                <h1>Gerador de Termo de Referência</h1>
+
+                <p>
+                    Consulte uma SSO, confira as informações e prepare
+                    o documento de forma padronizada.
+                </p>
+            </div>
+
+            <div class="tr-header-icon">
+                <i class="fa-solid fa-file-contract"></i>
+            </div>
+
+        </header>
+
+        <!-- APRESENTAÇÃO -->
+        <section class="tr-banner">
+
+            <div class="tr-banner-icon">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+
+            <div>
+                <h2>Preparação inteligente de documentos</h2>
+                <p>
+                    Utilize os dados cadastrados na SSO para agilizar
+                    a elaboração do Termo de Referência.
+                </p>
+            </div>
+
+            <span class="tr-banner-tag">
+                <i class="fa-solid fa-shield-halved"></i>
+                Ambiente institucional
+            </span>
+
+        </section>
+
+        <!-- ETAPAS -->
+        <section class="tr-steps">
+
+            <div class="tr-step tr-step-active">
+                <span class="tr-step-number">01</span>
+                <div>
+                    <strong>Consulta</strong>
+                    <small>Localizar SSO</small>
+                </div>
+            </div>
+
+            <div class="tr-step">
+                <span class="tr-step-number">02</span>
+                <div>
+                    <strong>Conferência</strong>
+                    <small>Dados e atividades</small>
+                </div>
+            </div>
+
+            <div class="tr-step">
+                <span class="tr-step-number">03</span>
+                <div>
+                    <strong>Complementação</strong>
+                    <small>Dados adicionais</small>
+                </div>
+            </div>
+
+            <div class="tr-step">
+                <span class="tr-step-number">04</span>
+                <div>
+                    <strong>Documento</strong>
+                    <small>Prévia e geração</small>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ETAPA 1: PESQUISA -->
         <section class="tr-card">
 
-            <h2>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Consultar solicitação
-            </h2>
+            <div class="tr-card-header">
 
-            <div class="tr-search">
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
 
-                <input
-                    type="text"
-                    id="numeroSSO"
-                    placeholder="Digite o número da SSO"
-                >
+                <div>
+                    <span class="tr-section-label">ETAPA 01</span>
+                    <h2>Localizar solicitação</h2>
+                    <p>Informe o protocolo da solicitação que deseja utilizar.</p>
+                </div>
 
-                <button class="tr-btn" id="btnBuscar">
-                    <i class="fa-solid fa-search"></i>
-                    Buscar SSO
+            </div>
+
+            <div class="tr-search-area">
+
+                <div class="tr-field tr-search-field">
+                    <label for="numeroSSO">Número da SSO</label>
+
+                    <div class="tr-input-icon">
+                        <i class="fa-solid fa-hashtag"></i>
+                        <input
+                            type="text"
+                            id="numeroSSO"
+                            placeholder="Digite o número do protocolo"
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <button type="button" class="tr-btn-primary" id="btnBuscar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Buscar solicitação
                 </button>
 
             </div>
@@ -186,141 +242,208 @@
 
         </section>
 
-        <!-- DADOS DA SOLICITAÇÃO -->
+        <!-- ETAPA 2: DADOS DA SOLICITAÇÃO -->
         <section id="dadosSolicitacao" class="tr-card tr-hidden">
 
-            <h2>
-                <i class="fa-solid fa-clipboard-list"></i>
-                Dados da solicitação
-            </h2>
+            <div class="tr-card-header">
 
-            <div class="tr-grid">
-
-                <div class="tr-info">
-                    <strong>Protocolo</strong>
-                    <div id="infoProtocolo">-</div>
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-clipboard-list"></i>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Solicitante</strong>
-                    <div id="infoSolicitante">-</div>
+                <div>
+                    <span class="tr-section-label">ETAPA 02</span>
+                    <h2>Dados da solicitação</h2>
+                    <p>Confira as informações recuperadas do sistema.</p>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Professor</strong>
-                    <div id="infoProfessor">-</div>
+                <span class="tr-data-badge">
+                    <i class="fa-solid fa-circle-check"></i>
+                    SSO localizada
+                </span>
+
+            </div>
+
+            <div class="tr-data-grid">
+
+                <div class="tr-data-item">
+                    <span>Protocolo</span>
+                    <strong id="infoProtocolo">-</strong>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Curso</strong>
-                    <div id="infoCurso">-</div>
+                <div class="tr-data-item">
+                    <span>Solicitante</span>
+                    <strong id="infoSolicitante">-</strong>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Disciplina</strong>
-                    <div id="infoDisciplina">-</div>
+                <div class="tr-data-item">
+                    <span>Professor</span>
+                    <strong id="infoProfessor">-</strong>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Tipo de serviço</strong>
-                    <div id="infoTipoServico">-</div>
+                <div class="tr-data-item">
+                    <span>Curso</span>
+                    <strong id="infoCurso">-</strong>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Analista responsável</strong>
-                    <div id="infoAnalista">-</div>
+                <div class="tr-data-item">
+                    <span>Disciplina / Unidade curricular</span>
+                    <strong id="infoDisciplina">-</strong>
                 </div>
 
-                <div class="tr-info">
-                    <strong>Valor por hora</strong>
-                    <div id="infoValorHora">-</div>
+                <div class="tr-data-item">
+                    <span>Tipo de serviço</span>
+                    <strong id="infoTipoServico">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Analista responsável</span>
+                    <strong id="infoAnalista">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Valor por hora</span>
+                    <strong id="infoValorHora">-</strong>
                 </div>
 
             </div>
 
         </section>
 
-        <!-- ATIVIDADES -->
+        <!-- ETAPA 3: ATIVIDADES -->
         <section id="secaoAtividades" class="tr-card tr-hidden">
 
-            <h2>
-                <i class="fa-solid fa-list-check"></i>
-                Atividades identificadas
-            </h2>
+            <div class="tr-card-header">
 
-            <div id="listaAtividades"></div>
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
 
-            <div class="tr-info">
-                <strong>Carga horária total</strong>
-                <div id="cargaTotal">0 horas</div>
+                <div>
+                    <span class="tr-section-label">ETAPA 03</span>
+                    <h2>Atividades identificadas</h2>
+                    <p>Atividades e cargas horárias registradas na SSO.</p>
+                </div>
+
             </div>
 
-            <div class="tr-info">
-                <strong>Datas das aulas/atividades</strong>
+            <div id="listaAtividades" class="tr-activities-list"></div>
+
+            <div class="tr-summary-box">
+
+                <div class="tr-summary-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div>
+                    <span>Carga horária total identificada</span>
+                    <strong id="cargaTotal">0 horas</strong>
+                </div>
+
+            </div>
+
+            <div class="tr-dates-box">
+                <div class="tr-dates-title">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    Datas das aulas / atividades
+                </div>
+
                 <div id="datasAtividades">-</div>
             </div>
 
         </section>
 
-        <!-- INFORMAÇÕES MANUAIS -->
+        <!-- ETAPA 4: COMPLEMENTAÇÃO -->
         <section id="dadosManuais" class="tr-card tr-hidden">
 
-            <h2>
-                <i class="fa-solid fa-pen-to-square"></i>
-                Informações complementares
-            </h2>
+            <div class="tr-card-header">
 
-            <div class="tr-field">
-                <label for="qualificacaoTecnica">
-                    Qualificação Técnica
-                </label>
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
 
-                <textarea
-                    id="qualificacaoTecnica"
-                    placeholder="Informe os requisitos de qualificação técnica..."
-                ></textarea>
+                <div>
+                    <span class="tr-section-label">ETAPA 04</span>
+                    <h2>Informações complementares</h2>
+                    <p>Preencha os campos adicionais necessários ao documento.</p>
+                </div>
+
             </div>
 
-            <div class="tr-field">
-                <label for="dataContrato">
-                    Data do Contrato
-                </label>
+            <div class="tr-form-grid">
 
-                <input
-                    type="date"
-                    id="dataContrato"
-                >
+                <div class="tr-field tr-field-full">
+                    <label for="qualificacaoTecnica">
+                        Qualificação Técnica
+                    </label>
+
+                    <textarea
+                        id="qualificacaoTecnica"
+                        placeholder="Informe os requisitos de qualificação técnica..."
+                    ></textarea>
+
+                    <small>
+                        Descreva os requisitos técnicos exigidos para a execução do serviço.
+                    </small>
+                </div>
+
+                <div class="tr-field">
+                    <label for="dataContrato">Data do Contrato</label>
+
+                    <div class="tr-input-icon">
+                        <i class="fa-regular fa-calendar"></i>
+                        <input type="date" id="dataContrato">
+                    </div>
+                </div>
+
             </div>
 
         </section>
 
-        <!-- AÇÕES -->
-        <section id="acoesTR" class="tr-card tr-hidden">
+        <!-- ETAPA 5: DOCUMENTO -->
+        <section id="acoesTR" class="tr-card tr-document-card tr-hidden">
 
-            <h2>
-                <i class="fa-solid fa-file-export"></i>
-                Gerar documento
-            </h2>
-
-            <p>
-                Após conferir os dados e preencher as informações
-                complementares, você poderá gerar o Termo de Referência.
-            </p>
-
-            <br>
-
-            <button class="tr-btn" id="btnGerarTR" disabled>
+            <div class="tr-document-icon">
                 <i class="fa-solid fa-file-word"></i>
+            </div>
+
+            <div class="tr-document-content">
+                <span class="tr-section-label">ETAPA 05</span>
+                <h2>Termo de Referência</h2>
+                <p>
+                    Confira as informações e prepare o documento
+                    seguindo o modelo institucional.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="tr-btn-primary tr-btn-generate"
+                id="btnGerarTR"
+                disabled>
+                <i class="fa-solid fa-file-export"></i>
                 Gerar Termo de Referência
             </button>
 
-            <div id="mensagemGeracao" class="tr-status"></div>
+            <div id="mensagemGeracao" class="tr-status tr-status-full"></div>
 
         </section>
 
-    </div>
+        <!-- RODAPÉ -->
+        <footer class="tr-footer">
+            <div>
+                <strong>SENAI CETIQT | CPE</strong>
+                <span>Sistema de Solicitações de Serviços Operacionais</span>
+            </div>
 
-    <script type="module" src="js/gerador-tr.js"></script>
+            <span>Gerador de Termo de Referência</span>
+        </footer>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/gerador-tr.js"></script>
 
 </body>
 </html>
