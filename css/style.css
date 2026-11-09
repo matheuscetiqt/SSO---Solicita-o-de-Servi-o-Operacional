@@ -4988,14 +4988,27 @@ label[for="filtroMes"] {
     margin-right: 5px;
 }
 
+
 .btn-automacao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     border: 0;
     border-radius: 9px;
-    padding: 10px 14px;
-    background: #DCE5ED;
-    color: #526273;
+    padding: 12px 18px;
+    background: #005A9C;
+    color: #FFFFFF;
     font: 600 12px Poppins, sans-serif;
-    cursor: not-allowed;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-automacao:hover {
+    background: #003B71;
+    color: #FFFFFF;
+    transform: translateY(-2px);
 }
 
 .automacao-em-breve {
