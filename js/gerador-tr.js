@@ -23,6 +23,38 @@ const ADMINISTRADORES = [
 ];
 
 // ==========================================
+// CARGOS DOS ANALISTAS
+// ==========================================
+
+const cargosAnalistas = {
+    "Kalvin Carneiro": "Analista Administrativo III",
+    "Caren Ouverney": "Analista Administrativo II",
+    "Clarissa Kopke": "Analista Administrativo I",
+    "Paula Freitas": "Analista Administrativo I",
+    "Caroline Rodrigues": "Analista Administrativo I",
+    "Matheus Damica": "Analista Administrativo I"
+};
+
+function obterResponsavelTR(nomeAnalista) {
+    const nome = String(nomeAnalista || "").trim();
+
+    const nomeEncontrado = Object.keys(cargosAnalistas).find(
+        cadastrado => cadastrado.toLowerCase() === nome.toLowerCase()
+    );
+
+    if (!nomeEncontrado) {
+        throw new Error(
+            `O analista "${nome || "não informado"}" não está cadastrado na tabela de cargos.`
+        );
+    }
+
+    return {
+        RESPONSAVEL_TR: nomeEncontrado,
+        CARGO_RESPONSAVEL_TR: cargosAnalistas[nomeEncontrado]
+    };
+}
+
+// ==========================================
 // ELEMENTOS DA PÁGINA
 // ==========================================
 
@@ -606,12 +638,14 @@ async function gerarTR() {
         });
 
         const campos = obterDadosParaTR(solicitacaoAtual);
+        const assinatura = obterResponsavelTR(solicitacaoAtual.analista);
 
         doc.render({
-            ...campos,
-            QUALIFICACAO_TECNICA: qualificacao,
-            DATA_DOCUMENTO: formatarDataDocumento(dataDocumento)
-        });
+    ...campos,
+    ...assinatura,
+    QUALIFICACAO_TECNICA: qualificacao,
+    DATA_DOCUMENTO: formatarDataDocumento(dataDocumento)
+});
 
         const blob = doc.getZip().generate({
             type: "blob",
