@@ -35,9 +35,9 @@ function identificarSecao(linha) {
         return "formacao";
     }
 
-    if (/^(experiencia profissional|historico profissional|experiencia)/.test(texto)) {
-        return "experiencia";
-    }
+   if (/^(experiencia profissional|historico profissional|experiencia|experience|professional experience|work experience)/.test(texto)) {
+    return "experiencia";
+}
 
     if (/^(publicacoes|producao academica|producao tecnica)/.test(texto)) {
         return "publicacoes";
