@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teste - Interpretador de Currículos</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+            color: #263445;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        }
+
+        h1, h2 {
+            color: #005A9C;
+        }
+
+        input, button {
+            padding: 12px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        input {
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 15px 0;
+        }
+
+        button {
+            background: #005A9C;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #003B71;
+        }
+
+        .resultado {
+            white-space: pre-wrap;
+            line-height: 1.7;
+            background: #f7f9fb;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .categoria {
+            margin-bottom: 20px;
+        }
+
+        .categoria h3 {
+            color: #005A9C;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <h1>Interpretador de Currículos</h1>
+        <p>Ambiente de testes do Gerador de Justificativa.</p>
+
+        <label for="arquivoCurriculo">
+            Selecione o currículo em PDF:
+        </label>
+
+        <input
+            type="file"
+            id="arquivoCurriculo"
+            accept=".pdf,application/pdf"
+        >
+
+        <button onclick="processarCurriculo()">
+            Interpretar currículo
+        </button>
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <div id="resultado" style="display:none;">
+
+        <div class="card">
+            <h2>Informações identificadas</h2>
+            <div id="categorias"></div>
+        </div>
+
+        <div class="card">
+            <h2>Texto institucional construído</h2>
+            <div id="textoGerado" class="resultado"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
+
+<script src="js/leitor-curriculo.js"></script>
+<script src="js/interpretador-curriculo.js"></script>
+
+<script>
+
+async function processarCurriculo() {
+
+    const arquivo = document.getElementById("arquivoCurriculo").files[0];
+
+    const status = document.getElementById("status");
+    const resultado = document.getElementById("resultado");
+
+    resultado.style.display = "none";
+
+    try {
+
+        status.style.color = "#005A9C";
+        status.textContent = "Lendo e interpretando currículo...";
+
+        // Etapa 1: extrair o texto do PDF
+        const texto = await lerCurriculoPDF(arquivo);
+
+        // Etapa 2: interpretar as informações
+        const interpretacao = interpretarCurriculo(texto);
+
+        // Etapa 3: apresentar as categorias
+        const categoriasDiv = document.getElementById("categorias");
+
+        categoriasDiv.innerHTML = "";
+
+        const nomes = {
+            formacao: "Formação acadêmica",
+            experiencia: "Experiência profissional",
+            certificacoes: "Certificações e capacitações",
+            docencia: "Experiência docente",
+            conhecimentos: "Conhecimentos técnicos"
+        };
+
+        Object.entries(interpretacao.categorias).forEach(
+            ([categoria, itens]) => {
+
+                const bloco = document.createElement("div");
+                bloco.className = "categoria";
+
+                const titulo = document.createElement("h3");
+                titulo.textContent = nomes[categoria];
+
+                bloco.appendChild(titulo);
+
+                const lista = document.createElement("ul");
+
+                itens.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    lista.appendChild(li);
+                });
+
+                if (itens.length === 0) {
+                    const li = document.createElement("li");
+                    li.textContent = "Nenhuma informação identificada.";
+                    lista.appendChild(li);
+                }
+
+                bloco.appendChild(lista);
+                categoriasDiv.appendChild(bloco);
+            }
+        );
+
+        // Etapa 4: apresentar o texto construído
+        document.getElementById("textoGerado").textContent =
+            interpretacao.textoGerado;
+
+        resultado.style.display = "block";
+
+        status.style.color = "#16834A";
+        status.textContent = "Currículo interpretado com sucesso!";
+
+    } catch (erro) {
+
+        status.style.color = "#C0392B";
+        status.textContent = erro.message;
+
+        console.error(erro);
+    }
+}
+
+</script>
+
+</body>
+</html>
