@@ -477,6 +477,8 @@ btnInterpretarCurriculo.addEventListener("click", async () => {
         // 3. Preencher texto institucional
         textoInstitucional.value = resultado.textoGerado;
 
+        atualizarDisponibilidadeGeracao();
+
         if (
             !resultado.textoGerado ||
             resultado.textoGerado.trim().length === 0
