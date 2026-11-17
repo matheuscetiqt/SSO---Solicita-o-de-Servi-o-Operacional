@@ -1,9 +1,4 @@
 
-/* =====================================================
-   LEITOR DE CURRÍCULOS PDF
-   Utiliza PDF.js
-   ===================================================== */
-
 async function lerCurriculoPDF(arquivo) {
 
     if (!arquivo) {
@@ -26,21 +21,64 @@ async function lerCurriculoPDF(arquivo) {
 
     let textoCompleto = "";
 
-    for (let pagina = 1; pagina <= pdf.numPages; pagina++) {
+    for (let numeroPagina = 1; numeroPagina <= pdf.numPages; numeroPagina++) {
 
-        const paginaPDF = await pdf.getPage(pagina);
-        const conteudo = await paginaPDF.getTextContent();
+        const pagina = await pdf.getPage(numeroPagina);
+        const conteudo = await pagina.getTextContent();
 
-        const textoPagina = conteudo.items
-            .map(item => item.str)
-            .join(" ");
+        // Mantém apenas os itens que possuem texto
+        const itens = conteudo.items.filter(item =>
+            item.str && item.str.trim()
+        );
 
-        textoCompleto += "\n" + textoPagina;
+        const linhas = [];
+
+        // Agrupa os textos pela posição vertical (eixo Y)
+        for (const item of itens) {
+
+            const x = item.transform[4];
+            const y = item.transform[5];
+
+            let linha = linhas.find(l =>
+                Math.abs(l.y - y) < 3
+            );
+
+            if (!linha) {
+                linha = {
+                    y: y,
+                    itens: []
+                };
+
+                linhas.push(linha);
+            }
+
+            linha.itens.push({
+                x: x,
+                texto: item.str
+            });
+        }
+
+        // Ordena as linhas de cima para baixo
+        linhas.sort((a, b) => b.y - a.y);
+
+        // Ordena os textos de cada linha da esquerda para a direita
+        const textoPagina = linhas.map(linha => {
+
+            linha.itens.sort((a, b) => a.x - b.x);
+
+            return linha.itens
+                .map(item => item.texto.trim())
+                .filter(Boolean)
+                .join(" ");
+
+        }).join("\n");
+
+        textoCompleto += "\n\n" + textoPagina;
     }
 
     if (textoCompleto.trim().length < 50) {
         throw new Error(
-            "Não foi possível extrair texto. O PDF pode ser digitalizado como imagem."
+            "Não foi possível extrair texto. O PDF pode estar digitalizado como imagem."
         );
     }
 
