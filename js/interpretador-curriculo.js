@@ -1,7 +1,7 @@
 
 /* =====================================================
    INTERPRETADOR DE CURRÍCULOS
-   Versão 3.0 - Redação institucional
+   Versão 4.0 - Reconhecimento ampliado
    ===================================================== */
 
 function normalizarTexto(texto) {
@@ -13,7 +13,6 @@ function normalizarTexto(texto) {
         .trim();
 }
 
-// Remove elementos comuns de cabeçalhos e formatação
 function limparTrecho(texto) {
     return String(texto || "")
         .replace(/^[\s•\-–—|:;]+/, "")
@@ -22,12 +21,11 @@ function limparTrecho(texto) {
         .trim();
 }
 
-// Descarta títulos, frases incompletas e trechos muito curtos
 function trechoValido(texto) {
     const trecho = limparTrecho(texto);
     const normalizado = normalizarTexto(trecho);
 
-    if (trecho.length < 25 || trecho.length > 350) {
+    if (trecho.length < 20 || trecho.length > 400) {
         return false;
     }
 
@@ -35,35 +33,39 @@ function trechoValido(texto) {
         "historico profissional",
         "experiencia profissional",
         "formacao academica",
+        "dados academicos",
         "qualificacoes",
         "conhecimentos tecnicos",
         "objetivo profissional",
-        "curriculo",
-        "perfil profissional"
+        "curriculo vitae",
+        "cursos complementares",
+        "experiencias em docencia",
+        "publicacoes"
     ];
 
-    if (titulos.some(titulo => normalizado === titulo)) {
+    if (titulos.includes(normalizado)) {
         return false;
     }
 
-    // Evita frases terminadas em palavras que indicam continuação
-    if (/\b(de|do|da|dos|das|em|no|na|nos|nas|para|com|e|ou|por|a|o)$/i.test(normalizado)) {
+    if (/^[0-9\s./-]+$/.test(trecho)) {
+        return false;
+    }
+
+    if (/\b(de|do|da|dos|das|em|no|na|nos|nas|para|com|e|ou|por)$/i.test(normalizado)) {
         return false;
     }
 
     return true;
 }
 
-// Divide o conteúdo em trechos menores
 function separarTrechos(texto) {
     return String(texto || "")
         .replace(/\r/g, "\n")
-        .split(/[\n;•]+/)
+        .split(/[\n•]+/)
         .map(limparTrecho)
         .filter(trechoValido);
 }
 
-// Busca trechos relacionados a determinados assuntos
 function selecionarTrechos(texto, padroes, limite = 3) {
     const trechos = separarTrechos(texto);
     const selecionados = [];
@@ -91,20 +93,29 @@ function selecionarTrechos(texto, padroes, limite = 3) {
     return selecionados;
 }
 
-// Identifica termos técnicos sem repetir informações
 function identificarConhecimentos(texto) {
     const termos = [
         "Segurança Funcional",
+        "Segurança de Processos",
+        "Segurança Operacional",
         "Sistemas Instrumentados de Segurança",
         "Instrumentação e Automação",
         "Automação Industrial",
+        "Análise de Riscos",
+        "Análise Qualitativa de Riscos",
         "HAZOP",
         "LOPA",
         "SIL",
-        "Análise de Riscos",
+        "Bow Tie",
+        "Gestão de Mudanças",
+        "Processamento de Petróleo",
+        "Engenharia de Refino",
+        "Exploração e Produção",
+        "Regulamentação da ANP",
+        "Transição Energética",
+        "Pesquisa e Desenvolvimento",
         "Comissionamento",
-        "Normalização Técnica",
-        "Pesquisa e Desenvolvimento"
+        "Normalização Técnica"
     ];
 
     const normalizado = normalizarTexto(texto);
@@ -117,7 +128,7 @@ function identificarConhecimentos(texto) {
         }
 
         return normalizado.includes(termoNormalizado);
-    }).slice(0, 7);
+    }).slice(0, 8);
 }
 
 // =====================================================
@@ -133,41 +144,72 @@ function interpretarCurriculo(textoOriginal) {
     }
 
     const categorias = {
+
         formacao: selecionarTrechos(textoOriginal, [
             /tecnico em/,
             /graduacao em/,
             /bacharelado em/,
             /licenciatura em/,
-            /engenheiro/,
+            /engenharia/,
             /mestrado em/,
             /doutorado em/,
-            /pos.graduacao/
-        ], 3),
+            /especializacao em/,
+            /pos.graduacao/,
+            /mba em/
+        ], 4),
 
         experiencia: selecionarTrechos(textoOriginal, [
             /petrobras/,
-            /central nuclear/,
-            /engenharia de instrumentacao/,
+            /consultora tecnica/,
+            /consultor tecnico/,
+            /engenheira/,
+            /engenheiro/,
+            /coordenadora/,
+            /coordenador/,
+            /gerente/,
+            /supervisora/,
+            /supervisor/,
+            /analista/,
+            /atuacao como/,
             /experiencia profissional/,
-            /atuacao profissional/,
             /trabalhou na/
-        ], 3),
+        ], 4),
 
         certificacoes: selecionarTrechos(textoOriginal, [
             /certificacao/,
             /certificado/,
             /functional safety engineer/,
             /tuv rheinland/,
-            /safety instrumented systems/
-        ], 2),
+            /safety instrumented systems/,
+            /curso complementar/,
+            /workshop/,
+            /capacitação/,
+            /capacitacao/
+        ], 3),
 
         docencia: selecionarTrechos(textoOriginal, [
             /docente/,
             /docencia/,
             /professor/,
+            /professora/,
+            /instrutor/,
+            /instrutora/,
+            /tutor/,
+            /tutora/,
             /ministrou aulas/,
             /universidade petrobras/,
+            /senai/,
             /puc.rio/
+        ], 4),
+
+        publicacoes: selecionarTrechos(textoOriginal, [
+            /publicacao/,
+            /publicacoes/,
+            /co.autor/,
+            /coautora/,
+            /coautor/,
+            /livro/,
+            /artigo publicado/
         ], 3),
 
         conhecimentos: identificarConhecimentos(textoOriginal)
@@ -189,6 +231,7 @@ function gerarTextoCurriculo(categorias) {
     const paragrafos = [];
 
     // 1. Formação e certificações
+
     const formacao = categorias.formacao.join("; ");
     const certificacoes = categorias.certificacoes.join("; ");
 
@@ -197,45 +240,61 @@ function gerarTextoCurriculo(categorias) {
         let paragrafo = "";
 
         if (formacao) {
-            paragrafo +=
-                "O profissional apresenta formação acadêmica e técnica em " +
-                formacao + ".";
+            paragrafo =
+                "O profissional apresenta formação acadêmica e técnica, " +
+                "com destaque para " + formacao + ".";
         }
 
         if (certificacoes) {
             paragrafo +=
                 (paragrafo ? " " : "") +
-                "Também possui qualificações e certificações complementares, " +
-                "com destaque para " + certificacoes + ".";
+                "Também possui certificações e qualificações complementares, " +
+                "incluindo " + certificacoes + ".";
         }
 
         paragrafos.push(paragrafo);
     }
 
     // 2. Experiência profissional
+
     if (categorias.experiencia.length) {
 
         paragrafos.push(
-            "Sua trajetória profissional inclui experiências em " +
+            "Sua trajetória profissional contempla experiências em " +
             categorias.experiencia.join("; ") + "."
         );
     }
 
-    // 3. Conhecimentos técnicos
-    if (categorias.conhecimentos.length) {
+    // 3. Conhecimentos técnicos e publicações
 
-        paragrafos.push(
+    const conhecimentos = categorias.conhecimentos.join(", ");
+
+    let paragrafoTecnico = "";
+
+    if (conhecimentos) {
+        paragrafoTecnico =
             "Entre suas principais áreas de atuação e conhecimentos técnicos, " +
-            "destacam-se " +
-            categorias.conhecimentos.join(", ") + "."
-        );
+            "destacam-se " + conhecimentos + ".";
+    }
+
+    if (categorias.publicacoes.length) {
+        paragrafoTecnico +=
+            (paragrafoTecnico ? " " : "") +
+            "O currículo também registra publicações e produções técnicas, " +
+            "incluindo " + categorias.publicacoes.join("; ") + ".";
+    }
+
+    if (paragrafoTecnico) {
+        paragrafos.push(paragrafoTecnico);
     }
 
     // 4. Experiência docente
+
     if (categorias.docencia.length) {
 
         paragrafos.push(
-            "Na área acadêmica, possui experiência docente em " +
+            "Na área acadêmica, possui experiência em docência, " +
+            "tutoria e formação profissional, com atuação em " +
             categorias.docencia.join("; ") + "."
         );
     }
@@ -246,3 +305,4 @@ function gerarTextoCurriculo(categorias) {
 
     return paragrafos.join("\n\n");
 }
+
