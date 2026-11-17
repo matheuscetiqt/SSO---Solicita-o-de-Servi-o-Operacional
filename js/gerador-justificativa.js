@@ -544,6 +544,7 @@ function obterCursoJustificativa(curso) {
 // MONTAR ATIVIDADES
 // ==========================================
 
+
 function obterAtividadesJustificativa(dados) {
 
     const atividades = [];
@@ -554,13 +555,39 @@ function obterAtividadesJustificativa(dados) {
             dados[`atividade${i}`] || ""
         ).trim();
 
-        if (atividade) {
-            atividades.push(atividade);
+        if (!atividade) continue;
+
+        const texto = atividade.toLowerCase();
+
+        let nomeAtividade = "";
+
+        if (texto.includes("tutoria")) {
+            nomeAtividade = "Tutoria";
+        } 
+        else if (
+            texto.includes("ministrar") ||
+            texto.includes("ministrar aulas")
+        ) {
+            nomeAtividade = "Ministrar aulas";
+        } 
+        else if (
+            texto.includes("desenvolver") ||
+            texto.includes("desenvolvimento de conteúdo")
+        ) {
+            nomeAtividade = "Desenvolver conteúdo";
+        }
+
+        if (
+            nomeAtividade &&
+            !atividades.includes(nomeAtividade)
+        ) {
+            atividades.push(nomeAtividade);
         }
     }
 
     return atividades.join("; ");
 }
+
 
 // ==========================================
 // VALIDAR LIBERAÇÃO DA GERAÇÃO
