@@ -26,14 +26,13 @@ async function lerCurriculoPDF(arquivo) {
         const pagina = await pdf.getPage(numeroPagina);
         const conteudo = await pagina.getTextContent();
 
-        // Mantém apenas os itens que possuem texto
         const itens = conteudo.items.filter(item =>
             item.str && item.str.trim()
         );
 
         const linhas = [];
 
-        // Agrupa os textos pela posição vertical (eixo Y)
+        // Agrupa fragmentos pela posição vertical
         for (const item of itens) {
 
             const x = item.transform[4];
@@ -44,34 +43,61 @@ async function lerCurriculoPDF(arquivo) {
             );
 
             if (!linha) {
-                linha = {
-                    y: y,
-                    itens: []
-                };
-
+                linha = { y, itens: [] };
                 linhas.push(linha);
             }
 
             linha.itens.push({
-                x: x,
-                texto: item.str
+                x,
+                largura: item.width || 0,
+                texto: item.str.trim()
             });
         }
 
-        // Ordena as linhas de cima para baixo
+        // Ordena de cima para baixo
         linhas.sort((a, b) => b.y - a.y);
 
-        // Ordena os textos de cada linha da esquerda para a direita
         const textoPagina = linhas.map(linha => {
 
             linha.itens.sort((a, b) => a.x - b.x);
 
-            return linha.itens
-                .map(item => item.texto.trim())
-                .filter(Boolean)
-                .join(" ");
+            let resultado = "";
+            let anterior = null;
 
-        }).join("\n");
+            for (const item of linha.itens) {
+
+                if (!anterior) {
+                    resultado = item.texto;
+                    anterior = item;
+                    continue;
+                }
+
+                const espaco = item.x -
+                    (anterior.x + anterior.largura);
+
+                const fimAnterior = resultado.slice(-1);
+                const inicioAtual = item.texto.charAt(0);
+
+                const fragmentoNumerico =
+                    /\d/.test(fimAnterior) &&
+                    /^\d/.test(inicioAtual) &&
+                    espaco < 8;
+
+                const fragmentoPalavra =
+                    espaco < 1.5;
+
+                if (fragmentoNumerico || fragmentoPalavra) {
+                    resultado += item.texto;
+                } else {
+                    resultado += " " + item.texto;
+                }
+
+                anterior = item;
+            }
+
+            return resultado.trim();
+
+        }).filter(Boolean).join("\n");
 
         textoCompleto += "\n\n" + textoPagina;
     }
