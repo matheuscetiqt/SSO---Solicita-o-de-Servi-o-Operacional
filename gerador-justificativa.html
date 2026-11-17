@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Justificativa | CPE - SENAI CETIQT</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img src="Logosenai.png" alt="SENAI CETIQT" class="logo-senai-sidebar">
+
+            <div class="identificacao-cpe">
+                <h2>CPE</h2>
+                <p>Coordenação de Pós-Graduação e Extensão</p>
+            </div>
+        </div>
+
+        <nav>
+            <div class="menu-secao">
+                <span class="menu-secao-titulo">SSO — Solicitações de Serviços Operacionais</span>
+            </div>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>Dashboard
+            </a>
+
+            <a href="nova-solicitacao.html">
+                <i class="fa-solid fa-plus"></i>Nova Solicitação
+            </a>
+
+            <a href="minhas-solicitacoes.html">
+                <i class="fa-solid fa-list"></i>Minhas Solicitações
+            </a>
+
+            <a href="indicadores.html">
+                <i class="fa-solid fa-chart-column"></i>Indicadores
+            </a>
+
+            <a href="configuracoes.html">
+                <i class="fa-solid fa-gear"></i>Configurações
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">Controle de Dados de SC</span>
+            </div>
+
+            <a href="controle-sc.html">
+                <i class="fa-solid fa-cart-shopping"></i>Acessar Controle de SC
+            </a>
+
+            <a href="indicadores-controle-sc.html">
+                <i class="fa-solid fa-chart-line"></i>Indicadores de SC
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">Automações</span>
+            </div>
+
+            <a href="automacoes.html">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>Central de Automações
+            </a>
+
+            <a href="gerador-tr.html">
+                <i class="fa-solid fa-file-contract"></i>Gerador de Termo de Referência
+            </a>
+
+            <a href="gerador-justificativa.html" class="active">
+                <i class="fa-solid fa-file-signature"></i>Gerador de Justificativa
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button type="button" id="btnSair" class="btn-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>Sair
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="tr-main">
+
+        <!-- CABEÇALHO -->
+        <header class="tr-header">
+
+            <div>
+                <div class="tr-breadcrumb">
+                    <span>CPE</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>Automações</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <strong>Gerador de Justificativa</strong>
+                </div>
+
+                <h1>Gerador de Justificativa para Contratação</h1>
+
+                <p>
+                    Consulte uma SSO, revise as informações do profissional
+                    e prepare a justificativa de contratação.
+                </p>
+            </div>
+
+            <div class="tr-header-icon">
+                <i class="fa-solid fa-file-signature"></i>
+            </div>
+
+        </header>
+
+        <!-- BANNER -->
+        <section class="tr-banner">
+
+            <div class="tr-banner-icon">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+
+            <div>
+                <h2>Preparação da justificativa de contratação</h2>
+
+                <p>
+                    Os dados da solicitação serão recuperados do sistema.
+                    O currículo e a data do contrato serão complementados pelo analista.
+                </p>
+            </div>
+
+            <span class="tr-banner-tag">
+                <i class="fa-solid fa-shield-halved"></i>
+                Ambiente institucional
+            </span>
+
+        </section>
+
+        <!-- ETAPAS -->
+        <section class="tr-steps">
+
+            <div class="tr-step tr-step-active">
+                <span class="tr-step-number">01</span>
+                <div>
+                    <strong>Consulta</strong>
+                    <small>Localizar SSO</small>
+                </div>
+            </div>
+
+            <div class="tr-step">
+                <span class="tr-step-number">02</span>
+                <div>
+                    <strong>Conferência</strong>
+                    <small>Dados e valores</small>
+                </div>
+            </div>
+
+            <div class="tr-step">
+                <span class="tr-step-number">03</span>
+                <div>
+                    <strong>Currículo</strong>
+                    <small>Interpretar e revisar</small>
+                </div>
+            </div>
+
+            <div class="tr-step">
+                <span class="tr-step-number">04</span>
+                <div>
+                    <strong>Documento</strong>
+                    <small>Data e geração</small>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ETAPA 01: CONSULTA -->
+        <section class="tr-card">
+
+            <div class="tr-card-header">
+
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+
+                <div>
+                    <span class="tr-section-label">ETAPA 01</span>
+                    <h2>Localizar solicitação</h2>
+                    <p>Informe o número do protocolo da SSO que deseja utilizar.</p>
+                </div>
+
+            </div>
+
+            <div class="tr-search-area">
+
+                <div class="tr-field tr-search-field">
+
+                    <label for="numeroSSO">Número da SSO</label>
+
+                    <div class="tr-input-icon">
+                        <i class="fa-solid fa-hashtag"></i>
+
+                        <input
+                            type="text"
+                            id="numeroSSO"
+                            placeholder="Digite o número do protocolo"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                </div>
+
+                <button type="button" class="tr-btn-primary" id="btnBuscar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Buscar solicitação
+                </button>
+
+            </div>
+
+            <div id="mensagemBusca" class="tr-status"></div>
+
+        </section>
+
+        <!-- ETAPA 02: DADOS DA SOLICITAÇÃO -->
+        <section id="dadosSolicitacao" class="tr-card tr-hidden">
+
+            <div class="tr-card-header">
+
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </div>
+
+                <div>
+                    <span class="tr-section-label">ETAPA 02</span>
+                    <h2>Dados recuperados da SSO</h2>
+                    <p>Confira as informações antes de preparar a justificativa.</p>
+                </div>
+
+                <span class="tr-data-badge">
+                    <i class="fa-solid fa-circle-check"></i>
+                    SSO localizada
+                </span>
+
+            </div>
+
+            <div class="tr-data-grid">
+
+                <div class="tr-data-item">
+                    <span>Protocolo</span>
+                    <strong id="infoProtocolo">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Professor / Especialista</span>
+                    <strong id="infoProfessor">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Curso</span>
+                    <strong id="infoCurso">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Unidade curricular / Disciplina</span>
+                    <strong id="infoDisciplina">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Valor por hora-aula</span>
+                    <strong id="infoValorHora">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Carga horária total</span>
+                    <strong id="infoCargaTotal">-</strong>
+                </div>
+
+                <div class="tr-data-item">
+                    <span>Valor total calculado</span>
+                    <strong id="infoValorTotal">-</strong>
+                </div>
+
+            </div>
+
+            <div class="tr-card-header" style="margin-top:24px">
+
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+
+                <div>
+                    <h2>Atividades da contratação</h2>
+                    <p>Atividades registradas na solicitação.</p>
+                </div>
+
+            </div>
+
+            <div id="listaAtividades" class="tr-activities-list"></div>
+
+        </section>
+
+        <!-- ETAPA 03: CURRÍCULO -->
+        <section id="secaoCurriculo" class="tr-card tr-hidden">
+
+            <div class="tr-card-header">
+
+                <div class="tr-card-title-icon">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+
+                <div>
+                    <span class="tr-section-label">ETAPA 03</span>
+                    <h2>Currículo do profissional</h2>
+                    <p>Anexe o currículo em PDF para extrair as informações profissionais.</p>
+                </div>
+
+            </div>
+
+            <div class="tr-form-grid">
+
+                <div class="tr-field tr-field-full">
+
+                    <label for="arquivoCurriculo">Currículo em PDF</label>
+
+                    <input
+                        type="file"
+                        id="arquivoCurriculo"
+                        accept="application/pdf,.pdf"
+                    >
+
+                    <small>
+                        Limite de 15 MB. O arquivo será processado no próprio navegador.
+                    </small>
+
+                </div>
+
+                <div class="tr-field tr-field-full">
+
+                    <button
+                        type="button"
+                        class="tr-btn-primary"
+                        id="btnInterpretar"
+                        disabled
+                    >
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Interpretar currículo
+                    </button>
+
+                    <div id="mensagemCurriculo" class="tr-status"></div>
+
+                </div>
+
+                <div class="tr-field tr-field-full">
+
+                    <label for="textoInstitucional">
+                        Texto institucional do profissional
+                    </label>
+
+                    <textarea
+                        id="textoInstitucional"
+                        rows="12"
+                        placeholder="O texto gerado pelo interpretador aparecerá aqui para revisão..."
+                    ></textarea>
+
+                    <small>
+                        Revise e ajuste o texto antes de gerar o documento.
+                        O conteúdo deste campo será inserido na justificativa.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ETAPA 04: DATA -->
+        <section id="secaoData" class="tr-card tr-hidden">
+
+            <div class="tr-card-header">
+
+                <div class="tr-card-title-icon">
+                    <i class="fa-regular fa-calendar"></i>
+                </div>
+
+                <div>
+                    <span class="tr-section-label">ETAPA 04</span>
+                    <h2>Data do contrato</h2>
+                    <p>Informe manualmente a data que deverá constar na justificativa.</p>
+                </div>
+
+            </div>
+
+            <div class="tr-form-grid">
+
+                <div class="tr-field">
+
+                    <label for="dataContrato">Data do contrato</label>
+
+                    <div class="tr-input-icon">
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <input
+                            type="date"
+                            id="dataContrato"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ETAPA 05: GERAR DOCUMENTO -->
+        <section id="acoesJustificativa" class="tr-card tr-document-card tr-hidden">
+
+            <div class="tr-document-icon">
+                <i class="fa-solid fa-file-word"></i>
+            </div>
+
+            <div class="tr-document-content">
+
+                <span class="tr-section-label">ETAPA 05</span>
+
+                <h2>Gerar justificativa</h2>
+
+                <p>
+                    O documento será criado a partir do modelo institucional de justificativa.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="tr-btn-primary tr-btn-generate"
+                id="btnGerarJustificativa"
+                disabled
+            >
+                <i class="fa-solid fa-file-export"></i>
+                Gerar justificativa em Word
+            </button>
+
+            <div id="mensagemGeracao" class="tr-status tr-status-full"></div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="tr-footer">
+
+            <div>
+                <strong>SENAI CETIQT | CPE</strong>
+                <span>Sistema de Solicitações de Serviços Operacionais</span>
+            </div>
+
+            <span>Gerador de Justificativa para Contratação</span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- BIBLIOTECA PDF.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
+
+<!-- LEITOR E INTERPRETADOR DE CURRÍCULOS -->
+<script src="js/leitor-curriculo.js"></script>
+<script src="js/interpretador-curriculo.js"></script>
+
+<!-- MÓDULO DO GERADOR -->
+<script type="module" src="js/gerador-justificativa.js"></script>
+
+</body>
+</html>
