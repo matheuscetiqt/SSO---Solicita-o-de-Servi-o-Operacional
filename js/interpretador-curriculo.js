@@ -25,35 +25,39 @@ function limparTexto(texto) {
 // IDENTIFICAÇÃO DAS SEÇÕES
 // =====================================================
 
-function identificarSecao(linha) {
-    const texto = normalizarTexto(linha);
 
-    if (/^(1[\s.]*)?(dados academicos|formacao academica|formacao|formacao escolar)/.test(texto)) {
+function identificarSecao(linha) {
+    const texto = normalizarTexto(linha)
+        .replace(/^\d+\s*[.)-]?\s*/, "")
+        .trim();
+
+    if (/^(dados academicos|formacao academica|formacao|formacao escolar)/.test(texto)) {
         return "formacao";
     }
 
-    if (/^(2[\s.]*)?(experiencia profissional|historico profissional|experiencia)/.test(texto)) {
+    if (/^(experiencia profissional|historico profissional|experiencia)/.test(texto)) {
         return "experiencia";
     }
 
-    if (/^(3[\s.]*)?(publicacoes|producao academica|producao tecnica)/.test(texto)) {
+    if (/^(publicacoes|producao academica|producao tecnica)/.test(texto)) {
         return "publicacoes";
     }
 
-    if (/^(4[\s.]*)?(experiencias em docencia|experiencia docente|docencia)/.test(texto)) {
+    if (/^(experiencias em docencia|experiencia docente|docencia)/.test(texto)) {
         return "docencia";
     }
 
-    if (/^(5[\s.]*)?(cursos complementares|certificacoes|qualificacoes|cursos)/.test(texto)) {
+    if (/^(cursos complementares|certificacoes|qualificacoes|cursos)/.test(texto)) {
         return "cursos";
     }
 
-    if (/^(6[\s.]*)?(conhecimentos tecnicos|competencias|habilidades)/.test(texto)) {
+    if (/^(conhecimentos tecnicos|competencias|habilidades)/.test(texto)) {
         return "conhecimentos";
     }
 
     return null;
 }
+
 
 function separarSecoes(textoOriginal) {
     const linhas = textoOriginal
