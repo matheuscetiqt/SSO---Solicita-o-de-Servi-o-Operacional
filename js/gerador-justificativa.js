@@ -378,3 +378,126 @@ numeroSSO.addEventListener("keydown", (evento) => {
         buscarSSO();
     }
 });
+
+// ==========================================
+// INTERPRETAÇÃO DO CURRÍCULO
+// ==========================================
+
+const arquivoCurriculoInput =
+    document.getElementById("arquivoCurriculo");
+
+const btnInterpretarCurriculo =
+    document.getElementById("btnInterpretar");
+
+const textoInstitucional =
+    document.getElementById("textoInstitucional");
+
+const mensagemCurriculo =
+    document.getElementById("mensagemCurriculo");
+
+// ==========================================
+// VALIDAR ARQUIVO SELECIONADO
+// ==========================================
+
+arquivoCurriculoInput.addEventListener("change", () => {
+
+    const arquivo = arquivoCurriculoInput.files[0];
+
+    textoInstitucional.value = "";
+    mensagemCurriculo.textContent = "";
+
+    btnInterpretarCurriculo.disabled = true;
+
+    if (!arquivo) {
+        return;
+    }
+
+    if (arquivo.type !== "application/pdf") {
+        mensagemCurriculo.textContent =
+            "Selecione um arquivo PDF válido.";
+        arquivoCurriculoInput.value = "";
+        return;
+    }
+
+    if (arquivo.size > 15 * 1024 * 1024) {
+        mensagemCurriculo.textContent =
+            "O currículo ultrapassa o limite de 15 MB.";
+        arquivoCurriculoInput.value = "";
+        return;
+    }
+
+    if (!solicitacaoAtual) {
+        mensagemCurriculo.textContent =
+            "Primeiro, localize uma solicitação SSO.";
+        arquivoCurriculoInput.value = "";
+        return;
+    }
+
+    btnInterpretarCurriculo.disabled = false;
+
+    mensagemCurriculo.textContent =
+        "Currículo selecionado. Pronto para interpretação.";
+});
+
+// ==========================================
+// INTERPRETAR CURRÍCULO
+// ==========================================
+
+btnInterpretarCurriculo.addEventListener("click", async () => {
+
+    const arquivo = arquivoCurriculoInput.files[0];
+
+    if (!arquivo) {
+        mensagemCurriculo.textContent =
+            "Selecione um currículo antes de continuar.";
+        return;
+    }
+
+    if (!solicitacaoAtual) {
+        mensagemCurriculo.textContent =
+            "Localize uma SSO antes de interpretar o currículo.";
+        return;
+    }
+
+    btnInterpretarCurriculo.disabled = true;
+
+    mensagemCurriculo.textContent =
+        "Extraindo informações e interpretando currículo...";
+
+    textoInstitucional.value = "";
+
+    try {
+
+        // 1. Extrair texto do PDF
+        const textoExtraido = await window.lerCurriculoPDF(arquivo);
+
+        // 2. Interpretar informações profissionais
+        const resultado = window.interpretarCurriculo(textoExtraido);
+
+        // 3. Preencher texto institucional
+        textoInstitucional.value = resultado.textoGerado;
+
+        if (
+            !resultado.textoGerado ||
+            resultado.textoGerado.trim().length === 0
+        ) {
+            throw new Error(
+                "Não foi possível gerar o texto institucional."
+            );
+        }
+
+        mensagemCurriculo.textContent =
+            "Currículo interpretado com sucesso! Revise o texto antes de continuar.";
+
+    } catch (erro) {
+
+        console.error("Erro ao interpretar currículo:", erro);
+
+        mensagemCurriculo.textContent =
+            erro.message || "Não foi possível interpretar o currículo.";
+
+    } finally {
+
+        btnInterpretarCurriculo.disabled = false;
+    }
+});
