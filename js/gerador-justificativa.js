@@ -501,3 +501,249 @@ btnInterpretarCurriculo.addEventListener("click", async () => {
         btnInterpretarCurriculo.disabled = false;
     }
 });
+
+// ==========================================
+// GERAÇÃO DA JUSTIFICATIVA EM WORD
+// ==========================================
+
+const btnGerarJustificativa =
+    document.getElementById("btnGerarJustificativa");
+
+const dataContratoInput =
+    document.getElementById("dataContrato");
+
+// ==========================================
+// FORMATAÇÃO DA DATA
+// ==========================================
+
+function formatarDataJustificativa(data) {
+
+    if (!data) return "";
+
+    const [ano, mes, dia] = data.split("-");
+
+    return `${dia}/${mes}/${ano}`;
+}
+
+// ==========================================
+// FORMATAÇÃO DO CURSO
+// ==========================================
+
+function obterCursoJustificativa(curso) {
+
+    if (!curso) return "";
+
+    const partes = String(curso).split("-");
+
+    return partes[partes.length - 1].trim();
+}
+
+// ==========================================
+// MONTAR ATIVIDADES
+// ==========================================
+
+function obterAtividadesJustificativa(dados) {
+
+    const atividades = [];
+
+    for (let i = 1; i <= 3; i++) {
+
+        const atividade = String(
+            dados[`atividade${i}`] || ""
+        ).trim();
+
+        if (atividade) {
+            atividades.push(atividade);
+        }
+    }
+
+    return atividades.join("; ");
+}
+
+// ==========================================
+// VALIDAR LIBERAÇÃO DA GERAÇÃO
+// ==========================================
+
+function atualizarDisponibilidadeGeracao() {
+
+    const curriculo = textoInstitucional.value.trim();
+    const data = dataContratoInput.value;
+
+    const pronto =
+        Boolean(solicitacaoAtual) &&
+        Boolean(curriculo) &&
+        Boolean(data);
+
+    btnGerarJustificativa.disabled = !pronto;
+
+    if (pronto) {
+        mostrarElemento(acoesJustificativa);
+    } else {
+        esconderElemento(acoesJustificativa);
+    }
+}
+
+// ==========================================
+// EVENTOS DE PREENCHIMENTO
+// ==========================================
+
+dataContratoInput.addEventListener("change", () => {
+    atualizarDisponibilidadeGeracao();
+});
+
+textoInstitucional.addEventListener("input", () => {
+    atualizarDisponibilidadeGeracao();
+});
+
+// ==========================================
+// GERAR DOCUMENTO
+// ==========================================
+
+async function gerarJustificativa() {
+
+    const mensagem = document.getElementById("mensagemGeracao");
+
+    if (!solicitacaoAtual) {
+        mensagem.textContent =
+            "Localize uma solicitação SSO antes de gerar o documento.";
+        return;
+    }
+
+    const curriculo = textoInstitucional.value.trim();
+    const data = dataContratoInput.value;
+
+    if (!curriculo || !data) {
+        mensagem.textContent =
+            "Preencha o currículo institucional e a data do contrato.";
+        return;
+    }
+
+    btnGerarJustificativa.disabled = true;
+
+    mensagem.textContent =
+        "Preparando a justificativa em Word...";
+
+    try {
+
+        // Carregar bibliotecas DOCX
+        const [
+            { default: PizZip },
+            { default: Docxtemplater }
+        ] = await Promise.all([
+            import("https://esm.sh/pizzip@3.1.7"),
+            import("https://esm.sh/docxtemplater@3.62.0")
+        ]);
+
+        // Buscar modelo institucional
+        const caminhoModelo = new URL(
+            "./modelos/Modelo_Justificativa.docx",
+            window.location.href
+        );
+
+        const resposta = await fetch(caminhoModelo);
+
+        if (!resposta.ok) {
+            throw new Error(
+                "Não foi possível localizar o modelo de justificativa na pasta modelos."
+            );
+        }
+
+        const arquivo = await resposta.arrayBuffer();
+
+        const zip = new PizZip(arquivo);
+
+        const doc = new Docxtemplater(zip, {
+            paragraphLoop: true,
+            linebreaks: true
+        });
+
+        // Dados financeiros
+        const valorHora = converterNumero(
+            solicitacaoAtual.valorHora
+        );
+
+        const valorTotal =
+            solicitacaoAtual.valorTotalCalculado ??
+            (valorHora * (solicitacaoAtual.cargaTotalCalculada || 0));
+
+        // Dados da justificativa
+        const campos = {
+
+            atividades: obterAtividadesJustificativa(
+                solicitacaoAtual
+            ),
+
+            disciplina: formatarValor(
+                solicitacaoAtual.disciplina
+            ),
+
+            curso: obterCursoJustificativa(
+                solicitacaoAtual.curso
+            ),
+
+            professor: formatarValor(
+                solicitacaoAtual.professor
+            ),
+
+            curriculo: curriculo,
+
+            valorHora: formatarMoeda(valorHora),
+
+            valorTotal: formatarMoeda(valorTotal),
+
+            dataContrato: formatarDataJustificativa(data)
+        };
+
+        // Substituir marcadores
+        doc.render(campos);
+
+        // Gerar arquivo Word
+        const blob = doc.getZip().generate({
+            type: "blob",
+            mimeType:
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        });
+
+        // Preparar download
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+
+        const protocolo = String(
+            solicitacaoAtual.protocolo || "SSO"
+        ).replace(/[^a-zA-Z0-9_-]/g, "_");
+
+        link.href = url;
+        link.download = `Justificativa_${protocolo}.docx`;
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(url);
+
+        mensagem.textContent =
+            "Justificativa gerada com sucesso!";
+
+    } catch (erro) {
+
+        console.error("Erro ao gerar justificativa:", erro);
+
+        mensagem.textContent =
+            erro.message ||
+            "Não foi possível gerar a justificativa.";
+
+    } finally {
+
+        atualizarDisponibilidadeGeracao();
+    }
+}
+
+// ==========================================
+// EVENTO DO BOTÃO
+// ==========================================
+
+btnGerarJustificativa.addEventListener(
+    "click",
+    gerarJustificativa
+);
