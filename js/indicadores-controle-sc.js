@@ -887,9 +887,23 @@ function renderizarGraficoEntregaAnalista(base) {
         },
 
         options: {
-            indexAxis: "y",
-            responsive: true,
-            maintainAspectRatio: false,
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+
+    onClick: (event, elementos) => {
+        if (!elementos.length) return;
+
+        const indice = elementos[0].index;
+        const prioridade = categorias[indice].numero;
+
+        alternarFiltroInterativoSC("prioridade", prioridade);
+    },
+
+    onHover: (event, elementos) => {
+        event.native.target.style.cursor =
+            elementos.length ? "pointer" : "default";
+    },
 
             plugins: {
                 legend: {
