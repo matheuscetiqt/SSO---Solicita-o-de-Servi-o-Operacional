@@ -14,9 +14,6 @@ import {
 let solicitacoesSC = [];
 let graficosSC = {};
 
-// Filtro interativo dos gráficos
-let prioridadeSelecionadaSC = null;
-
 const $ = (id) => document.getElementById(id);
 
 // =====================================================
@@ -79,39 +76,30 @@ async function carregarIndicadoresSC() {
     });
 
         preencherFiltrosSC();
-       function atualizarIndicadoresSC() {
+function atualizarIndicadoresSC() {
 
-    // Base respeitando os filtros de ano e analista
     const base = obterBaseFiltrada();
 
-    // Base adicional respeitando a seleção do gráfico
-    const baseVisual = prioridadeSelecionadaSC === null
-        ? base
-        : base.filter(
-            item => calcularPrioridade(item) === prioridadeSelecionadaSC
-        );
+    const total = base.length;
 
-    const total = baseVisual.length;
+    const entregues = base.filter(pedidoEntregue);
 
-    const entregues = baseVisual.filter(pedidoEntregue);
-
-    const pendentes = baseVisual.filter(
-        item => !pedidoEntregue(item)
+    const pendentes = base.filter(
+        (item) => !pedidoEntregue(item)
     );
 
-    const urgentes = baseVisual.filter(
-        item => calcularPrioridade(item) === 1
+    const urgentes = base.filter(
+        (item) => calcularPrioridade(item) === 1
     );
 
-    const vencidas = baseVisual.filter(
-        item => calcularPrioridade(item) === 6
+    const vencidas = base.filter(
+        (item) => calcularPrioridade(item) === 6
     );
 
     const taxaEntrega = total
         ? (entregues.length / total) * 100
         : 0;
 
-    // Atualizar cards
     $("indTotalSC").textContent = total;
     $("indEntreguesSC").textContent = entregues.length;
     $("indPendentesSC").textContent = pendentes.length;
@@ -121,38 +109,11 @@ async function carregarIndicadoresSC() {
     $("indTaxaEntregaSC").textContent =
         `${taxaEntrega.toFixed(1).replace(".", ",")}%`;
 
-    // Atualizar aviso de seleção
-    const aviso = $("filtroInterativoSC");
-
-    if (aviso) {
-
-        if (prioridadeSelecionadaSC === null) {
-            aviso.textContent =
-                "Clique em uma categoria para filtrar os demais indicadores.";
-        } else {
-
-            const nomes = {
-                1: "Urgentes",
-                2: "Atenção",
-                3: "No prazo",
-                4: "Futuras",
-                5: "Concluídas",
-                6: "Vencidas"
-            };
-
-            aviso.textContent =
-                `Filtro ativo: ${nomes[prioridadeSelecionadaSC]}. Clique novamente na categoria para limpar.`;
-        }
-    }
-
-    // O gráfico de prioridade continua mostrando a base completa
     renderizarGraficoPrioridade(base);
-
-    // Os demais gráficos recebem a base filtrada
-    renderizarGraficoAnalista(baseVisual);
-    renderizarGraficoEntrega(baseVisual);
-    renderizarGraficoMensal(baseVisual);
-    renderizarGraficoEntregaAnalista(baseVisual);
+    renderizarGraficoAnalista(base);
+    renderizarGraficoEntrega(base);
+    renderizarGraficoMensal(base);
+    renderizarGraficoEntregaAnalista(base);
 }
 
 // =====================================================
@@ -612,81 +573,41 @@ function renderizarGraficoPrioridade(base) {
         { numero: 6, nome: "6 - Vencido" }
     ];
 
-    const dados = categorias.map(categoria =>
+    const dados = categorias.map((categoria) =>
         base.filter(
-            item => calcularPrioridade(item) === categoria.numero
+            (item) => calcularPrioridade(item) === categoria.numero
         ).length
     );
-
-    const cores = categorias.map(categoria => {
-
-        if (prioridadeSelecionadaSC === null) {
-            return "#e94b0c";
-        }
-
-        return categoria.numero === prioridadeSelecionadaSC
-            ? "#0066A1"
-            : "rgba(150, 160, 170, 0.25)";
-    });
 
     criarGrafico("graficoPrioridadeSC", {
 
         type: "bar",
 
         data: {
-            labels: categorias.map(item => item.nome),
+            labels: categorias.map((item) => item.nome),
 
             datasets: [{
                 label: "Quantidade de SCs",
                 data: dados,
-                backgroundColor: cores,
+                backgroundColor: "#e94b0c",
                 borderRadius: 5,
                 barThickness: 25
             }]
         },
 
         options: {
-
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
 
-            onClick: (evento, elementos) => {
-
-                if (!elementos.length) return;
-
-                const indice = elementos[0].index;
-
-                const prioridade =
-                    categorias[indice].numero;
-
-                // Clicar novamente remove a seleção
-                prioridadeSelecionadaSC =
-                    prioridadeSelecionadaSC === prioridade
-                        ? null
-                        : prioridade;
-
-                atualizarIndicadoresSC();
-            },
-
-            onHover: (evento, elementos) => {
-
-                evento.native.target.style.cursor =
-                    elementos.length ? "pointer" : "default";
-            },
-
             plugins: {
-                legend: {
-                    display: false
-                }
+                legend: { display: false }
             },
 
             scales: {
                 x: {
                     beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
+                    ticks: { precision: 0 }
                 }
             }
         }
