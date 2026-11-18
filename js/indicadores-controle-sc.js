@@ -14,6 +14,9 @@ import {
 let solicitacoesSC = [];
 let graficosSC = {};
 
+// Filtro interativo dos gráficos
+let prioridadeSelecionadaSC = null;
+
 const $ = (id) => document.getElementById(id);
 
 // =====================================================
@@ -76,20 +79,80 @@ async function carregarIndicadoresSC() {
     });
 
         preencherFiltrosSC();
-        atualizarIndicadoresSC();
+       function atualizarIndicadoresSC() {
 
-        $("ultimaAtualizacaoSC").textContent =
-            `Atualizado em ${new Date().toLocaleString("pt-BR")}`;
+    // Base respeitando os filtros de ano e analista
+    const base = obterBaseFiltrada();
 
-    } catch (erro) {
+    // Base adicional respeitando a seleção do gráfico
+    const baseVisual = prioridadeSelecionadaSC === null
+        ? base
+        : base.filter(
+            item => calcularPrioridade(item) === prioridadeSelecionadaSC
+        );
 
-        console.error("Erro ao carregar indicadores de SC:", erro);
+    const total = baseVisual.length;
 
-        $("ultimaAtualizacaoSC").textContent =
-            "Não foi possível carregar os dados.";
+    const entregues = baseVisual.filter(pedidoEntregue);
 
-        alert("Erro ao carregar os indicadores de Controle de SC.");
+    const pendentes = baseVisual.filter(
+        item => !pedidoEntregue(item)
+    );
+
+    const urgentes = baseVisual.filter(
+        item => calcularPrioridade(item) === 1
+    );
+
+    const vencidas = baseVisual.filter(
+        item => calcularPrioridade(item) === 6
+    );
+
+    const taxaEntrega = total
+        ? (entregues.length / total) * 100
+        : 0;
+
+    // Atualizar cards
+    $("indTotalSC").textContent = total;
+    $("indEntreguesSC").textContent = entregues.length;
+    $("indPendentesSC").textContent = pendentes.length;
+    $("indUrgentesSC").textContent = urgentes.length;
+    $("indVencidasSC").textContent = vencidas.length;
+
+    $("indTaxaEntregaSC").textContent =
+        `${taxaEntrega.toFixed(1).replace(".", ",")}%`;
+
+    // Atualizar aviso de seleção
+    const aviso = $("filtroInterativoSC");
+
+    if (aviso) {
+
+        if (prioridadeSelecionadaSC === null) {
+            aviso.textContent =
+                "Clique em uma categoria para filtrar os demais indicadores.";
+        } else {
+
+            const nomes = {
+                1: "Urgentes",
+                2: "Atenção",
+                3: "No prazo",
+                4: "Futuras",
+                5: "Concluídas",
+                6: "Vencidas"
+            };
+
+            aviso.textContent =
+                `Filtro ativo: ${nomes[prioridadeSelecionadaSC]}. Clique novamente na categoria para limpar.`;
+        }
     }
+
+    // O gráfico de prioridade continua mostrando a base completa
+    renderizarGraficoPrioridade(base);
+
+    // Os demais gráficos recebem a base filtrada
+    renderizarGraficoAnalista(baseVisual);
+    renderizarGraficoEntrega(baseVisual);
+    renderizarGraficoMensal(baseVisual);
+    renderizarGraficoEntregaAnalista(baseVisual);
 }
 
 // =====================================================
@@ -549,41 +612,81 @@ function renderizarGraficoPrioridade(base) {
         { numero: 6, nome: "6 - Vencido" }
     ];
 
-    const dados = categorias.map((categoria) =>
+    const dados = categorias.map(categoria =>
         base.filter(
-            (item) => calcularPrioridade(item) === categoria.numero
+            item => calcularPrioridade(item) === categoria.numero
         ).length
     );
+
+    const cores = categorias.map(categoria => {
+
+        if (prioridadeSelecionadaSC === null) {
+            return "#e94b0c";
+        }
+
+        return categoria.numero === prioridadeSelecionadaSC
+            ? "#0066A1"
+            : "rgba(150, 160, 170, 0.25)";
+    });
 
     criarGrafico("graficoPrioridadeSC", {
 
         type: "bar",
 
         data: {
-            labels: categorias.map((item) => item.nome),
+            labels: categorias.map(item => item.nome),
 
             datasets: [{
                 label: "Quantidade de SCs",
                 data: dados,
-                backgroundColor: "#e94b0c",
+                backgroundColor: cores,
                 borderRadius: 5,
                 barThickness: 25
             }]
         },
 
         options: {
+
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
 
+            onClick: (evento, elementos) => {
+
+                if (!elementos.length) return;
+
+                const indice = elementos[0].index;
+
+                const prioridade =
+                    categorias[indice].numero;
+
+                // Clicar novamente remove a seleção
+                prioridadeSelecionadaSC =
+                    prioridadeSelecionadaSC === prioridade
+                        ? null
+                        : prioridade;
+
+                atualizarIndicadoresSC();
+            },
+
+            onHover: (evento, elementos) => {
+
+                evento.native.target.style.cursor =
+                    elementos.length ? "pointer" : "default";
+            },
+
             plugins: {
-                legend: { display: false }
+                legend: {
+                    display: false
+                }
             },
 
             scales: {
                 x: {
                     beginAtZero: true,
-                    ticks: { precision: 0 }
+                    ticks: {
+                        precision: 0
+                    }
                 }
             }
         }
