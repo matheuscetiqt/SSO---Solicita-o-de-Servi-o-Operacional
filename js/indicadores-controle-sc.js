@@ -651,6 +651,7 @@ function renderizarGraficoPrioridade(base) {
             responsive: true,
             maintainAspectRatio: false,
             
+   onClick: (event, elementos) => {
     if (!elementos.length) return;
 
     const indice = elementos[0].index;
