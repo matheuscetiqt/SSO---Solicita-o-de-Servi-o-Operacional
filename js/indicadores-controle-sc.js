@@ -14,6 +14,14 @@ import {
 let solicitacoesSC = [];
 let graficosSC = {};
 
+// Filtros interativos dos gráficos
+let filtrosInterativosSC = {
+    prioridade: null,
+    analista: null,
+    entrega: null,
+    mes: null
+};
+
 const $ = (id) => document.getElementById(id);
 
 // =====================================================
@@ -470,6 +478,54 @@ function obterBaseFiltrada() {
 
         return true;
     });
+}
+
+// =====================================================
+// FILTROS CRUZADOS - ESTILO POWER BI
+// =====================================================
+
+function obterBaseInterativaSC(ignorar = []) {
+
+    let base = obterBaseFiltrada();
+
+    if (!ignorar.includes("prioridade") &&
+        filtrosInterativosSC.prioridade !== null) {
+
+        base = base.filter(item =>
+            calcularPrioridade(item) === filtrosInterativosSC.prioridade
+        );
+    }
+
+    if (!ignorar.includes("analista") &&
+        filtrosInterativosSC.analista !== null) {
+
+        base = base.filter(item =>
+            (item.analista || "Não informado") === filtrosInterativosSC.analista
+        );
+    }
+
+    if (!ignorar.includes("entrega") &&
+        filtrosInterativosSC.entrega !== null) {
+
+        base = base.filter(item =>
+            filtrosInterativosSC.entrega === "entregues"
+                ? pedidoEntregue(item)
+                : !pedidoEntregue(item)
+        );
+    }
+
+    if (!ignorar.includes("mes") &&
+        filtrosInterativosSC.mes !== null) {
+
+        base = base.filter(item => {
+            const data = obterData(item.dataCriacao);
+
+            return data &&
+                data.getMonth() === filtrosInterativosSC.mes;
+        });
+    }
+
+    return base;
 }
 
 // =====================================================
