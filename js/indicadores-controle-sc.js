@@ -578,6 +578,17 @@ function atualizarIndicadoresSC() {
 }
 
 
+function alternarFiltroInterativoSC(tipo, valor) {
+
+    if (filtrosInterativosSC[tipo] === valor) {
+        filtrosInterativosSC[tipo] = null;
+    } else {
+        filtrosInterativosSC[tipo] = valor;
+    }
+
+    atualizarIndicadoresSC();
+}
+
 // =====================================================
 // FUNÇÃO DE GRÁFICOS
 // =====================================================
