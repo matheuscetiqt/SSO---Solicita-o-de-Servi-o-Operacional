@@ -650,21 +650,6 @@ function renderizarGraficoPrioridade(base) {
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
-
-            onClick: (event, elementos) => {
-    if (!elementos.length) return;
-
-    const indice = elementos[0].index;
-    const analista = ranking[indice][0];
-
-    alternarFiltroInterativoSC("analista", analista);
-},
-
-onHover: (event, elementos) => {
-    event.native.target.style.cursor =
-        elementos.length ? "pointer" : "default";
-},
-
             
     if (!elementos.length) return;
 
