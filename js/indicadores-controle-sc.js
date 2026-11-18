@@ -651,6 +651,20 @@ function renderizarGraficoPrioridade(base) {
             responsive: true,
             maintainAspectRatio: false,
 
+            onClick: (event, elementos) => {
+    if (!elementos.length) return;
+
+    const indice = elementos[0].index;
+    const prioridade = categorias[indice].numero;
+
+    alternarFiltroInterativoSC("prioridade", prioridade);
+},
+
+onHover: (event, elementos) => {
+    event.native.target.style.cursor =
+        elementos.length ? "pointer" : "default";
+},
+
             plugins: {
                 legend: { display: false }
             },
@@ -890,20 +904,6 @@ function renderizarGraficoEntregaAnalista(base) {
     indexAxis: "y",
     responsive: true,
     maintainAspectRatio: false,
-
-    onClick: (event, elementos) => {
-        if (!elementos.length) return;
-
-        const indice = elementos[0].index;
-        const prioridade = categorias[indice].numero;
-
-        alternarFiltroInterativoSC("prioridade", prioridade);
-    },
-
-    onHover: (event, elementos) => {
-        event.native.target.style.cursor =
-            elementos.length ? "pointer" : "default";
-    },
 
             plugins: {
                 legend: {
