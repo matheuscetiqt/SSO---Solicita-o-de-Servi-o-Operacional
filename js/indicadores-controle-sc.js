@@ -532,25 +532,16 @@ function obterBaseInterativaSC(ignorar = []) {
 // ATUALIZAÇÃO GERAL
 // =====================================================
 
+
 function atualizarIndicadoresSC() {
 
-    const base = obterBaseFiltrada();
+    const base = obterBaseInterativaSC();
 
     const total = base.length;
-
     const entregues = base.filter(pedidoEntregue);
-
-    const pendentes = base.filter(
-        (item) => !pedidoEntregue(item)
-    );
-
-    const urgentes = base.filter(
-        (item) => calcularPrioridade(item) === 1
-    );
-
-    const vencidas = base.filter(
-        (item) => calcularPrioridade(item) === 6
-    );
+    const pendentes = base.filter(item => !pedidoEntregue(item));
+    const urgentes = base.filter(item => calcularPrioridade(item) === 1);
+    const vencidas = base.filter(item => calcularPrioridade(item) === 6);
 
     const taxaEntrega = total
         ? (entregues.length / total) * 100
@@ -565,12 +556,27 @@ function atualizarIndicadoresSC() {
     $("indTaxaEntregaSC").textContent =
         `${taxaEntrega.toFixed(1).replace(".", ",")}%`;
 
-    renderizarGraficoPrioridade(base);
-    renderizarGraficoAnalista(base);
-    renderizarGraficoEntrega(base);
-    renderizarGraficoMensal(base);
-    renderizarGraficoEntregaAnalista(base);
+    renderizarGraficoPrioridade(
+        obterBaseInterativaSC(["prioridade"])
+    );
+
+    renderizarGraficoAnalista(
+        obterBaseInterativaSC(["analista"])
+    );
+
+    renderizarGraficoEntrega(
+        obterBaseInterativaSC(["entrega"])
+    );
+
+    renderizarGraficoMensal(
+        obterBaseInterativaSC(["mes"])
+    );
+
+    renderizarGraficoEntregaAnalista(
+        obterBaseInterativaSC(["analista", "entrega"])
+    );
 }
+
 
 // =====================================================
 // FUNÇÃO DE GRÁFICOS
