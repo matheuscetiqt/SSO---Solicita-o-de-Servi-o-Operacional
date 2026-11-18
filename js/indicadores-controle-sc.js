@@ -75,46 +75,24 @@ async function carregarIndicadoresSC() {
         return tipoServicoValido && statusValido;
     });
 
+    
         preencherFiltrosSC();
-function atualizarIndicadoresSC() {
+        atualizarIndicadoresSC();
 
-    const base = obterBaseFiltrada();
+        $("ultimaAtualizacaoSC").textContent =
+            `Atualizado em ${new Date().toLocaleString("pt-BR")}`;
 
-    const total = base.length;
+    } catch (erro) {
 
-    const entregues = base.filter(pedidoEntregue);
+        console.error("Erro ao carregar indicadores de SC:", erro);
 
-    const pendentes = base.filter(
-        (item) => !pedidoEntregue(item)
-    );
+        $("ultimaAtualizacaoSC").textContent =
+            "Não foi possível carregar os dados.";
 
-    const urgentes = base.filter(
-        (item) => calcularPrioridade(item) === 1
-    );
-
-    const vencidas = base.filter(
-        (item) => calcularPrioridade(item) === 6
-    );
-
-    const taxaEntrega = total
-        ? (entregues.length / total) * 100
-        : 0;
-
-    $("indTotalSC").textContent = total;
-    $("indEntreguesSC").textContent = entregues.length;
-    $("indPendentesSC").textContent = pendentes.length;
-    $("indUrgentesSC").textContent = urgentes.length;
-    $("indVencidasSC").textContent = vencidas.length;
-
-    $("indTaxaEntregaSC").textContent =
-        `${taxaEntrega.toFixed(1).replace(".", ",")}%`;
-
-    renderizarGraficoPrioridade(base);
-    renderizarGraficoAnalista(base);
-    renderizarGraficoEntrega(base);
-    renderizarGraficoMensal(base);
-    renderizarGraficoEntregaAnalista(base);
+        alert("Erro ao carregar os indicadores de Controle de SC.");
+    }
 }
+
 
 // =====================================================
 // FUNÇÕES AUXILIARES
