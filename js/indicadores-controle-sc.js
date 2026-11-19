@@ -727,7 +727,9 @@ function renderizarGraficoAnalista(base) {
             datasets: [{
                 label: "Quantidade de SCs",
                 data: ranking.map((item) => item[1]),
-                backgroundColor: "#e94b0c",
+                backgroundColor: ranking.map(item =>
+    corRealceSC("analista", item[0], "#e94b0c")
+),
                 borderRadius: 4
             }]
         },
