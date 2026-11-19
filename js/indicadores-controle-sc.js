@@ -953,6 +953,39 @@ function renderizarGraficoEntregaAnalista(base) {
     responsive: true,
     maintainAspectRatio: false,
 
+            onClick: (event, elementos) => {
+    if (!elementos.length) return;
+
+    const elemento = elementos[0];
+
+    const indice = elemento.index;
+    const datasetIndex = elemento.datasetIndex;
+
+    const analista = ranking[indice][0];
+
+    const entrega = datasetIndex === 0
+        ? "entregues"
+        : "pendentes";
+
+    if (
+        filtrosInterativosSC.analista === analista &&
+        filtrosInterativosSC.entrega === entrega
+    ) {
+        filtrosInterativosSC.analista = null;
+        filtrosInterativosSC.entrega = null;
+    } else {
+        filtrosInterativosSC.analista = analista;
+        filtrosInterativosSC.entrega = entrega;
+    }
+
+    atualizarIndicadoresSC();
+},
+
+onHover: (event, elementos) => {
+    event.native.target.style.cursor =
+        elementos.length ? "pointer" : "default";
+},
+
             plugins: {
                 legend: {
                     position: "bottom"
