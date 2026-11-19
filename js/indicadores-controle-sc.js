@@ -789,8 +789,8 @@ function renderizarGraficoEntrega(base) {
             datasets: [{
                 data: [entregues, pendentes],
                 backgroundColor: [
-    "#0066A1",
-    "#E94B0C"
+    corRealceSC("entrega", "entregues", "#0066A1"),
+    corRealceSC("entrega", "pendentes", "#E94B0C")
 ],
                 borderWidth: 2,
                 borderColor: "#ffffff"
