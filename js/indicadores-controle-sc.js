@@ -596,6 +596,21 @@ function alternarFiltroInterativoSC(tipo, valor) {
 // FUNÇÃO DE GRÁFICOS
 // =====================================================
 
+// =====================================================
+// REALCE VISUAL DOS FILTROS
+// =====================================================
+
+function corRealceSC(tipo, valor, cor) {
+
+    if (filtrosInterativosSC[tipo] === null) {
+        return cor;
+    }
+
+    return filtrosInterativosSC[tipo] === valor
+        ? cor
+        : "rgba(150, 150, 150, 0.30)";
+}
+
 function criarGrafico(id, configuracao) {
 
     if (graficosSC[id]) {
@@ -643,7 +658,9 @@ function renderizarGraficoPrioridade(base) {
             datasets: [{
                 label: "Quantidade de SCs",
                 data: dados,
-                backgroundColor: "#e94b0c",
+                backgroundColor: categorias.map(item =>
+    corRealceSC("prioridade", item.numero, "#e94b0c")
+),
                 borderRadius: 5,
                 barThickness: 25
             }]
