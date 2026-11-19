@@ -611,6 +611,21 @@ function corRealceSC(tipo, valor, cor) {
         : "rgba(150, 150, 150, 0.30)";
 }
 
+function corRealceEntregaAnalistaSC(analista, status, cor) {
+
+    const analistaOk =
+        filtrosInterativosSC.analista === null ||
+        filtrosInterativosSC.analista === analista;
+
+    const entregaOk =
+        filtrosInterativosSC.entrega === null ||
+        filtrosInterativosSC.entrega === status;
+
+    return analistaOk && entregaOk
+        ? cor
+        : "rgba(150, 150, 150, 0.30)";
+}
+
 function criarGrafico(id, configuracao) {
 
     if (graficosSC[id]) {
@@ -969,14 +984,26 @@ function renderizarGraficoEntregaAnalista(base) {
                     data: ranking.map(
                         (item) => item[1].entregues
                     ),
-                    backgroundColor: "#0066A1"
+                    backgroundColor: ranking.map(item =>
+    corRealceEntregaAnalistaSC(
+        item[0],
+        "entregues",
+        "#0066A1"
+    )
+)
                 },
                 {
                     label: "Pendentes",
                     data: ranking.map(
                         (item) => item[1].pendentes
                     ),
-                    backgroundColor: "#E94B0C"
+                   backgroundColor: ranking.map(item =>
+    corRealceEntregaAnalistaSC(
+        item[0],
+        "pendentes",
+        "#E94B0C"
+    )
+)
                 }
             ]
         },
