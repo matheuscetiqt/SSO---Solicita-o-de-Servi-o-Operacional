@@ -872,7 +872,21 @@ function renderizarGraficoMensal(base) {
                 backgroundColor: "rgba(23, 105, 170, 0.12)",
                 fill: true,
                 tension: 0.3,
-                pointRadius: 4
+                pointRadius: meses.map((_, indice) =>
+    filtrosInterativosSC.mes === null
+        ? 4
+        : filtrosInterativosSC.mes === `${ano}-${indice}`
+            ? 7
+            : 3
+),
+
+pointBackgroundColor: meses.map((_, indice) =>
+    corRealceSC("mes", `${ano}-${indice}`, "#1769aa")
+),
+
+pointBorderColor: meses.map((_, indice) =>
+    corRealceSC("mes", `${ano}-${indice}`, "#1769aa")
+)
             }]
         },
 
