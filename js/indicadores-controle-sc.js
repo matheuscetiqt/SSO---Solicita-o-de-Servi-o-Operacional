@@ -779,6 +779,23 @@ function renderizarGraficoEntrega(base) {
             responsive: true,
             maintainAspectRatio: false,
 
+            onClick: (event, elementos) => {
+    if (!elementos.length) return;
+
+    const indice = elementos[0].index;
+
+    const status = indice === 0
+        ? "entregues"
+        : "pendentes";
+
+    alternarFiltroInterativoSC("entrega", status);
+},
+
+onHover: (event, elementos) => {
+    event.native.target.style.cursor =
+        elementos.length ? "pointer" : "default";
+},
+
             plugins: {
                 legend: {
                     position: "bottom"
