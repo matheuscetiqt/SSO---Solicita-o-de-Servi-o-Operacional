@@ -515,15 +515,18 @@ function obterBaseInterativaSC(ignorar = []) {
     }
 
     if (!ignorar.includes("mes") &&
-        filtrosInterativosSC.mes !== null) {
+    filtrosInterativosSC.mes !== null) {
 
-        base = base.filter(item => {
-            const data = obterData(item.dataCriacao);
+    base = base.filter(item => {
+        const data = obterData(item.dataCriacao);
 
-            return data &&
-                data.getMonth() === filtrosInterativosSC.mes;
-        });
-    }
+        if (!data) return false;
+
+        const chaveMes = `${data.getFullYear()}-${data.getMonth()}`;
+
+        return chaveMes === filtrosInterativosSC.mes;
+    });
+}
 
     return base;
 }
@@ -857,6 +860,20 @@ function renderizarGraficoMensal(base) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+
+            onClick: (event, elementos) => {
+    if (!elementos.length) return;
+
+    const indice = elementos[0].index;
+    const mes = `${ano}-${indice}`;
+
+    alternarFiltroInterativoSC("mes", mes);
+},
+
+onHover: (event, elementos) => {
+    event.native.target.style.cursor =
+        elementos.length ? "pointer" : "default";
+},
 
             plugins: {
                 legend: {
