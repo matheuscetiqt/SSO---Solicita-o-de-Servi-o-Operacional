@@ -79,18 +79,19 @@ function normalizarTexto(valor) {
 
 // LOCALIZAR COLUNA DE PERÍODO
 
+
 function localizarColunaPeriodo(colunas) {
 
     return colunas.find(coluna => {
 
         const nome = normalizarTexto(coluna);
 
-        return nome.includes("periodo") ||
-               nome.includes("semestre");
+        return nome === "codperlet";
 
     });
 
 }
+
 
 
 // IDENTIFICAR REGISTROS DE 2026
