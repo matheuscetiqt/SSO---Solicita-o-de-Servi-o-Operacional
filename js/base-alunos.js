@@ -322,3 +322,23 @@ document.getElementById("totalDuplicadosBase").textContent =
     }
 
 }
+async function testarConexaoFirestore() {
+
+    try {
+
+        const consulta = query(
+            collection(db, "base_alunos"),
+            limit(1)
+        );
+
+        await getDocs(consulta);
+
+        console.log("Conexão com Firestore funcionando.");
+
+    } catch (erro) {
+
+        console.error("Erro na conexão com Firestore:", erro);
+
+    }
+
+}
