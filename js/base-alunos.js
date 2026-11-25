@@ -109,6 +109,42 @@ function registroEhDe2026(valor) {
 }
 
 
+function normalizarCampo(valor) {
+    return String(valor ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toUpperCase();
+}
+
+function identificarDuplicidades(linhas) {
+
+    const contagem = new Map();
+
+    linhas.forEach(linha => {
+
+        const cpf = String(linha.CPF ?? "")
+            .replace(/\D/g, "");
+
+        const curso = normalizarCampo(linha.CURSO);
+        const periodo = normalizarCampo(linha.CODPERLET);
+
+        if (!cpf || !curso || !periodo) return;
+
+        const chave = `${cpf}|${curso}|${periodo}`;
+
+        contagem.set(chave, (contagem.get(chave) || 0) + 1);
+
+    });
+
+    return [...contagem.values()]
+        .filter(quantidade => quantidade > 1)
+        .length;
+}
+
+
+
 // PROCESSAR ARQUIVO EXCEL
 
 async function processarArquivo(evento) {
