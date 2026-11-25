@@ -1,0 +1,275 @@
+
+import { auth } from "./firebase-config.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+// ELEMENTOS DA TELA
+
+const inputArquivo = document.getElementById("arquivoBaseAlunos");
+const btnSelecionar = document.getElementById("btnSelecionarArquivo");
+const nomeArquivo = document.getElementById("nomeArquivoBase");
+const status = document.getElementById("statusImportacaoBase");
+const resumo = document.getElementById("resumoImportacaoBase");
+const secaoPrevia = document.getElementById("secaoPreviaBase");
+const btnSair = document.getElementById("btnSair");
+
+// VALIDAR LOGIN
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+        window.location.href = "index.html";
+    }
+
+});
+
+// SAIR DO SISTEMA
+
+if (btnSair) {
+
+    btnSair.addEventListener("click", async () => {
+
+        await signOut(auth);
+
+        window.location.href = "index.html";
+
+    });
+
+}
+
+// ABRIR SELETOR DE ARQUIVO
+
+btnSelecionar.addEventListener("click", () => {
+
+    inputArquivo.click();
+
+});
+
+// LER ARQUIVO
+
+inputArquivo.addEventListener("change", processarArquivo);
+
+
+// ATUALIZAR MENSAGEM
+
+function atualizarStatus(mensagem, tipo = "") {
+
+    status.textContent = mensagem;
+
+    status.className = `base-alunos-status ${tipo}`.trim();
+
+}
+
+
+// NORMALIZAR TEXTO
+
+function normalizarTexto(valor) {
+
+    return String(valor ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+}
+
+
+// LOCALIZAR COLUNA DE PERÍODO
+
+function localizarColunaPeriodo(colunas) {
+
+    return colunas.find(coluna => {
+
+        const nome = normalizarTexto(coluna);
+
+        return nome.includes("periodo") ||
+               nome.includes("semestre");
+
+    });
+
+}
+
+
+// IDENTIFICAR REGISTROS DE 2026
+
+function registroEhDe2026(valor) {
+
+    if (valor === null || valor === undefined || valor === "") {
+        return false;
+    }
+
+    const texto = String(valor).trim();
+
+    return /(^|\D)2026(\D|$)/.test(texto);
+
+}
+
+
+// PROCESSAR ARQUIVO EXCEL
+
+async function processarArquivo(evento) {
+
+    const arquivo = evento.target.files?.[0];
+
+    if (!arquivo) return;
+
+    nomeArquivo.textContent = `Arquivo selecionado: ${arquivo.name}`;
+
+    resumo.hidden = true;
+
+    secaoPrevia.hidden = true;
+
+    atualizarStatus("Lendo e validando a planilha...");
+
+    try {
+
+        if (!window.XLSX) {
+
+            throw new Error(
+                "A biblioteca de leitura do Excel não carregou. Atualize a página e tente novamente."
+            );
+
+        }
+
+        const dados = await arquivo.arrayBuffer();
+
+        const workbook = XLSX.read(dados, {
+            type: "array",
+            cellDates: true
+        });
+
+        const primeiraAba = workbook.SheetNames[0];
+
+        if (!primeiraAba) {
+
+            throw new Error("A planilha não possui abas para leitura.");
+
+        }
+
+        const linhas = XLSX.utils.sheet_to_json(
+            workbook.Sheets[primeiraAba],
+            {
+                defval: "",
+                raw: false
+            }
+        );
+
+        if (!linhas.length) {
+
+            throw new Error("Não encontrei registros na primeira aba da planilha.");
+
+        }
+
+        const colunas = Object.keys(linhas[0]);
+
+        const colunaPeriodo = localizarColunaPeriodo(colunas);
+
+        if (!colunaPeriodo) {
+
+            throw new Error(
+                "Não identifiquei uma coluna de período/semestre. Confira o cabeçalho da planilha."
+            );
+
+        }
+
+        const registros2026 = linhas.filter(linha => {
+
+            return registroEhDe2026(linha[colunaPeriodo]);
+
+        });
+
+        // ATUALIZAR INDICADORES
+
+        document.getElementById("totalLinhasBase").textContent =
+            linhas.length.toLocaleString("pt-BR");
+
+        document.getElementById("total2026Base").textContent =
+            registros2026.length.toLocaleString("pt-BR");
+
+        document.getElementById("totalColunasBase").textContent =
+            colunas.length.toLocaleString("pt-BR");
+
+        resumo.hidden = false;
+
+
+        // MONTAR TABELA DE PRÉVIA
+
+        const cabecalho = document.getElementById("cabecalhoPreviaBase");
+
+        const corpo = document.getElementById("corpoPreviaBase");
+
+        cabecalho.innerHTML = "";
+
+        corpo.innerHTML = "";
+
+
+        // MOSTRAR ATÉ 7 COLUNAS
+
+        const colunasPrevia = colunas.slice(0, 7);
+
+        const trCabecalho = document.createElement("tr");
+
+        colunasPrevia.forEach(coluna => {
+
+            const th = document.createElement("th");
+
+            th.textContent = coluna;
+
+            trCabecalho.appendChild(th);
+
+        });
+
+        cabecalho.appendChild(trCabecalho);
+
+
+        // MOSTRAR ATÉ 15 REGISTROS
+
+        registros2026.slice(0, 15).forEach(registro => {
+
+            const tr = document.createElement("tr");
+
+            colunasPrevia.forEach(coluna => {
+
+                const td = document.createElement("td");
+
+                td.textContent = String(registro[coluna] ?? "");
+
+                tr.appendChild(td);
+
+            });
+
+            corpo.appendChild(tr);
+
+        });
+
+
+        // MENSAGEM DA PRÉVIA
+
+        document.getElementById("mensagemPreviaBase").textContent =
+            registros2026.length
+                ? `Exibindo até 15 dos ${registros2026.length.toLocaleString("pt-BR")} registros identificados em 2026. Coluna utilizada: ${colunaPeriodo}.`
+                : `Nenhum registro de 2026 foi identificado na coluna ${colunaPeriodo}. A planilha pode ainda conter somente períodos anteriores.`;
+
+
+        secaoPrevia.hidden = false;
+
+        atualizarStatus(
+            "Planilha lida com sucesso. Nenhum dado foi enviado ao Firebase.",
+            "sucesso"
+        );
+
+    } catch (erro) {
+
+        console.error("Erro ao ler a base de alunos:", erro);
+
+        atualizarStatus(
+            erro.message || "Não foi possível ler a planilha.",
+            "erro"
+        );
+
+    }
+
+}
