@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Base de Alunos | CPE</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Biblioteca para leitura de Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <style>
+        .base-alunos-conteudo {
+            padding: 24px;
+        }
+
+        .base-alunos-intro {
+            color: #64748b;
+            margin: 6px 0 22px;
+        }
+
+        .base-alunos-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 18px rgba(15,23,42,.06);
+        }
+
+        .base-alunos-upload {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            background: #f8fafc;
+        }
+
+        .base-alunos-upload i {
+            font-size: 32px;
+            color: #1769aa;
+            margin-bottom: 12px;
+        }
+
+        .base-alunos-upload p {
+            color: #64748b;
+            margin: 8px 0 16px;
+        }
+
+        .base-alunos-btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 18px;
+            background: #1769aa;
+            color: white;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .base-alunos-status {
+            margin-top: 16px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .base-alunos-status.erro {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .base-alunos-status.sucesso {
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .base-alunos-resumo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(170px,1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .base-alunos-indicador {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 10px;
+        }
+
+        .base-alunos-indicador span {
+            display: block;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .base-alunos-indicador strong {
+            display: block;
+            font-size: 25px;
+            margin-top: 5px;
+            color: #0f172a;
+        }
+
+        .base-alunos-tabela-wrap {
+            overflow-x: auto;
+        }
+
+        .base-alunos-tabela {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .base-alunos-tabela th,
+        .base-alunos-tabela td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .base-alunos-tabela th {
+            background: #f8fafc;
+        }
+
+        .base-alunos-aviso {
+            color: #92400e;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img src="Logosenai.png" alt="SENAI CETIQT" class="logo-senai-sidebar">
+
+            <div class="identificacao-cpe">
+                <h2>CPE</h2>
+                <p>Coordenação de Pós-Graduação e Extensão</p>
+            </div>
+        </div>
+
+        <nav>
+
+            <div class="menu-secao">
+                <span class="menu-secao-titulo">
+                    SSO — Solicitações de Serviços Operacionais
+                </span>
+            </div>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="nova-solicitacao.html">
+                <i class="fa-solid fa-plus"></i>
+                Nova Solicitação
+            </a>
+
+            <a href="minhas-solicitacoes.html">
+                <i class="fa-solid fa-list"></i>
+                Minhas Solicitações
+            </a>
+
+            <a href="indicadores.html">
+                <i class="fa-solid fa-chart-column"></i>
+                Indicadores
+            </a>
+
+            <a href="configuracoes.html">
+                <i class="fa-solid fa-gear"></i>
+                Configurações
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">
+                    Controle de Dados de SC
+                </span>
+            </div>
+
+            <a href="controle-sc.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Acessar Controle de SC
+            </a>
+
+            <a href="indicadores-controle-sc.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Indicadores de SC
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">
+                    Gestão Acadêmica
+                </span>
+            </div>
+
+            <a href="base-alunos.html" class="active">
+                <i class="fa-solid fa-graduation-cap"></i>
+                Base de Alunos
+            </a>
+
+            <div class="menu-secao menu-secao-sc">
+                <span class="menu-secao-titulo">
+                    Automações
+                </span>
+            </div>
+
+            <a href="automacoes.html">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Central de Automações
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <button type="button" id="btnSair" class="btn-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </button>
+        </div>
+
+    </aside>
+
+    <main>
+
+        <header>
+            <div>
+                <h1>Base de Alunos</h1>
+                <span>
+                    Importação e acompanhamento da base acadêmica do CPE.
+                </span>
+            </div>
+        </header>
+
+        <div class="base-alunos-conteudo">
+
+            <p class="base-alunos-intro">
+                Nesta primeira etapa, vamos validar o arquivo e visualizar os registros de 2026.
+                Nenhum dado será gravado no Firebase.
+            </p>
+
+            <section class="base-alunos-card">
+
+                <h2>
+                    <i class="fa-solid fa-file-excel"></i>
+                    Importar planilha
+                </h2>
+
+                <div class="base-alunos-upload">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <h3>Selecione a base de alunos em Excel</h3>
+
+                    <p>Formatos aceitos: .xlsx, .xls e .csv</p>
+
+                    <input
+                        type="file"
+                        id="arquivoBaseAlunos"
+                        accept=".xlsx,.xls,.csv"
+                        hidden
+                    >
+
+                    <button
+                        class="base-alunos-btn"
+                        type="button"
+                        id="btnSelecionarArquivo"
+                    >
+                        <i class="fa-solid fa-folder-open"></i>
+                        Selecionar arquivo
+                    </button>
+
+                    <div id="nomeArquivoBase"></div>
+
+                </div>
+
+                <div id="statusImportacaoBase" class="base-alunos-status">
+                    Aguardando seleção de arquivo.
+                </div>
+
+                <div id="resumoImportacaoBase" class="base-alunos-resumo" hidden>
+
+                    <div class="base-alunos-indicador">
+                        <span>Linhas válidas na planilha</span>
+                        <strong id="totalLinhasBase">0</strong>
+                    </div>
+
+                    <div class="base-alunos-indicador">
+                        <span>Registros identificados em 2026</span>
+                        <strong id="total2026Base">0</strong>
+                    </div>
+
+                    <div class="base-alunos-indicador">
+                        <span>Colunas identificadas</span>
+                        <strong id="totalColunasBase">0</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="base-alunos-card" id="secaoPreviaBase" hidden>
+
+                <h2>Prévia dos registros de 2026</h2>
+
+                <p id="mensagemPreviaBase" class="base-alunos-intro"></p>
+
+                <div class="base-alunos-aviso">
+                    Esta é apenas uma prévia local. A importação para o banco de dados ainda não está habilitada.
+                </div>
+
+                <div class="base-alunos-tabela-wrap" style="margin-top:16px">
+
+                    <table class="base-alunos-tabela">
+
+                        <thead id="cabecalhoPreviaBase"></thead>
+
+                        <tbody id="corpoPreviaBase"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/base-alunos.js"></script>
+
+</body>
+</html>
