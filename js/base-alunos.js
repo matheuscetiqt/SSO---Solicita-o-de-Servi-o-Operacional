@@ -229,6 +229,11 @@ async function processarArquivo(evento) {
         document.getElementById("totalColunasBase").textContent =
             colunas.length.toLocaleString("pt-BR");
 
+        const totalDuplicados = identificarDuplicidades(linhas);
+
+document.getElementById("totalDuplicadosBase").textContent =
+    totalDuplicados.toLocaleString("pt-BR");
+
         resumo.hidden = false;
 
 
