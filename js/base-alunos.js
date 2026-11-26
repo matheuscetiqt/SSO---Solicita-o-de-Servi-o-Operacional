@@ -780,20 +780,20 @@ function criarGrafico(id, tipo, labels, valores, titulo) {
             plugins: {
 
                 legend: {
-                    display: graficoRosca,
-                    position: "bottom",
-
-                    labels: {
-                        usePointStyle: true,
-                        pointStyle: "circle",
-                        padding: 16,
-                        boxWidth: 8,
-                        font: {
-                            family: "Poppins",
-                            size: 10
-                        }
-                    }
-                },
+    display: graficoRosca,
+    position: "bottom",
+    labels: {
+        usePointStyle: true,
+        pointStyle: "circle",
+        padding: 10,
+        boxWidth: 7,
+        boxHeight: 7,
+        font: {
+            family: "Poppins",
+            size: 9
+        }
+    }
+},
 
                 tooltip: {
                     backgroundColor: "#123b5d",
