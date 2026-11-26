@@ -5,7 +5,9 @@ import {
     collection,
     getDocs,
     limit,
-    query
+    query,
+    where
+
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
@@ -23,15 +25,93 @@ const resumo = document.getElementById("resumoImportacaoBase");
 const secaoPrevia = document.getElementById("secaoPreviaBase");
 const btnSair = document.getElementById("btnSair");
 
-// VALIDAR LOGIN
 
-onAuthStateChanged(auth, (user) => {
+// CONTROLE DE ACESSO À BASE DE ALUNOS
+
+const ADMINISTRADORES = [
+    "mdrconceicao@cetiqt.senai.br",
+    "rbenites@cetiqt.senai.br"
+];
+
+let usuarioAtual = null;
+let ehAdministrador = false;
+
+const cardImportacao = document.getElementById("cardImportacaoBase");
+
+onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
         window.location.href = "index.html";
+        return;
+    }
+
+    try {
+
+        usuarioAtual = user;
+
+        const email = (user.email || "")
+            .toLowerCase()
+            .trim();
+
+        ehAdministrador = ADMINISTRADORES.includes(email);
+
+        // Administradores já possuem acesso pelo login do CPE.
+        // Os demais precisam estar cadastrados e ativos.
+
+        if (!ehAdministrador) {
+
+            const consulta = query(
+                collection(db, "colaboradores"),
+                where("uid", "==", user.uid)
+            );
+
+            const resultado = await getDocs(consulta);
+
+            if (resultado.empty) {
+                await signOut(auth);
+                window.location.href = "index.html";
+                return;
+            }
+
+            const colaborador = resultado.docs[0].data();
+
+            const statusColaborador = String(
+                colaborador.status || ""
+            ).toLowerCase().trim();
+
+            if (statusColaborador !== "ativo") {
+                await signOut(auth);
+                window.location.href = "index.html";
+                return;
+            }
+
+        }
+
+        // Somente administradores visualizam a área de importação.
+
+        if (cardImportacao) {
+            cardImportacao.hidden = !ehAdministrador;
+        }
+
+        console.log(
+            ehAdministrador
+                ? "Acesso administrativo à Base de Alunos."
+                : "Acesso de consulta à Base de Alunos."
+        );
+
+    } catch (erro) {
+
+        console.error("Erro ao validar acesso:", erro);
+
+        atualizarStatus(
+            "Não foi possível validar seu acesso. Entre novamente no CPE.",
+            "erro"
+        );
+
     }
 
 });
+
 
 // SAIR DO SISTEMA
 
