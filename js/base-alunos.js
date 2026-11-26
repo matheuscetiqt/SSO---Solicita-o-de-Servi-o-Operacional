@@ -28,6 +28,9 @@ const status = document.getElementById("statusImportacaoBase");
 const resumo = document.getElementById("resumoImportacaoBase");
 const secaoPrevia = document.getElementById("secaoPreviaBase");
 const btnSair = document.getElementById("btnSair");
+const btnImportar = document.getElementById("btnImportarBase");
+
+let linhasPlanilhaAtual = [];
 
 
 
@@ -278,6 +281,7 @@ async function processarArquivo(evento) {
         }
 
         const colunas = Object.keys(linhas[0]);
+        linhasPlanilhaAtual = linhas;
 
         const colunaPeriodo = localizarColunaPeriodo(colunas);
 
@@ -375,6 +379,10 @@ document.getElementById("totalDuplicadosBase").textContent =
 
         secaoPrevia.hidden = false;
 
+        if (btnImportar) {
+    btnImportar.hidden = !ehAdministrador;
+}
+
         atualizarStatus(
             "Planilha lida com sucesso. Nenhum dado foi enviado ao Firebase.",
             "sucesso"
@@ -413,3 +421,218 @@ async function testarConexaoFirestore() {
 
 }
 testarConexaoFirestore();
+
+
+// GERAR IDENTIFICADOR ACADÊMICO ESTÁVEL
+
+function gerarHash(texto) {
+    let hash = 14695981039346656037n;
+
+    for (let i = 0; i < texto.length; i++) {
+        hash ^= BigInt(texto.charCodeAt(i));
+        hash = BigInt.asUintN(64, hash * 1099511628211n);
+    }
+
+    return hash.toString(16);
+}
+
+
+// IMPORTAR BASE PARA O FIRESTORE
+
+async function importarBaseFirestore() {
+
+    if (!ehAdministrador || !usuarioAtual) {
+        atualizarStatus(
+            "Você não possui permissão para importar dados.",
+            "erro"
+        );
+        return;
+    }
+
+    if (!linhasPlanilhaAtual.length) {
+        atualizarStatus(
+            "Selecione e valide uma planilha antes de importar.",
+            "erro"
+        );
+        return;
+    }
+
+    const confirmar = window.confirm(
+        `Você está prestes a importar ${linhasPlanilhaAtual.length.toLocaleString("pt-BR")} registros. Deseja continuar?`
+    );
+
+    if (!confirmar) return;
+
+    btnImportar.disabled = true;
+
+    const total = linhasPlanilhaAtual.length;
+    const tamanhoLote = 400;
+
+    let processados = 0;
+    let historicoRef = null;
+
+    try {
+
+        atualizarStatus(
+            "Preparando importação para o Firebase...",
+            "sucesso"
+        );
+
+        // Criar registro inicial no histórico
+
+        historicoRef = await addDoc(
+            collection(db, "historico_importacoes_alunos"),
+            {
+                arquivo: nomeArquivo.textContent,
+                totalRegistros: total,
+                processados: 0,
+                status: "em andamento",
+                usuario: usuarioAtual.email || "",
+                usuarioUid: usuarioAtual.uid,
+                iniciadoEm: serverTimestamp()
+            }
+        );
+
+        const ocorrencias = new Map();
+
+        // Preparar identificadores sem perder duplicidades
+
+        const registros = linhasPlanilhaAtual.map(linha => {
+
+            const cpf = String(linha.CPF ?? "")
+                .replace(/\D/g, "");
+
+            const curso = normalizarCampo(linha.CURSO);
+            const periodo = normalizarCampo(linha.CODPERLET);
+
+            if (!cpf || !curso || !periodo) {
+                throw new Error(
+                    "Existem registros sem CPF, CURSO ou CODPERLET. Corrija a planilha antes de importar."
+                );
+            }
+
+            const chave = `${cpf}|${curso}|${periodo}`;
+
+            const ocorrencia = ocorrencias.get(chave) || 0;
+
+            ocorrencias.set(chave, ocorrencia + 1);
+
+            const identificador =
+                `aluno_${gerarHash(chave)}_${ocorrencia}`;
+
+            return {
+                identificador,
+                dados: {
+                    ...linha,
+                    _chaveAcademica: chave,
+                    _ocorrenciaChave: ocorrencia,
+                    _atualizadoEm: serverTimestamp()
+                }
+            };
+
+        });
+
+        // Gravar em lotes de até 400 documentos
+
+        for (
+            let inicio = 0;
+            inicio < registros.length;
+            inicio += tamanhoLote
+        ) {
+
+            const lote = writeBatch(db);
+
+            const grupo = registros.slice(
+                inicio,
+                inicio + tamanhoLote
+            );
+
+            grupo.forEach(registro => {
+
+                const referencia = doc(
+                    db,
+                    "base_alunos",
+                    registro.identificador
+                );
+
+                lote.set(referencia, registro.dados);
+
+            });
+
+            await lote.commit();
+
+            processados += grupo.length;
+
+            atualizarStatus(
+                `Importação em andamento: ${processados.toLocaleString("pt-BR")} de ${total.toLocaleString("pt-BR")} registros.`,
+                "sucesso"
+            );
+
+            await updateDoc(historicoRef, {
+                processados,
+                atualizadoEm: serverTimestamp()
+            });
+
+        }
+
+        // Finalizar histórico
+
+        await updateDoc(historicoRef, {
+            status: "concluída",
+            processados,
+            finalizadoEm: serverTimestamp()
+        });
+
+        atualizarStatus(
+            `Importação concluída! ${processados.toLocaleString("pt-BR")} registros processados.`,
+            "sucesso"
+        );
+
+        console.log("Importação concluída:", {
+            total: processados,
+            historico: historicoRef.id
+        });
+
+    } catch (erro) {
+
+        console.error("Erro na importação:", erro);
+
+        if (historicoRef) {
+            try {
+                await updateDoc(historicoRef, {
+                    status: "erro ou parcial",
+                    processados,
+                    mensagemErro: erro.message,
+                    finalizadoEm: serverTimestamp()
+                });
+            } catch (erroHistorico) {
+                console.error(
+                    "Não foi possível atualizar o histórico:",
+                    erroHistorico
+                );
+            }
+        }
+
+        atualizarStatus(
+            `Falha na importação. ${processados} registros foram processados. ${erro.message}`,
+            "erro"
+        );
+
+    } finally {
+
+        btnImportar.disabled = false;
+
+    }
+
+}
+
+
+// EVENTO DO BOTÃO
+
+if (btnImportar) {
+    btnImportar.addEventListener(
+        "click",
+        importarBaseFirestore
+    );
+}
+
