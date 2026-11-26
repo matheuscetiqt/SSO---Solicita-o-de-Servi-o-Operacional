@@ -5842,6 +5842,7 @@ label[for="filtroMes"] {
     padding: 20px;
     min-width: 0;
     min-height: 320px;
+    height: 350px;
 }
 
 .dashboard-grafico-card h3 {
