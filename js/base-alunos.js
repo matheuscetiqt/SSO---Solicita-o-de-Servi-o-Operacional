@@ -6,6 +6,10 @@ import {
     getDocs,
     getDoc,
     doc,
+    addDoc,
+    updateDoc,
+    serverTimestamp,
+    writeBatch,
     limit,
     query
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
