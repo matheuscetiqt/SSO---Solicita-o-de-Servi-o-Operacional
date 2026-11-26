@@ -5769,3 +5769,103 @@ label[for="filtroMes"] {
     }
 
 }
+
+/* DASHBOARD BASE DE ALUNOS */
+
+.dashboard-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.dashboard-cabecalho h2 {
+    margin: 0 0 5px;
+}
+
+.dashboard-cabecalho p {
+    color: #64748b;
+    margin: 0;
+    font-size: 14px;
+}
+
+.dashboard-indicadores {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 26px;
+}
+
+.dashboard-kpi {
+    position: relative;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 105px;
+}
+
+.dashboard-kpi span {
+    display: block;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.dashboard-kpi strong {
+    display: block;
+    color: #0f172a;
+    font-size: 28px;
+    margin-top: 8px;
+}
+
+.dashboard-kpi i {
+    position: absolute;
+    right: 18px;
+    top: 22px;
+    font-size: 22px;
+    color: #1769aa;
+    opacity: .8;
+}
+
+.dashboard-graficos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.dashboard-grafico-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 0;
+    min-height: 320px;
+}
+
+.dashboard-grafico-card h3 {
+    font-size: 16px;
+    margin: 0 0 20px;
+    color: #1e293b;
+}
+
+.dashboard-grafico-card canvas {
+    max-height: 270px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-indicadores {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-graficos {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .dashboard-indicadores {
+        grid-template-columns: 1fr;
+    }
+}
