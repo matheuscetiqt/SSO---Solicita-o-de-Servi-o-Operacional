@@ -845,6 +845,128 @@ function criarGrafico(id, tipo, labels, valores, titulo) {
 }
 
 
+        // 1. Alunos por curso - Top 10
+        const cursos = Object.entries(agrupar("CURSO"))
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+
+        criarGrafico(
+            "graficoCursos",
+            "bar",
+            cursos.map(item => item[0]),
+            cursos.map(item => item[1]),
+            "Alunos"
+        );
+
+        // 2. Situação acadêmica
+        const dadosSituacao = agrupar("STATUSCURSO");
+
+        criarGrafico(
+            "graficoSituacao",
+            "doughnut",
+            Object.keys(dadosSituacao),
+            Object.values(dadosSituacao),
+            "Registros"
+        );
+
+        // 3. Evolução por período
+        const periodos = Object.entries(agrupar("CODPERLET"))
+            .sort((a, b) => a[0].localeCompare(b[0], "pt-BR", {
+                numeric: true
+            }));
+
+        criarGrafico(
+            "graficoPeriodos",
+            "bar",
+            periodos.map(item => item[0]),
+            periodos.map(item => item[1]),
+            "Registros"
+        );
+
+        // 4. Distribuição por sexo
+        const sexos = agrupar("SEXO");
+
+        criarGrafico(
+            "graficoSexo",
+            "doughnut",
+            Object.keys(sexos),
+            Object.values(sexos),
+            "Alunos"
+        );
+
+        // 5. Faixa etária
+        const faixas = {
+            "Até 20 anos": 0,
+            "21 a 30 anos": 0,
+            "31 a 40 anos": 0,
+            "41 a 50 anos": 0,
+            "Acima de 50 anos": 0,
+            "Sem informação": 0
+        };
+
+        alunos.forEach(aluno => {
+            const idade = Number(aluno.IDADE);
+
+            if (!Number.isFinite(idade) || idade <= 0) {
+                faixas["Sem informação"]++;
+            } else if (idade <= 20) {
+                faixas["Até 20 anos"]++;
+            } else if (idade <= 30) {
+                faixas["21 a 30 anos"]++;
+            } else if (idade <= 40) {
+                faixas["31 a 40 anos"]++;
+            } else if (idade <= 50) {
+                faixas["41 a 50 anos"]++;
+            } else {
+                faixas["Acima de 50 anos"]++;
+            }
+        });
+
+        criarGrafico(
+            "graficoIdade",
+            "bar",
+            Object.keys(faixas),
+            Object.values(faixas),
+            "Alunos"
+        );
+
+        // 6. Distribuição por estado - Top 10
+        const estados = Object.entries(agrupar("ESTADO"))
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+
+        criarGrafico(
+            "graficoEstados",
+            "bar",
+            estados.map(item => item[0]),
+            estados.map(item => item[1]),
+            "Alunos"
+        );
+
+        // Exibir dashboard
+        dashboard.hidden = false;
+
+        atualizarStatus(
+            `Dashboard atualizado com ${alunos.length.toLocaleString("pt-BR")} registros.`,
+            "sucesso"
+        );
+
+        console.log("Dashboard carregado:", alunos.length, "registros.");
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar dashboard:", erro);
+
+        atualizarStatus(
+            "Não foi possível carregar os indicadores. Verifique a conexão e as permissões do Firestore.",
+            "erro"
+        );
+
+    }
+
+}
+
+
 // BOTÃO ATUALIZAR DASHBOARD
 
 const btnAtualizarDashboard = document.getElementById("btnAtualizarDashboard");
