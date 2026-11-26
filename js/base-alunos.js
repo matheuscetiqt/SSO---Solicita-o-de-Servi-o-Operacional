@@ -350,8 +350,7 @@ document.getElementById("totalDuplicadosBase").textContent =
 
         // MOSTRAR ATÉ 15 REGISTROS
 
-        registros2026.slice(0, 15).forEach(registro => {
-
+        linhas.slice(0, 15).forEach(registro => {
             const tr = document.createElement("tr");
 
             colunasPrevia.forEach(coluna => {
@@ -372,9 +371,7 @@ document.getElementById("totalDuplicadosBase").textContent =
         // MENSAGEM DA PRÉVIA
 
         document.getElementById("mensagemPreviaBase").textContent =
-            registros2026.length
-                ? `Exibindo até 15 dos ${registros2026.length.toLocaleString("pt-BR")} registros identificados em 2026. Coluna utilizada: ${colunaPeriodo}.`
-                : `Nenhum registro de 2026 foi identificado na coluna ${colunaPeriodo}. A planilha pode ainda conter somente períodos anteriores.`;
+    `Exibindo até 15 dos ${linhas.length.toLocaleString("pt-BR")} registros da planilha. Foram identificados ${registros2026.length.toLocaleString("pt-BR")} registros de 2026. Coluna utilizada: ${colunaPeriodo}.`;
 
 
         secaoPrevia.hidden = false;
