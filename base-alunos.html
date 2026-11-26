@@ -19,6 +19,9 @@
     <!-- Biblioteca para leitura de Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
+    <!-- Biblioteca para gráficos do dashboard -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         .base-alunos-conteudo {
             padding: 24px;
@@ -253,6 +256,108 @@
         </header>
 
         <div class="base-alunos-conteudo">
+
+            
+<!-- DASHBOARD DA BASE DE ALUNOS -->
+
+<section id="dashboardAlunos" hidden>
+
+    <div class="base-alunos-card">
+
+        <div class="dashboard-cabecalho">
+            <div>
+                <h2>Painel geral de alunos</h2>
+                <p>Visão consolidada da base acadêmica do CPE</p>
+            </div>
+
+            <button id="btnAtualizarDashboard" class="base-alunos-btn">
+                <i class="fa-solid fa-rotate"></i>
+                Atualizar dados
+            </button>
+        </div>
+
+        <!-- INDICADORES -->
+
+        <div class="dashboard-indicadores">
+
+            <div class="dashboard-kpi">
+                <span>Total de alunos</span>
+                <strong id="kpiTotalAlunos">--</strong>
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="dashboard-kpi">
+                <span>Concluintes</span>
+                <strong id="kpiConcluintes">--</strong>
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <div class="dashboard-kpi">
+                <span>Matriculados</span>
+                <strong id="kpiMatriculados">--</strong>
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+
+            <div class="dashboard-kpi">
+                <span>Reprovados</span>
+                <strong id="kpiReprovados">--</strong>
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+
+            <div class="dashboard-kpi">
+                <span>Trancados</span>
+                <strong id="kpiTrancados">--</strong>
+                <i class="fa-solid fa-pause-circle"></i>
+            </div>
+
+            <div class="dashboard-kpi">
+                <span>Pré-matriculados</span>
+                <strong id="kpiPreMatriculados">--</strong>
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+        </div>
+
+        <!-- GRÁFICOS -->
+
+        <div class="dashboard-graficos">
+
+            <div class="dashboard-grafico-card">
+                <h3>Alunos por curso</h3>
+                <canvas id="graficoCursos"></canvas>
+            </div>
+
+            <div class="dashboard-grafico-card">
+                <h3>Situação acadêmica</h3>
+                <canvas id="graficoSituacao"></canvas>
+            </div>
+
+            <div class="dashboard-grafico-card">
+                <h3>Evolução por período</h3>
+                <canvas id="graficoPeriodos"></canvas>
+            </div>
+
+            <div class="dashboard-grafico-card">
+                <h3>Perfil demográfico</h3>
+                <canvas id="graficoSexo"></canvas>
+            </div>
+
+            <div class="dashboard-grafico-card">
+                <h3>Distribuição por faixa etária</h3>
+                <canvas id="graficoIdade"></canvas>
+            </div>
+
+            <div class="dashboard-grafico-card">
+                <h3>Distribuição por estado</h3>
+                <canvas id="graficoEstados"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 
             <p class="base-alunos-intro">
                 Nesta primeira etapa, vamos validar o arquivo e visualizar os registros de 2026.
