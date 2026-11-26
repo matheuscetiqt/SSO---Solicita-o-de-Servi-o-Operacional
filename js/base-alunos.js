@@ -770,6 +770,71 @@ function criarGrafico(id, tipo, labels, valores, titulo) {
             }]
         },
 
+                plugins: [{
+            id: "percentuaisSituacao",
+
+            afterDatasetsDraw(chart) {
+
+                // Aplicar somente ao gráfico de situação acadêmica
+                if (chart.canvas.id !== "graficoSituacao") return;
+
+                const ctx = chart.ctx;
+                const dataset = chart.data.datasets[0];
+                const meta = chart.getDatasetMeta(0);
+
+                const total = dataset.data.reduce(
+                    (soma, valor) => soma + Number(valor || 0),
+                    0
+                );
+
+                if (!total) return;
+
+                ctx.save();
+
+                ctx.font = "bold 12px Poppins";
+                ctx.fillStyle = "#ffffff";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+
+                meta.data.forEach((arco, index) => {
+
+                    const valor = Number(dataset.data[index] || 0);
+                    const percentual = (valor / total) * 100;
+
+                    // Não exibir rótulos em fatias muito pequenas
+                    if (percentual < 4.5) return;
+
+                    const propriedades = arco.getProps([
+                        "x",
+                        "y",
+                        "startAngle",
+                        "endAngle",
+                        "innerRadius",
+                        "outerRadius"
+                    ], true);
+
+                    const angulo = (
+                        propriedades.startAngle +
+                        propriedades.endAngle
+                    ) / 2;
+
+                    const raio = (
+                        propriedades.innerRadius +
+                        propriedades.outerRadius
+                    ) / 2;
+
+                    const x = propriedades.x + Math.cos(angulo) * raio;
+                    const y = propriedades.y + Math.sin(angulo) * raio;
+
+                    const texto = `${percentual.toFixed(1).replace(".", ",")}%`;
+
+                    ctx.fillText(texto, x, y);
+                });
+
+                ctx.restore();
+            }
+        }],
+
         options: {
 
             indexAxis: graficoCursos ? "y" : "x",
