@@ -26,12 +26,8 @@ const secaoPrevia = document.getElementById("secaoPreviaBase");
 const btnSair = document.getElementById("btnSair");
 
 
-// CONTROLE DE ACESSO À BASE DE ALUNOS
 
-const ADMINISTRADORES = [
-    "mdrconceicao@cetiqt.senai.br",
-    "rbenites@cetiqt.senai.br"
-];
+// CONTROLE DE ACESSO À BASE DE ALUNOS
 
 let usuarioAtual = null;
 let ehAdministrador = false;
@@ -49,46 +45,36 @@ onAuthStateChanged(auth, async (user) => {
 
         usuarioAtual = user;
 
-        const email = (user.email || "")
-            .toLowerCase()
-            .trim();
+        // Buscar cadastro de acesso pelo UID
+        const referenciaAcesso = doc(
+            db,
+            "acessos_base_alunos",
+            user.uid
+        );
 
-        ehAdministrador = ADMINISTRADORES.includes(email);
+        const resultadoAcesso = await getDoc(referenciaAcesso);
 
-        // Administradores já possuem acesso pelo login do CPE.
-        // Os demais precisam estar cadastrados e ativos.
-
-        if (!ehAdministrador) {
-
-            const consulta = query(
-                collection(db, "colaboradores"),
-                where("uid", "==", user.uid)
+        if (!resultadoAcesso.exists()) {
+            atualizarStatus(
+                "Você não possui autorização para acessar a Base de Alunos.",
+                "erro"
             );
-
-            const resultado = await getDocs(consulta);
-
-            if (resultado.empty) {
-                await signOut(auth);
-                window.location.href = "index.html";
-                return;
-            }
-
-            const colaborador = resultado.docs[0].data();
-
-            const statusColaborador = String(
-                colaborador.status || ""
-            ).toLowerCase().trim();
-
-            if (statusColaborador !== "ativo") {
-                await signOut(auth);
-                window.location.href = "index.html";
-                return;
-            }
-
+            return;
         }
 
-        // Somente administradores visualizam a área de importação.
+        const acesso = resultadoAcesso.data();
 
+        if (acesso.ativo !== true) {
+            atualizarStatus(
+                "Seu acesso à Base de Alunos está inativo.",
+                "erro"
+            );
+            return;
+        }
+
+        ehAdministrador = acesso.perfil === "administrador";
+
+        // Somente administradores visualizam a importação
         if (cardImportacao) {
             cardImportacao.hidden = !ehAdministrador;
         }
