@@ -92,6 +92,8 @@ onAuthStateChanged(auth, async (user) => {
                 : "Acesso de consulta à Base de Alunos."
         );
 
+        await carregarDashboard();
+
     } catch (erro) {
 
         console.error("Erro ao validar acesso:", erro);
@@ -631,5 +633,261 @@ if (btnImportar) {
         "click",
         importarBaseFirestore
     );
+}
+
+// ==========================================
+// DASHBOARD DA BASE DE ALUNOS
+// ==========================================
+
+let graficosDashboard = {};
+
+async function carregarDashboard() {
+
+    const dashboard = document.getElementById("dashboardAlunos");
+
+    try {
+
+        atualizarStatus("Carregando indicadores da Base de Alunos...");
+
+        // Buscar os registros existentes no Firestore
+        const consulta = await getDocs(
+            collection(db, "base_alunos")
+        );
+
+        const alunos = consulta.docs.map(documento => documento.data());
+
+        if (!alunos.length) {
+            atualizarStatus("A coleção ainda não possui registros.", "erro");
+            return;
+        }
+
+        // Normalizar situações
+        const situacoes = alunos.map(aluno =>
+            normalizarCampo(aluno.STATUSCURSO)
+        );
+
+        const contarSituacao = (termo) =>
+            situacoes.filter(situacao => situacao === termo).length;
+
+        // Atualizar indicadores
+        document.getElementById("kpiTotalAlunos").textContent =
+            alunos.length.toLocaleString("pt-BR");
+
+        document.getElementById("kpiConcluintes").textContent =
+            contarSituacao("CONCLUINTE").toLocaleString("pt-BR");
+
+        document.getElementById("kpiMatriculados").textContent =
+            contarSituacao("MATRICULADO").toLocaleString("pt-BR");
+
+        document.getElementById("kpiReprovados").textContent =
+            contarSituacao("REPROVADO").toLocaleString("pt-BR");
+
+        document.getElementById("kpiTrancados").textContent =
+            contarSituacao("TRANCADO").toLocaleString("pt-BR");
+
+        document.getElementById("kpiPreMatriculados").textContent =
+            contarSituacao("PRE-MATRICULADO").toLocaleString("pt-BR");
+
+        // Função para agrupar informações
+        function agrupar(campo) {
+
+            const resultado = {};
+
+            alunos.forEach(aluno => {
+
+                const valor = normalizarCampo(aluno[campo]) || "SEM INFORMAÇÃO";
+
+                resultado[valor] = (resultado[valor] || 0) + 1;
+
+            });
+
+            return resultado;
+        }
+
+        // Cores dos gráficos
+        const cores = [
+            "#1769aa",
+            "#2697c8",
+            "#22a699",
+            "#e5a13b",
+            "#df6b75",
+            "#8064a2",
+            "#64748b",
+            "#91b8d8",
+            "#80b7a5",
+            "#c18b61"
+        ];
+
+        // Função para criar ou atualizar gráficos
+        function criarGrafico(id, tipo, labels, valores, titulo) {
+
+            const canvas = document.getElementById(id);
+
+            if (!canvas || !window.Chart) return;
+
+            if (graficosDashboard[id]) {
+                graficosDashboard[id].destroy();
+            }
+
+            graficosDashboard[id] = new Chart(canvas, {
+                type: tipo,
+                data: {
+                    labels,
+                    datasets: [{
+                        label: titulo,
+                        data: valores,
+                        backgroundColor: cores,
+                        borderColor: "#ffffff",
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: tipo === "doughnut" || tipo === "pie",
+                            position: "bottom"
+                        }
+                    },
+                    scales: tipo === "bar" ? {
+                        y: {
+                            beginAtZero: true
+                        }
+                    } : {}
+                }
+            });
+        }
+
+        // 1. Alunos por curso - Top 10
+        const cursos = Object.entries(agrupar("CURSO"))
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+
+        criarGrafico(
+            "graficoCursos",
+            "bar",
+            cursos.map(item => item[0]),
+            cursos.map(item => item[1]),
+            "Alunos"
+        );
+
+        // 2. Situação acadêmica
+        const dadosSituacao = agrupar("STATUSCURSO");
+
+        criarGrafico(
+            "graficoSituacao",
+            "doughnut",
+            Object.keys(dadosSituacao),
+            Object.values(dadosSituacao),
+            "Registros"
+        );
+
+        // 3. Evolução por período
+        const periodos = Object.entries(agrupar("CODPERLET"))
+            .sort((a, b) => a[0].localeCompare(b[0], "pt-BR", {
+                numeric: true
+            }));
+
+        criarGrafico(
+            "graficoPeriodos",
+            "bar",
+            periodos.map(item => item[0]),
+            periodos.map(item => item[1]),
+            "Registros"
+        );
+
+        // 4. Distribuição por sexo
+        const sexos = agrupar("SEXO");
+
+        criarGrafico(
+            "graficoSexo",
+            "doughnut",
+            Object.keys(sexos),
+            Object.values(sexos),
+            "Alunos"
+        );
+
+        // 5. Faixa etária
+        const faixas = {
+            "Até 20 anos": 0,
+            "21 a 30 anos": 0,
+            "31 a 40 anos": 0,
+            "41 a 50 anos": 0,
+            "Acima de 50 anos": 0,
+            "Sem informação": 0
+        };
+
+        alunos.forEach(aluno => {
+
+            const idade = Number(aluno.IDADE);
+
+            if (!Number.isFinite(idade) || idade <= 0) {
+                faixas["Sem informação"]++;
+            } else if (idade <= 20) {
+                faixas["Até 20 anos"]++;
+            } else if (idade <= 30) {
+                faixas["21 a 30 anos"]++;
+            } else if (idade <= 40) {
+                faixas["31 a 40 anos"]++;
+            } else if (idade <= 50) {
+                faixas["41 a 50 anos"]++;
+            } else {
+                faixas["Acima de 50 anos"]++;
+            }
+
+        });
+
+        criarGrafico(
+            "graficoIdade",
+            "bar",
+            Object.keys(faixas),
+            Object.values(faixas),
+            "Alunos"
+        );
+
+        // 6. Distribuição por estado - Top 10
+        const estados = Object.entries(agrupar("ESTADO"))
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+
+        criarGrafico(
+            "graficoEstados",
+            "bar",
+            estados.map(item => item[0]),
+            estados.map(item => item[1]),
+            "Alunos"
+        );
+
+        // Exibir dashboard
+        dashboard.hidden = false;
+
+        atualizarStatus(
+            `Dashboard atualizado com ${alunos.length.toLocaleString("pt-BR")} registros.`,
+            "sucesso"
+        );
+
+        console.log("Dashboard carregado:", alunos.length, "registros.");
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar dashboard:", erro);
+
+        atualizarStatus(
+            "Não foi possível carregar os indicadores. Verifique a conexão e as permissões do Firestore.",
+            "erro"
+        );
+
+    }
+
+}
+
+
+// BOTÃO ATUALIZAR DASHBOARD
+
+const btnAtualizarDashboard = document.getElementById("btnAtualizarDashboard");
+
+if (btnAtualizarDashboard) {
+    btnAtualizarDashboard.addEventListener("click", carregarDashboard);
 }
 
