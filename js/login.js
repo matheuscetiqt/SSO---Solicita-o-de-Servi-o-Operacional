@@ -160,23 +160,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 "dashboard.html";
 
 
-        } catch (error) {
+} catch (error) {
 
-            console.error(
-                "Erro ao fazer login:",
-                error
-            );
+    console.error("Erro ao fazer login:", {
+        codigo: error.code,
+        mensagem: error.message,
+        erro: error
+    });
 
+    if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+    ) {
 
-            // ==========================================
-            // ERRO DE LOGIN
-            // ==========================================
+        alert("E-mail ou senha inválidos.");
 
-            alert(
-                "E-mail ou senha inválidos."
-            );
+    } else if (
+        error.code === "permission-denied" ||
+        error.code === "firestore/permission-denied"
+    ) {
 
-        }
+        alert(
+            "Login realizado, mas o sistema não conseguiu consultar seus dados de acesso. Verifique as permissões do Firestore."
+        );
+
+    } else if (
+        error.code === "auth/too-many-requests"
+    ) {
+
+        alert(
+            "Muitas tentativas de login. Aguarde alguns minutos e tente novamente."
+        );
+
+    } else {
+
+        alert(
+            "Erro ao acessar o sistema: " +
+            (error.code || error.message)
+        );
+
+    }
+
+}
 
     });
 
