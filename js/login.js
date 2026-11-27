@@ -64,36 +64,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 credencial.user;
 
 
-            // ==========================================
-            // BUSCA O COLABORADOR PELO UID
-            // ==========================================
+// VERIFICA SE É ADMINISTRADOR PRIMEIRO
 
-            const consulta =
-                query(
-                    collection(db, "colaboradores"),
-                    where("uid", "==", usuario.uid)
-                );
+const ADMINISTRADORES = [
+    "mdrconceicao@cetiqt.senai.br",
+    "rbenites@cetiqt.senai.br"
+];
 
+const ehAdministrador =
+    ADMINISTRADORES.includes(email);
 
-            const resultado =
-                await getDocs(consulta);
+// ADMINISTRADOR NÃO PRECISA CONSULTAR COLABORADORES
 
+if (ehAdministrador) {
 
-            // ==========================================
-            // VERIFICA SE É ADMINISTRADOR
-            // ==========================================
+    window.location.href = "dashboard.html";
+    return;
 
-            const ADMINISTRADORES = [
+}
 
-                "mdrconceicao@cetiqt.senai.br",
-                "rbenites@cetiqt.senai.br"
+// BUSCA O COLABORADOR PELO UID
 
-            ];
+const consulta = query(
+    collection(db, "colaboradores"),
+    where("uid", "==", usuario.uid)
+);
 
-
-            const ehAdministrador =
-                ADMINISTRADORES.includes(email);
-
+const resultado = await getDocs(consulta);
 
             // ==========================================
             // SE NÃO FOR ADMINISTRADOR,
